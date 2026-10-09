@@ -94,6 +94,22 @@ Start with `fruitfulness/README.md`. The key documents:
   citations, like function words in language and currency metabolites in metabolism.
 - Mathlib obeys Zipf's law of abbreviation: definition names shorten with use.
 
+## 4. `problem-atlas/`: ranking of 100 hard open problems
+
+`atlas.pdf` (12 pages) ranks 100 open problems into four tiers: beyond Fields, Fields-level, major
+breakthrough, and strong research. Each problem has a difficulty score and a raw-reasoning fit score. The atlas
+also contains:
+- a heat map of difficulty against fit;
+- the problems that fell between 2013 and 2025;
+- the barriers that block whole families of methods;
+- odds estimates and suggested targets.
+
+**Update, 9 Oct 2026:** cross-referenced against `github.com/openai/math` (released 6 Oct 2026: 372 claimed
+result families, 3 papers withdrawn the next day). 30 of the 100 atlas problems now carry an AI claim.
+- **Our picks with no AI claim:** union-closed sets, Černý, 1/3–2/3, Erdős–Gyárfás, sunflower, Erdős–Hajnal.
+- **New suggested niche:** audit a claimed result. Check that its Lean statement really is the conjecture, find
+  any gap, and write the short human proof.
+
 ## Open threads (to resume later)
 
 1. **Lucas conjecture (our own; not found in the literature).** The maximum unfolded size

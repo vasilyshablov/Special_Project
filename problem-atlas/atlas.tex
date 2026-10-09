@@ -47,6 +47,10 @@
 
 \input{gen_stats.tex}
 \input{gen_fields.tex}
+\input{gen_claims.tex}
+\newcommand{\aiC}[1]{{\scriptsize\textcolor{tS}{\textbf{$\blacktriangleright$\,AI claim, resolved:}} #1}}
+\newcommand{\aiP}[1]{{\scriptsize\textcolor{tC}{\textbf{$\blacktriangleright$\,AI claim, partial:}} #1}}
+\newcommand{\hmC}[1]{\tikz[baseline=-0.6ex]\node[draw=tS,line width=0.9pt,circle,inner sep=0.3pt,minimum size=1.35em,font=\scriptsize\bfseries,text=tS]{#1};}
 
 \begin{document}
 
@@ -72,7 +76,7 @@
     \node[white,font=\bfseries\large] at (0,0.8) {B \quad strong research};
   \end{scope}
   \node[anchor=south west,text=white,align=left] at ($(current page.south west)+(1.8,2.0)$)
-    {\large\bfseries Special Project \quad$\cdot$\quad October 2026\\[3pt]\normalsize Written by Claude for the project's mathematician. All rankings and odds are my own judgement.};
+    {\large\bfseries Special Project \quad$\cdot$\quad October 2026 \quad$\cdot$\quad updated 9 October after the \texttt{openai/math} release\\[3pt]\normalsize Written by Claude for the project's mathematician. All rankings and odds are my own judgement.};
 \end{tikzpicture}
 \end{titlepage}
 
@@ -144,11 +148,82 @@ famous problems are the least likely to fall to one clever idea, which is part o
 
 % =====================================================================
 \newpage
+\section*{Update, 9 October 2026: the ground moved this week}
+\addcontentsline{toc}{section}{Update}
+
+\begin{keybox}[title={What happened}]{tS}
+On \textbf{6 October 2026} OpenAI published \texttt{github.com/openai/math}: 719 manuscripts in 372 ``result
+families'', each claiming to solve an open problem or make substantial progress on one, produced by an
+unreleased internal model at about three hours of compute per result, out of roughly 4{,}000 problems posed.
+About 42\% of the top-line results come with Lean proofs. Within a day, \textbf{three Hodge-related papers were
+withdrawn} over a sign error and 14 others were repaired. Earlier in 2026: a disproof of the square-grid
+unit-distance conjecture (May), ten Lean-certified results (``Astra'', August), and a claimed
+\textbf{Navier--Stokes blow-up} (8 September), which is Lean-checked but disputed on priority, scope and whether
+the Lean statement matches the Clay problem.
+\end{keybox}
+
+\begin{center}
+\begin{tikzpicture}[x=1.0cm]
+  \draw[line width=3pt,black!25,-{Latex[length=4mm]}] (0,0) -- (16.3,0);
+  \foreach \x/\m in {0/May,3/Jun,6/Jul,9/Aug,12/Sep,15/Oct} {\node[font=\scriptsize\bfseries,black!60] at (\x+0.2,-0.35) {\m};}
+  \tikzset{ev/.style={font=\scriptsize,align=center,text width=2.4cm,inner sep=1.5pt}}
+  \foreach \x/\h/\c/\t in {
+     1.9/0.7/tA/{\textbf{20 May}\\unit-distance grid conjecture disproved},
+     9.1/0.7/tA/{\textbf{2 Aug}\\Astra: ten Lean-certified results},
+     12.6/1.4/tS/{\textbf{7--8 Sep}\\3D Euler (Buckmaster--Alp\"oge) and Navier--Stokes (OpenAI) blow-up claims},
+     15.2/0.7/tS/{\textbf{6 Oct}\\\texttt{openai/math}: 372 families}}
+     {\fill[\c] (\x,0) circle (4pt); \draw[\c,thick] (\x,0.15) -- (\x,\h); \node[ev,anchor=south] at (\x,\h) {\t};}
+  \foreach \x/\h/\c/\t in {
+     15.6/0.6/tO/{\textbf{7 Oct}\\3 papers withdrawn; Fields medalists' open letter; ``Lean is not enough'' critique (arXiv 2610.08144)}}
+     {\fill[\c] (\x,0) circle (4pt); \draw[\c,thick] (\x,-0.15) -- (\x,-\h); \node[ev,anchor=north east,text width=3.6cm] at (\x+0.4,-\h) {\t};}
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[xbar stacked, width=0.6\textwidth, height=3.9cm, bar width=9pt, xmin=0, xmax=40,
+  ytick={0,1,2,3}, yticklabels={Tier B,Tier A,Tier S,Tier $\Omega$}, yticklabel style={font=\small\bfseries},
+  xlabel={problems from this atlas}, enlarge y limits=0.2, axis lines*=left, xmajorgrids, grid style={black!10},
+  legend style={at={(1.03,0.5)},anchor=west,font=\small,draw=none}, legend cell align=left,
+  title={\bfseries 30 of our 100 problems now carry an AI claim}]
+\claimplots
+\legend{claimed resolved (\nclaimC),claimed partial (\nclaimP),no claim}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\noindent Claimed resolutions on our list include Unique Games, Hilbert's 10th over $\mathbb Q$, Erd\H{o}s's
+progression conjecture, Mahler, Seymour, and disproofs of Hadwiger and Kaplansky. Partial claims reach Tier~$\Omega$
+($\zeta$ zero-free for $\Re s>7/8$; Hodge for CM abelian varieties). Table rows now carry badges, and the map rings
+claimed resolutions in red.
+
+\begin{keybox}[breakable,title={What it means for us: my updated opinion}]{tO}
+\begin{enumerate}[leftmargin=1.3em]
+\item \textbf{Treat every claim as unverified.} None has been peer reviewed, three papers fell in a day, and a
+  compiling Lean file only proves \emph{the statement that was formalised}. Thomas Bloom notes that the Lean file
+  for Erd\H{o}s problem 3 proves a weaker bound than the paper claims.
+\item \textbf{Survivorship cuts both ways.} OpenAI posed about 4{,}000 problems and published only the successes.
+  My sweet-spot targets (union-closed sets, \v{C}ern\'y, 1/3--2/3, Erd\H{o}s--Gy\'arf\'as, sunflower,
+  Erd\H{o}s--Hajnal) are \emph{absent}. They may never have been tried, or they may have resisted a very strong
+  model. I now consider them harder than my odds page suggests, roughly by a factor of two.
+\item \textbf{``Nobody has tackled it'' now needs a new check.} Before any attack we search
+  \texttt{openai/math}, \texttt{openai/ten-proofs} and erdosproblems.com. Seymour's conjecture (my old pick 3) is
+  now claimed, so I have replaced it below.
+\item \textbf{A new and wide-open niche: understanding.} Hundreds of results now exist that no human has digested.
+  Auditing one carefully means checking that its Lean statement really is the conjecture, finding the gap if
+  there is one, and writing the short human proof that Bloom expects to exist. That is publishable, needed, and
+  plays exactly to our strengths. It is also the strongest reply to the ``understanding'' side of the debate with
+  your friend: humans and AI together turn raw proofs into mathematics.
+\end{enumerate}
+\end{keybox}
+
+% =====================================================================
+\newpage
 \section{The map: difficulty against fit}
 
 Each number is a problem from the list in Section~\ref{sec:list}, coloured by tier. Cells shaded green form the
 \textbf{sweet spot} (fit $\ge 4$, difficulty $\le 8$): hard enough to matter, but the kind of problem that
-recently fell to short ideas.
+recently fell to short ideas. \hmC{0}\,ringed red: a resolution claimed by AI in 2026; $^\dagger$: partial
+progress claimed (see the update page).
 
 \begin{center}
 \begin{tikzpicture}
@@ -159,9 +234,10 @@ recently fell to short ideas.
 \begin{keybox}[title={Reading the map}]{tG}
 \begin{itemize}[leftmargin=1.1em]
 \item \textbf{Top-left (green):} the realistic targets. Union-closed sets (\textcolor{tA}{\textbf{41}}),
-  \v{C}ern\'y (\textcolor{tA}{\textbf{54}}), Seymour (\textcolor{tB}{\textbf{81}}), Erd\H{o}s--Gy\'arf\'as
+  \v{C}ern\'y (\textcolor{tA}{\textbf{54}}), Erd\H{o}s--Gy\'arf\'as
   (\textcolor{tB}{\textbf{83}}), the 1/3--2/3 conjecture (\textcolor{tB}{\textbf{94}}), Sunflower
   (\textcolor{tS}{\textbf{35}}), Erd\H{o}s--Hajnal (\textcolor{tS}{\textbf{28}}).
+  Seymour (\textcolor{tB}{\textbf{81}}) was here too, until OpenAI's release claimed it.
 \item \textbf{Bottom-right:} problems that need \emph{new theories} (Langlands, Yang--Mills, Hodge). No single
   idea, however clever, is known to suffice.
 \item \textbf{Bottom-middle:} problems that need \emph{huge computation} ($R(5,5)$, projective plane of order 12,
@@ -382,10 +458,11 @@ pure finite combinatorics. \emph{Lean ready.}\\
 \textbf{The wall:} 60 years stuck at about $n^3/6$.\\
 \textbf{First move:} a potential function on subsets that provably shrinks every $n$ steps, in the same spirit as our speed-limit potentials.
 \end{card}
-\begin{card}{tB}{3. Seymour's second neighbourhood (1990)}
-\textbf{Claim:} every oriented graph has a vertex whose second out-neighbourhood is at least as large as its first.\\
-\textbf{Why it fits:} the tournament case was solved by an elegant ``median order'' idea.\\
-\textbf{First move:} generalise median orders to oriented graphs with few missing edges, then induct on the missing edges.
+\begin{card}{tS}{3. New: audit and understand an AI claim}
+\textbf{What:} take one claimed result with a Lean proof, such as Seymour's conjecture (OAI 173) or Erd\H{o}s's
+progression conjecture (OAI 159, whose Lean file proves less than the paper claims).\\
+\textbf{Do:} check that the Lean statement is the real conjecture, find any gap, and write the short human proof.\\
+\textbf{Why:} real value, high odds, and nobody owns this niche yet.
 \end{card}
 \begin{card}{tB}{4. The 1/3--2/3 conjecture (1968)}
 \textbf{Claim:} every finite non-chain poset has a pair $x,y$ with $\tfrac13\le\Pr[x<y]\le\tfrac23$.\\
@@ -413,8 +490,8 @@ $\le3$ by block amortisation. Nobody else is working on it, because we posed it.
 
 \begin{keybox}[title={Proposed plan for the hard-problem session}]{tO}
 \begin{enumerate}[leftmargin=1.3em]
-\item \textbf{You choose} one target from cards 1--6 (my vote: \textbf{union-closed sets} or \textbf{\v{C}ern\'y}).
-\item \textbf{Literature sweep first} (about 20 minutes of searching), so that we never re-prove a known result.
+\item \textbf{You choose} one target from cards 1--6 (my vote: \textbf{union-closed sets}, or card~3 for the safest real contribution).
+\item \textbf{Literature sweep first}, now including \texttt{openai/math}, \texttt{openai/ten-proofs} and erdosproblems.com, so that we never re-prove a known (or freshly claimed) result.
 \item \textbf{Transplant brainstorm:} list 10--15 tools from distant fields with the right shape and kill most of
   them quickly with small, cheap examples.
 \item \textbf{Aim for a ladder of results:} a new special case, then a better constant, then the full conjecture.

@@ -11,3 +11,13 @@ All tiers, scores and odds are Claude's subjective judgements, as of 2026.
 - `atlas.tex`: the document.
 
 Rebuild with `python3 build.py && pdflatex atlas.tex && pdflatex atlas.tex`.
+
+## Update, 9 October 2026
+
+The atlas now records AI claims from `github.com/openai/math` (released 6 October 2026, 372 result families) and
+from earlier 2026 announcements (the Navier–Stokes and 3D Euler blow-up claims). These live in `CLAIMS` in
+`build.py`.
+
+- **Coverage:** 30 of the 100 problems carry a claim: 12 claimed resolutions and 18 claimed partial results.
+- **Verification:** none of the claims is peer reviewed.
+- **Picks:** Seymour's conjecture was replaced in the picks by "audit an AI claim".

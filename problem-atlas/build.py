@@ -121,6 +121,43 @@ P = [
 ]
 assert len(P) == 100, len(P)
 
+
+# AI claims as of 9 Oct 2026. "C" = claimed full resolution (proof or disproof); "P" = claimed partial progress.
+# Sources: github.com/openai/math (family numbers, released 6 Oct 2026), OpenAI Navier--Stokes announcement
+# (8 Sep 2026), Buckmaster--Alpoge Euler result (7 Sep 2026). None of these has completed peer review.
+CLAIMS = {
+ "Riemann Hypothesis": ("P", r"zero-free half-plane $\Re s>7/8$ for all Dirichlet $L$-functions (OAI 003)"),
+ "Navier--Stokes regularity": ("C", r"finite-time blow-up with smooth forcing, Lean-checked; disputed (OpenAI, Sep 2026)"),
+ "Hodge conjecture": ("P", r"rational Hodge for CM abelian varieties (OAI 032); 3 related papers withdrawn"),
+ "Birch--Swinnerton-Dyer": ("P", r"full BSD formula when Selmer corank $\le1$ (OAI 002, 006)"),
+ "Langlands functoriality": ("P", r"restricted geometric Langlands in char.\ $p$; generic Ramanujan (OAI 014)"),
+ "Grothendieck's standard conjectures": ("P", r"Hodge standard conjecture for abelian varieties (OAI 032)"),
+ "VP vs VNP": ("P", r"border determinantal complexity of permanent $\ge cn^3$ (OAI 108)"),
+ "Explicit circuit lower bounds": ("P", r"depth-3 bound beyond $2^{\sqrt n}$ (OAI 112)"),
+ "Unique Games Conjecture": ("C", r"proof claimed, with Lean (OAI 102)"),
+ r"Matrix multiplication $\omega=2$": ("P", r"$\omega\le 9/4$ claimed (OAI 107)"),
+ r"Kakeya conjecture, $n\ge4$": ("P", r"Hausdorff-dimension version in $\mathbb R^4$ (OAI 074)"),
+ "Fourier restriction conjecture": ("P", r"positively curved surfaces in $\mathbb R^3$ (OAI 077)"),
+ "Chowla and Sarnak conjectures": ("P", r"ordinary two-point Chowla (OAI 007)"),
+ "Hadwiger's conjecture": ("C", r"disproved, even fractionally (OAI 157, Lean)"),
+ "Tate conjecture": ("P", r"abelian varieties over finite fields (OAI 032)"),
+ "Novikov / Baum--Connes": ("C", r"Baum--Connes for groups disproved (OAI 285); coarse Novikov disproved (307)"),
+ "Invariant subspace problem": ("P", r"hyperinvariant version answered negatively (OAI 293)"),
+ "3D Euler: smooth blow-up?": ("C", r"blow-up proof, Lean-checked (Buckmaster--Alp\"oge, Sep 2026)"),
+ "Hilbert's 16th (limit cycles)": ("C", r"uniform bound in each degree claimed (OAI 143, Lean)"),
+ r"Hilbert's 10th problem over $\mathbb Q$": ("C", r"undecidable (OAI 004)"),
+ "Erd\\H{o}s arithmetic-progression conj.": ("C", r"proved with quasipolynomial Szemer\'edi bounds (OAI 159); Lean proves a weaker bound"),
+ "Chromatic number of the plane": ("P", r"$\chi\ge6$: no 5-colouring (OAI 158, Lean)"),
+ "Artin's primitive-root conjecture": ("P", r"infinitude for every admissible base, unconditionally (OAI 029)"),
+ "Erd\\H{o}s unit-distance problem": ("P", r"upper bound $O(n^{4/3-\delta})$ (OAI 167); grid conjecture disproved (OpenAI, May 2026)"),
+ "Heilbronn triangle problem": ("P", r"lower bound $n^{-2+c}$, disproving the conjectured upper bound (OAI 191)"),
+ "Mahler volume conjecture": ("C", r"symmetric and general cases, all dimensions (OAI 087, Lean)"),
+ "Hot spots conjecture": ("P", r"all simply connected planar domains (OAI 369)"),
+ "Kaplansky zero-divisor conjecture": ("C", r"disproved over $\mathbb F_2$ (OAI 196, Lean)"),
+ r"3D percolation at $p_c$": ("C", r"no percolation at $p_c$ on $\mathbb Z^3$ (OAI 213)"),
+ "Seymour's second-neighbourhood conj.": ("C", r"proof claimed, with Lean (OAI 173)"),
+}
+
 TCOL = {"O": "tO", "S": "tS", "A": "tA", "B": "tB"}
 
 def table():
@@ -135,6 +172,9 @@ def table():
             last = t
         yr = ("c.\\,300 BC" if y < 0 else str(y))
         row = r"\rowcolor{%s!%d}" % (TCOL[t], 6 if i % 2 else 13)
+        if n in CLAIMS:
+            k, txt = CLAIMS[n]
+            s = s + (r"\newline\aiC{%s}" if k == "C" else r"\newline\aiP{%s}") % txt
         out.append(row + r"\textbf{%d} & \textbf{%s}\newline{\color{black!60}\scriptsize %s} & %s & %s & \D{%d} & \F{%d}\\"
                    % (i, n, FIELDS[f], yr, s, d, fit))
     return "\n".join(out)
@@ -154,7 +194,14 @@ def heatmap():
             fill = ("tG!%d" % min(12 + 4 * len(items), 32)) if sweet else ("black!%d" % (shade // 3))
             o.append(r"\fill[%s,rounded corners=3pt] (%.2f,%.2f) rectangle ++(%.2f,%.2f);" % (fill, x + .04, yy + .04, W - .08, H - .08))
             if items:
-                txt = " ".join(r"\textcolor{%s}{\textbf{%d}}" % (TCOL[t], i) for i, t in items)
+                def lab(i, t):
+                    k = CLAIMS.get(P[i - 1][0], ("", ""))[0]
+                    if k == "C":
+                        return r"\hmC{%d}" % i
+                    if k == "P":
+                        return r"\textcolor{%s}{\textbf{%d}}$^\dagger$" % (TCOL[t], i)
+                    return r"\textcolor{%s}{\textbf{%d}}" % (TCOL[t], i)
+                txt = " ".join(lab(i, t) for i, t in items)
                 o.append(r"\node[text width=%.2fcm,align=center,font=\scriptsize] at (%.2f,%.2f) {%s};" % (W - .25, x + W / 2, yy + H / 2, txt))
     for d in range(6, 11):
         o.append(r"\node[font=\small\bfseries] at (%.2f,-0.35) {%d};" % ((d - 6) * W + W / 2, d))
@@ -184,6 +231,17 @@ def age():
         rows.append("%d %.2f %s" % (2026 - y, d + ((i * 37) % 11 - 5) * 0.045, t))
     return "x y t\n" + "\n".join(rows)
 
+def claims_chart():
+    cnt = defaultdict(Counter)
+    for n, f, y, t, d, fit, st in P:
+        cnt[t][CLAIMS.get(n, ("N", ""))[0]] += 1
+    lines = []
+    for k, col, name in (("C", "tS", "claimed resolved"), ("P", "tC", "claimed partial progress"), ("N", "black!25", "no AI claim")):
+        coords = " ".join("(%d,%d)" % (cnt[t][k], j) for j, t in enumerate("BASO"))
+        lines.append(r"\addplot[fill=%s,draw=white] coordinates {%s};" % (col, coords))
+    tot = Counter(CLAIMS[n][0] for n in CLAIMS)
+    return "\n".join(lines), tot
+
 def stats():
     by = defaultdict(list)
     for n, f, y, t, d, fit, s in P:
@@ -200,6 +258,8 @@ if __name__ == "__main__":
     for t in "OSAB":
         rows = [r for r in age().splitlines()[1:] if r.endswith(" " + t)]
         open("gen_age_%s.dat" % t, "w").write("x y t\n" + "\n".join(rows) + "\n")
+    cl, tot = claims_chart()
+    open("gen_claims.tex", "w").write("\\def\\claimplots{%s}\n\\def\\nclaimC{%d}\n\\def\\nclaimP{%d}\n" % (cl, tot["C"], tot["P"]))
     s = stats()
     open("gen_stats.tex", "w").write("".join(
         "\\def\\avgfit%s{%.1f}\n" % ({"O": "O", "S": "S", "A": "A", "B": "B"}[t], v) for t, v in s.items()))
