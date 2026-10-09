@@ -1,0 +1,375 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\emergencystretch=2em
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\newcommand{\lean}[1]{\texttt{\detokenize{#1}}}
+
+\title{Mathematics Without Human Understanders:\\
+A Lean-Checked Model of Producer-Independence and Trust Transfer\\[4pt]
+\large Draft}
+\author{Vasily Shablov\\[2pt]
+\small Formalization and drafting assisted by Claude (Anthropic)}
+\date{October 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We examine two claims about mathematics produced by artificial agents. The first is that an
+artifact can be valid mathematics even if no human understands it, or could. The second is
+that, given a long enough record of verified superiority, it becomes rational to defer to such
+an agent more than to the combined human community, just as we already defer to doctors and
+engineers. We build a small formal model containing a Hilbert-style (formalist) definition of
+mathematics, a Thurston-style (humanist) definition parameterised by a predicate
+\emph{IsHuman}, a checker-based account of trust, a two-type Bayesian model of
+trust transfer, and a gradual-replacement account of the boundary of ``human''. Sixteen
+results are proved in Lean~4 with Mathlib. They show: the formalist definition is
+producer-independent; the humanist definition inherits every open question about the boundary
+of \emph{IsHuman} and collapses to the formalist one as that boundary widens; trusting a
+checked proof never requires trusting its producer; verified successes push trust above any
+threshold $t<1$ but never to certainty; and no evidence from checkable tasks constrains
+behaviour on uncheckable ones. Lean certifies only that the conclusions follow from the
+assumptions. The philosophical content lies in the assumptions, and we state each one
+explicitly.
+\end{abstract}
+
+\section{Introduction}
+
+A recent joke depicts two people celebrating that an AI ``proved that the Riemann zeta function
+is zero-free in the half-plane $\Re(s) > 7/8$'' and then admitting that neither knows what
+$\Re(s)$ means. The joke lands because the celebration is right: a zero-free half-plane
+$\Re(s) > \sigma$ for any fixed $\sigma<1$ is unknown (the ``quasi-Riemann hypothesis''), and
+proving it would be a major result in analytic number theory. Yet neither person is in a
+position to know that. They are correct by trust, not by understanding.
+
+The joke points to two questions.
+\begin{enumerate}
+\item \textbf{Is it mathematics?} If an artifact is correct but no human understands it, or
+even could, is it still mathematics?
+\item \textbf{Should we believe it?} If an agent repeatedly proves things humans cannot, and
+is rarely or never caught in an error, when, if ever, does its word outweigh that of human
+experts?
+\end{enumerate}
+A common answer to the first question, following Thurston~\cite{thurston}, is that the goal of
+mathematics is human understanding, so an incomprehensible proof is at best a degenerate case.
+A common answer to the second is that AI excels only at tasks with binary, checkable answers,
+while the questions that generate mathematics (``what \emph{is} geometry?'') have no reward
+signal to train on.
+
+We defend a different position.
+\begin{itemize}
+\item[(T1)] Validity is a property of the derivation, not of its producer or audience
+(formalism, in the tradition of Hilbert~\cite{zach}).
+\item[(T2)] Trust in a sufficiently reliable agent can rationally exceed trust in human
+experts. The point at which this happens in practice is a ``fuzzy boundary'': a threshold set
+partly by psychology and sociology rather than by logic alone.
+\end{itemize}
+A thesis of this kind cannot be ``proved'' outright. What can be proved is that it follows from
+explicit assumptions. Making those assumptions precise is useful in itself: it shows where the
+real disagreements lie. Section~\ref{sec:model} develops the model. Section~\ref{sec:discussion}
+discusses what is and is not established.
+
+\paragraph{Prior art.} The arguments below are not new in substance. The examples of accepted
+mathematics that no human has checked line by line include the four colour
+theorem~\cite{appelhaken}, the Kepler conjecture~\cite{flyspeck}, the Boolean Pythagorean
+triples problem~\cite{bpt} and Keller's conjecture in dimension seven~\cite{keller}.
+Psychological research on trust in algorithms includes~\cite{dietvorst}. Gradual-replacement
+arguments in philosophy of mind include~\cite{chalmers}. Our contribution is a single
+machine-checked model that puts these threads side by side.
+
+\section{The model}\label{sec:model}
+
+All results are in the Lean file \path{TrustThesis.lean}. Section~\ref{sec:lean} maps
+theorem numbers to Lean names.
+
+\subsection{Two definitions of mathematics}
+
+\begin{definition}
+A \emph{proof system} $S$ consists of a type of formulas, a type of proofs and a relation
+$\mathrm{Proves}(\pi,\varphi)$. An \emph{artifact} is a pair (producer, proof).
+\end{definition}
+
+\begin{definition}[Formalist]
+An artifact $a$ is \emph{formal mathematics} for $\varphi$ if $\mathrm{Proves}(a.\mathrm{proof},
+\varphi)$.
+\end{definition}
+
+\begin{definition}[Humanist]
+Given a predicate $\mathrm{IsHuman}$ on agents and a relation $U(h,\pi,\varphi)$ (``$h$
+understands $\pi$ as a proof of $\varphi$''), $a$ is \emph{humanist mathematics} for $\varphi$
+if it is formal mathematics and some $h$ with $\mathrm{IsHuman}(h)$ satisfies
+$U(h, a.\mathrm{proof}, \varphi)$.
+\end{definition}
+
+\begin{theorem}[Producer irrelevance]
+Formal mathematics does not depend on the producer: $(x,\pi)$ and $(y,\pi)$ are formal
+mathematics for the same formulas.
+\end{theorem}
+
+\begin{theorem}
+Humanist mathematics is formal mathematics.
+\end{theorem}
+
+\begin{theorem}[Monotonicity]
+If $\mathrm{IsHuman}_1 \subseteq \mathrm{IsHuman}_2$, then humanist mathematics with respect to
+$\mathrm{IsHuman}_1$ is humanist mathematics with respect to $\mathrm{IsHuman}_2$.
+\end{theorem}
+
+\begin{theorem}[Collapse]
+If every agent counts and every producer understands its own valid proofs, humanist and formal
+mathematics coincide.
+\end{theorem}
+
+\begin{theorem}[Boundary dependence]
+Suppose a valid proof is understood by exactly one agent $s$, with
+$\neg\mathrm{IsHuman}_1(s)$ and $\mathrm{IsHuman}_2(s)$. Then the proof is humanist mathematics
+for $\mathrm{IsHuman}_2$ but not for $\mathrm{IsHuman}_1$.
+\end{theorem}
+
+Theorem~5 makes precise the observation that the humanist definition ``contains conjectures''.
+Whether a synthetic brain, an uploaded mind or a language model counts as a possible
+understander is an open question. The humanist definition makes the mathematical status of a
+proof depend on that question. Theorems~3 and~4 show the direction of travel: the more agents
+we admit as understanders, the closer the humanist definition comes to the formalist one.
+
+\subsection{The trusted base of a checked proof}
+
+\begin{definition}
+A checker $c$ is \emph{sound} if $c(\pi,\varphi) = \mathrm{true}$ implies
+$\mathrm{Proves}(\pi,\varphi)$.
+\end{definition}
+
+\begin{theorem}[Trusted base]
+Let $c$ be a sound checker. Let the logic be sound with respect to an intended meaning:
+$\mathrm{Proves}(\pi,\varphi) \Rightarrow \mathrm{Meaning}(\varphi)$. Let the statement be faithful:
+$\mathrm{Meaning}(\varphi) \Leftrightarrow Q$. Then any artifact accepted by $c$ for
+$\varphi$ establishes $Q$, whoever produced it.
+\end{theorem}
+
+The producer does not appear among the hypotheses. This is the asymmetry that makes mathematics
+special: finding a proof may require superhuman ability, but checking one is mechanical, and a
+proof kernel such as Lean's~\cite{lean4} is small enough to be audited. The intelligence gap
+between the producer and the reader therefore matters less for proofs than for any other kind
+of expert output.
+
+Three things remain to be trusted: the checker, the logic and the faithfulness of the statement.
+The third is the weak point, since a correct proof of a mis-stated theorem is worthless. One
+proposal is to have other agents audit the statement.
+
+\begin{theorem}[Independent audits]
+If $n$ auditors miss an unfaithful statement independently, with probabilities
+$\varepsilon_i \le e$, the probability that all miss it is at most $e^n$.
+\end{theorem}
+
+\begin{theorem}
+If $0 \le e < 1$ and $\delta > 0$, then $e^n < \delta$ for all sufficiently large $n$.
+\end{theorem}
+
+The model assumes independence. This is the substantive assumption: auditors built on similar
+data and methods tend to make correlated errors, and correlation breaks the $e^n$ bound.
+
+\subsection{Evidential trust transfer}
+
+Fix two hypotheses about an agent. With prior probability $p>0$ it is of a \emph{high} type,
+solving each independent verified task correctly with probability $a_{\mathrm{hi}}$. Otherwise
+it is of a \emph{low} type, with accuracy $a_{\mathrm{lo}} < a_{\mathrm{hi}}$. After $n$
+consecutive verified successes the posterior probability of the high type is
+\[
+P_n = \frac{p\,a_{\mathrm{hi}}^n}{p\,a_{\mathrm{hi}}^n + (1-p)\,a_{\mathrm{lo}}^n}.
+\]
+
+\begin{theorem}
+If $p>0$ and $0 \le a_{\mathrm{lo}} < a_{\mathrm{hi}}$, then $P_n \to 1$.
+\end{theorem}
+
+\begin{theorem}[The boundary is crossed]
+For every threshold $t < 1$ there is an $N$ such that $P_n > t$ for all $n \ge N$.
+\end{theorem}
+
+\begin{theorem}[Never certainty]
+If $0 < p < 1$ and $a_{\mathrm{lo}}, a_{\mathrm{hi}} > 0$, then $P_n < 1$ for every $n$.
+\end{theorem}
+
+\begin{theorem}[Outweighing a community]
+Model the aggregated judgement of a human community as a fixed reliability $r$. If
+$r < a_{\mathrm{hi}}$, the agent's posterior expected accuracy
+$P_n a_{\mathrm{hi}} + (1-P_n)a_{\mathrm{lo}}$ exceeds $r$ for all sufficiently large $n$.
+\end{theorem}
+
+Theorems~10 and~11 together give a precise version of the ``fuzzy boundary''. Evidence alone
+crosses any threshold short of certainty in finite time, but never reaches certainty itself. A
+person who demands zero risk ($t=1$) is therefore never convinced by evidence, however long the
+record. Where a person or a society actually sets $t$ is not determined by the mathematics. It
+is a psychological and social parameter. Studies of \emph{algorithm aversion}~\cite{dietvorst}
+find that people abandon an algorithm after seeing it err, even when it outperforms humans.
+This amounts to setting $t$ much higher for machines than for people.
+
+\emph{Numerical illustration.} Take a sceptical prior $p = 0.01$, $a_{\mathrm{hi}} = 0.999$ and
+$a_{\mathrm{lo}} = 0.9$. The posterior first exceeds $0.5$, $0.9$, $0.99$ and $0.999$ after
+$45$, $66$, $89$ and $111$ consecutive verified successes respectively. The expected accuracy
+first exceeds a community reliability of $r=0.95$ after $45$ successes, and $r=0.99$ after
+$67$.
+
+\subsection{The limits of transfer}
+
+Let tasks be split into \emph{checkable} and \emph{uncheckable}. An observer sees only an
+agent's correctness on checkable tasks.
+
+\begin{theorem}[Evidence is blind off the checkable set]
+Any quantity computed from observations on checkable tasks takes the same value for two agents
+that agree on checkable tasks.
+\end{theorem}
+
+\begin{corollary}
+There is always an agent that is wrong on every uncheckable task yet produces exactly the same
+evidence as a perfect agent.
+\end{corollary}
+
+So the conclusions of Section~2.3 hold on the checkable domain only. Extending them to
+uncheckable domains requires an additional \emph{transfer assumption}: that accuracy carries
+over, with no distribution shift and no deception. This assumption cannot be tested with
+evidence of the kind that motivated the trust in the first place. Research on scalable
+oversight, such as~\cite{debate}, aims to enlarge the checkable set, for instance by letting
+agents check each other.
+
+\subsection{What is a human?}
+
+\begin{theorem}[Replacement dilemma]
+Let $f(0), \dots, f(n)$ be a chain of agents, for instance a brain with $i$ neurons replaced by
+functionally identical synthetic ones. If $\mathrm{IsHuman}(f(0))$ and
+$\neg\mathrm{IsHuman}(f(n))$, then there is a single step $i<n$ with $\mathrm{IsHuman}(f(i))$
+and $\neg\mathrm{IsHuman}(f(i+1))$.
+\end{theorem}
+
+\begin{theorem}[Functional duplicates]
+If understanding depends only on input--output behaviour, a behavioural duplicate of a human
+understands everything that human understands.
+\end{theorem}
+
+Theorem~15 is the formal core of Chalmers' gradual-replacement arguments~\cite{chalmers} and of
+the Ship of Theseus. Anyone who denies that a 1:1 synthetic brain is human must accept that
+replacing one particular neuron makes the difference. Theorem~16 shows that under a behavioural
+notion of understanding, a 1:1 synthetic brain qualifies as an understander in Thurston's sense,
+whatever its substrate.
+
+Current language models are not functional duplicates of any human brain, so neither theorem
+settles their status. Whether they belong to the class of understanders is, in the terms of
+Theorem~5, exactly the kind of open question on which the humanist definition depends. We take
+no position on it here.
+
+\section{Discussion}\label{sec:discussion}
+
+\paragraph{What Lean certifies.} Every theorem above is proved in Lean~4 with Mathlib and
+depends on at most the standard axioms (\lean{propext}, \lean{Classical.choice},
+\lean{Quot.sound}). The mathematics is elementary. The point of formalising it is not
+difficulty but precision: the hypotheses of each theorem are the complete list of what the
+corresponding philosophical claim needs. Anyone who rejects a conclusion must reject a
+named hypothesis.
+
+\paragraph{The hypotheses that carry the weight.}
+\begin{itemize}
+\item \emph{Faithfulness of statements} (Theorem~6). This is where humans, or auditors, remain
+necessary. Auditing by other agents helps only to the extent that their errors are independent.
+\item \emph{Fixed community reliability} (Theorem~12). By Condorcet's jury
+theorem~\cite{condorcet}, a large community of independent judges with individual reliability
+above $1/2$ has majority reliability approaching $1$. The claim that one agent can outweigh
+``all mathematicians combined'' therefore relies on human errors being correlated, which is
+plausible since mathematicians share training, methods and blind spots, but it is an
+assumption.
+\item \emph{Transfer} (Corollary~14). Trust earned on checkable tasks does not, by itself,
+license trust on uncheckable ones.
+\end{itemize}
+
+\paragraph{On ``disproving G\"odel''.} The incompleteness theorems are themselves proved in
+weak systems, and have been machine-checked~\cite{paulson}. A valid ``refutation'' could only
+mean exhibiting an inconsistency in the foundations, that is, a derivation of a contradiction.
+Such a derivation is a finite object and can be checked mechanically, however incomprehensible
+its structure. It would be valid mathematics in the sense of (T1), and an extreme instance of
+Theorem~6.
+
+\paragraph{Machines and the ``why'' questions.} An objection to (T2) is that AI can only answer
+well-posed yes/no questions, while mathematics grows from open questions with no reward signal.
+The model shows that this matters less for whether to trust an AI's conclusions than for how
+to evaluate them. It also has counterexamples: computer programs have generated conjectures for
+decades~\cite{graffiti}, and machine learning has suggested new conjectures in knot theory and
+representation theory~\cite{davies}. What remains open is whether machines will reframe
+foundations in the way that the question ``what is geometry?'' once did.
+
+\section{Conclusion}
+
+Under a formalist definition, mathematics does not need a human audience, and a Thurston-style
+definition becomes formalist as the class of understanders widens. Mathematics is the domain
+where trust can most cleanly shift from producers to small, auditable checkers. Elsewhere,
+trust in a superhuman agent can rationally exceed trust in human experts after finitely many
+verified successes, for any standard short of certainty. Where the threshold actually sits is a
+social fact, not a theorem. The decisive open assumption is whether reliability observed on
+checkable tasks transfers to uncheckable ones.
+
+\section{Lean index}\label{sec:lean}
+
+\begin{center}
+\small
+\begin{tabular}{@{}rl@{}}
+\toprule
+Thm & Lean name (namespace \lean{TrustThesis}) \\
+\midrule
+1 & \lean{formalMath_producer_irrelevant} \\
+2 & \lean{formalMath_of_humanistMath} \\
+3 & \lean{humanistMath_mono} \\
+4 & \lean{humanistMath_univ_iff} \\
+5 & \lean{humanistMath_depends_on_boundary} \\
+6 & \lean{trusted_base} \\
+7, 8 & \lean{audit_miss_le}, \lean{audit_risk_eventually_lt} \\
+9, 10 & \lean{posterior_tendsto_one}, \lean{trust_threshold_crossed} \\
+11 & \lean{posterior_lt_one} \\
+12 & \lean{outweighs_community} \\
+13, 14 & \lean{evidence_blind}, \lean{exists_indistinguishable_failure} \\
+15 & \lean{replacement_dilemma} (via \lean{sorites}) \\
+16 & \lean{duplicate_understands} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{thebibliography}{99}
+\bibitem{appelhaken} K.~Appel and W.~Haken, Every planar map is four colorable,
+\emph{Illinois J.\ Math.} 21 (1977).
+\bibitem{bpt} M.~J.~H.~Heule, O.~Kullmann and V.~W.~Marek, Solving and verifying the Boolean
+Pythagorean triples problem via cube-and-conquer, \emph{SAT 2016}, LNCS 9710.
+\bibitem{chalmers} D.~J.~Chalmers, Absent qualia, fading qualia, dancing qualia, in
+T.~Metzinger (ed.), \emph{Conscious Experience}, 1995.
+\bibitem{condorcet} Marquis de Condorcet, \emph{Essai sur l'application de l'analyse \`a la
+probabilit\'e des d\'ecisions rendues \`a la pluralit\'e des voix}, 1785.
+\bibitem{davies} A.~Davies et al., Advancing mathematics by guiding human intuition with AI,
+\emph{Nature} 600 (2021), 70--74.
+\bibitem{dietvorst} B.~J.~Dietvorst, J.~P.~Simmons and C.~Massey, Algorithm aversion: people
+erroneously avoid algorithms after seeing them err, \emph{J.\ Exp.\ Psychol.\ Gen.} 144 (2015),
+114--126.
+\bibitem{graffiti} S.~Fajtlowicz, On conjectures of Graffiti, \emph{Discrete Math.} 72 (1988),
+113--118.
+\bibitem{flyspeck} T.~Hales et al., A formal proof of the Kepler conjecture, \emph{Forum Math.\
+Pi} 5 (2017), e2.
+\bibitem{debate} G.~Irving, P.~Christiano and D.~Amodei, AI safety via debate,
+arXiv:1805.00899 (2018).
+\bibitem{keller} J.~Brakensiek, M.~Heule, J.~Mackey and D.~Narv\'aez, The resolution of
+Keller's conjecture, \emph{IJCAR 2020}.
+\bibitem{lean4} L.~de Moura and S.~Ullrich, The Lean 4 theorem prover and programming
+language, \emph{CADE-28} (2021).
+\bibitem{paulson} L.~C.~Paulson, A machine-assisted proof of G\"odel's incompleteness theorems
+for the theory of hereditarily finite sets, \emph{Rev.\ Symb.\ Logic} 7 (2014).
+\bibitem{thurston} W.~P.~Thurston, On proof and progress in mathematics, \emph{Bull.\ Amer.\
+Math.\ Soc.} 30 (1994), 161--177.
+\bibitem{zach} R.~Zach, Hilbert's program, \emph{Stanford Encyclopedia of Philosophy}.
+\end{thebibliography}
+
+\end{document}
