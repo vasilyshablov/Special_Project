@@ -23,7 +23,7 @@
 \emergencystretch=3em
 
 \title{Fruitfulness as Compression:\\
-Lean-Checked Theorems and a Measurement of All of Mathlib}
+An Exact Calculus of Naming, a Speed Limit,\\ and a Measurement of All of Mathlib}
 \author{Vasily Shablov\thanks{Formalization, measurement and drafting assisted by Claude (Anthropic).}}
 \date{October 2026 \\ \small Draft}
 
@@ -32,39 +32,50 @@ Lean-Checked Theorems and a Measurement of All of Mathlib}
 
 \begin{abstract}
 We pose an open-ended question: what is the \emph{fruitfulness} of a mathematical idea?
-We answer it with a definition: a named concept is a compression, and its value is what
-naming it saves. We then prove theorems about this definition in Lean~4 and measure it on
-all 771{,}129 constants of Mathlib.
+Our answer is that a named concept is a compression, and its value is what naming it saves.
+We develop this into a theory, prove its theorems in Lean~4 (about 1{,}100 lines, no
+\lean{sorry}), and measure it on all 771{,}129 constants of Mathlib.
 
-\textbf{Theorems.}
+\textbf{An exact calculus of naming.}
 \begin{itemize}
-\item The saving from naming a body of size $b$ used $k$ times is exactly $(k-1)(b-1)-1$.
-\item Unfolding all names at most doubles proof size per result, and the doubling is
-  attained.
-\item With at most $d$ citations per result, the sharp bound is the $d$-bonacci recurrence,
-  also attained.
+\item In any library, naming one more result $v$ saves exactly $(o-1)(W-1)-1$ symbols.
+  Here $o$ is how often $v$ occurs and $W$ is how much it hides.
+\item Naming changes all inlined sizes and occurrence counts by \emph{rank-one updates}:
+  the Schur complements of Gaussian elimination. Inlining a concept is eliminating a
+  variable.
+\item When every result is used, the savings function is \emph{submodular}: concepts are
+  substitutes, never complements, as far as compression goes.
+\item For a reader of bounded capacity, by contrast, names can be strict complements. We
+  conclude that the increasing returns of great concepts are a phenomenon of bounded
+  minds, not of compression.
+\end{itemize}
+
+\textbf{A speed limit.}
+\begin{itemize}
+\item Naming can make mathematics exponentially shorter, but only at a bounded rate. Every
+  unfolded size is at most $28\cdot(5/4)^{C}$, where $C$ is the named size of the library.
+  The proof is a potential-function argument with weights found by linear programming.
+\item Explicit Fibonacci and Lucas libraries reach $\varphi^{C/3}$.
+\item We conjecture that the golden rate $\varphi^{1/3}$ is exact. At named size $3m$ the
+  maximum is $2L_m-2$, with $L_m$ the Lucas numbers. This is proved attainable, and
+  verified to be optimal for $4\le m\le 15$.
 \end{itemize}
 
 \textbf{Measurements.}
-\begin{enumerate}
-\item \emph{Growth law.} Naively unfolded proof size grows by a factor of about $1.5$ per
-  dependency level ($R^2=0.98$), reaching about $10^{65.6}$ symbols.
-\item \emph{Rediscovery.} Ranking by reuse alone rediscovers the textbook core:
-  \lean{Set}, \lean{Category}, \lean{Functor}, \lean{TopologicalSpace}, \lean{Real},
-  \lean{Module}, \ldots
-\item \emph{Two axes of taste.} Human curation of \emph{concepts} is predicted by reuse
-  (AUC $0.88$). Human fame of \emph{theorems} is predicted by depth (AUC $0.78$) and not
-  by reuse (AUC $0.54$).
-\item \emph{A glue layer.} Instance declarations and structure projections are $12\%$ of
-  constants but receive $60\%$ of all citations. Mathlib also obeys Zipf's law of
-  abbreviation. These are the same signatures as function words in language and currency
-  metabolites in metabolism.
-\end{enumerate}
+\begin{itemize}
+\item Unfolded size grows about $1.5\times$ per dependency level ($R^2=0.98$).
+\item Reuse alone rediscovers the textbook core (\lean{Set}, \lean{Category},
+  \lean{Functor}, \ldots).
+\item Human taste splits along exactly the two factors of the exact value: concepts by
+  occurrence (AUC $0.88$), famous theorems by depth (AUC $0.78$). Humans do not, however,
+  value things by the product of the two (AUC $0.62$).
+\item A structural glue layer takes $12\%$ of constants but $60\%$ of citations, the
+  signature of function words and currency metabolites.
+\end{itemize}
 
-We correct an overreach in our own earlier statement (naive unfolding is not minimal
-lemma-free proof size). We connect the work to proof complexity, logical depth,
-compression progress, hierarchy in nature, and Wigner's puzzle. We state nine open
-questions and five falsifiable conjectures.
+We correct an overreach in our own earlier statement and connect the work to proof
+complexity, Gaussian elimination and renormalization, logical depth, compression
+progress, and hierarchy in nature. We state open questions and falsifiable conjectures.
 \end{abstract}
 
 \section{Introduction}
@@ -90,30 +101,19 @@ number of important operations which we can perform without thinking about them.
 
 \paragraph{Contributions.}
 \begin{enumerate}
-\item \textbf{Theorems, checked in Lean 4 with Mathlib} (Section~\ref{sec:theory}; no
-  \lean{sorry}; standard axioms only).
-  \begin{itemize}
-  \item The exact value of naming a concept.
-  \item A tight exponential bound on unfolding.
-  \item A sharp bound for bounded citation, via the $d$-bonacci recurrence.
-  \end{itemize}
-\item \textbf{A complete measurement of Mathlib} (Sections~\ref{sec:data}--\ref{sec:results}).
-  \begin{itemize}
-  \item A growth law for unfolded size.
-  \item Reuse rediscovers the textbook core.
-  \item Two distinct axes of human mathematical taste, each predicted by a computable
-    measure.
-  \item A glue layer with the statistics of function words.
-  \end{itemize}
+\item \textbf{Single-name accounting} (Section~\ref{sec:theory}). The value
+  $(k-1)(b-1)-1$, tight exponential bounds on unfolding, and a sharp $d$-bonacci bound.
+\item \textbf{A calculus of naming} (Section~\ref{sec:calculus}). The exact value of a name
+  in any library, rank-one (Schur) update rules, submodularity (concepts are
+  substitutes), and complementarity for bounded readers.
+\item \textbf{A speed limit} (Section~\ref{sec:speed}). A proved bound of $(5/4)^C$, golden
+  constructions, and the Lucas conjecture.
+\item \textbf{A complete measurement of Mathlib} (Sections~\ref{sec:data}--\ref{sec:results}),
+  including a test of the calculus against human taste.
 \item \textbf{Connections and open questions} (Section~\ref{sec:questions}).
-  \begin{itemize}
-  \item The deepest version of ``are concepts necessary?'' is the open Frege versus
-    Extended Frege problem.
-  \item Human fame tracks Bennett's logical depth; concept taste tracks Schmidhuber's
-    compression progress.
-  \item The same reuse statistics appear in language, metabolism and software.
-  \end{itemize}
 \end{enumerate}
+All theorems are machine-checked: \lean{Fruitfulness.lean}, \lean{Naming.lean} and
+\lean{SpeedLimit.lean} (Appendix~\ref{app:lean}).
 
 \section{Theory: what naming buys}\label{sec:theory}
 
@@ -184,6 +184,206 @@ question of whether \emph{new symbols} (definitions) can save super-polynomially
 Frege versus Extended Frege problem, which is open (Section~\ref{sec:questions}). Our
 theorems are about naming versus copying, and they are tight for that.
 \end{remark}
+
+\section{A calculus of naming}\label{sec:calculus}
+
+Section~\ref{sec:theory} priced one name in isolation. Real libraries have names inside
+names, and the value of one name depends on every other naming decision. Here we give an
+exact theory of that dependence.
+
+\paragraph{Setting.}
+\begin{itemize}
+\item Results $0,1,2,\ldots$ have own sizes $\mathrm{size}(x)\ge1$ and citations
+  $\mathrm{deps}(x)$ of smaller index.
+\item A \emph{naming} is a finite set $N$ of results. A named result is written once and
+  cited by a one-symbol reference. Every other result is inlined wherever it occurs.
+\item A goal $r$ is always written.
+\end{itemize}
+Define, by recursion over the DAG:
+\begin{align*}
+W_N(x) &= \mathrm{size}(x)+\sum_{j\in\mathrm{deps}(x)}\begin{cases}1 & j\in N\\ W_N(j) & j\notin N\end{cases}
+&&\text{(inlined size of $x$)}\\
+P_N(x,v) &= \sum_{j\in\mathrm{deps}(x)}\begin{cases}1 & j=v\\ 0 & j\in N\\ P_N(j,v) & \text{else}\end{cases}
+&&\text{(occurrences of $v$ in $x$)}
+\end{align*}
+\begin{itemize}
+\item $\mathrm{cost}(N)=W_N(r)+\sum_{x\in N}W_N(x)$ is the written size.
+\item $o_N(v)=P_N(r,v)+\sum_{x\in N}P_N(x,v)$ is the number of occurrences of $v$ in the
+  written library.
+\end{itemize}
+
+\begin{theorem}[Exact value of a name; \lean{Lib.gain\_eq}]\label{thm:exact}
+For $v\notin N$,
+\[
+\mathrm{cost}(N)-\mathrm{cost}(N\cup\{v\}) \;=\; \bigl(o_N(v)-1\bigr)\bigl(W_N(v)-1\bigr)-1 .
+\]
+\end{theorem}
+
+\noindent The value of a concept is a product of two factors:
+\begin{itemize}
+\item an \emph{external} one: how often the concept is needed;
+\item an \emph{internal} one: how much it hides.
+\end{itemize}
+Section~\ref{sec:results} finds that human taste splits along exactly these two factors.
+
+\begin{theorem}[Rank-one updates; \lean{Lib.W\_insert}, \lean{Lib.P\_insert}, \lean{Lib.occ\_insert}]\label{thm:rank1}
+Let $u\notin N$ and $N'=N\cup\{u\}$. For all $x$ and all $v\neq u$:
+\begin{align*}
+W_{N'}(x) &= W_N(x) - P_N(x,u)\,\bigl(W_N(u)-1\bigr),\\
+P_{N'}(x,v) &= P_N(x,v) - P_N(x,u)\,P_N(u,v),\\
+o_{N'}(v) &= o_N(v) - \bigl(o_N(u)-1\bigr)\,P_N(u,v).
+\end{align*}
+(In Lean these are stated without subtraction, as identities in $\mathbb N$.)
+\end{theorem}
+
+\paragraph{Naming is pivoting.} Write $A$ for the citation matrix and $D$ for the diagonal
+projection onto unnamed results. Occurrence counts are then the entries of
+$(I-AD)^{-1}A$: paths whose interior avoids names. Naming $u$ removes $u$ from $D$, and
+Theorem~\ref{thm:rank1} is exactly the Sherman--Morrison rank-one update of this inverse.
+It is the Schur complement of Gaussian elimination, read in reverse. So:
+\begin{itemize}
+\item \textbf{Inlining a concept is eliminating a variable.} In electrical networks this
+  is Kron reduction, and in physics it is integrating out a degree of freedom, the
+  elementary step of renormalization.
+\item \textbf{Naming a concept is keeping it as an interface.}
+\end{itemize}
+The analogy has teeth. Choosing an elimination order that minimizes fill-in is
+NP-complete~\cite{yannakakis}. We ask below whether optimal naming is too.
+
+\begin{theorem}[Concepts are substitutes; \lean{Lib.substitutes}]\label{thm:sub}
+Suppose every result below the goal is cited by some result at or below the goal. Then for
+all $N$ and all distinct $u,v\notin N$ below the goal,
+\[
+\mathrm{gain}_{N\cup\{u\}}(v)\;\le\;\mathrm{gain}_N(v).
+\]
+Equivalently, $N\mapsto\mathrm{cost}(\emptyset)-\mathrm{cost}(N)$ is submodular.
+\end{theorem}
+
+\noindent \textbf{Proof sketch.} The proof combines three facts.
+\begin{itemize}
+\item By Theorem~\ref{thm:rank1}, naming $u$ can only lower $W(v)$ (since $W\ge1$).
+\item It can only lower $o(v)$, provided $u$ itself occurs (\lean{Lib.occ\_insert\_le}).
+\item A downward induction shows that every used result always occurs at least once,
+  whatever is named (\lean{Lib.one\_le\_occ}).
+\end{itemize}
+Both factors of Theorem~\ref{thm:exact} are then nonnegative and non-increasing.
+\hfill$\square$
+
+\paragraph{Consequences.} Submodularity is the structure behind the greedy and
+double-greedy guarantees of combinatorial optimization~\cite{nwf,buchbinder}. More
+striking is what it says about mathematics. \emph{For compression of a fixed body of
+mathematics, every new concept is worth less the more concepts we already have.} Concepts
+never make each other more valuable. Yet the history of mathematics is full of the
+opposite: a concept that makes others fruitful, a definition that opens a field.
+
+\begin{theorem}[Bounded readers see complements; \lean{comprehension\_complements}]\label{thm:compl}
+There is a library with two lemmas and a goal such that, for a reader who can hold at most
+$3$ symbols:
+\begin{itemize}
+\item the goal is unreadable with no names, and with either name alone;
+\item it is readable with both names.
+\end{itemize}
+Comprehension, unlike compression, is not submodular.
+\end{theorem}
+
+\noindent Taken together, Theorems~\ref{thm:sub} and~\ref{thm:compl} locate the source of
+increasing returns. It is not compression. It is \emph{bounded capacity}: a reader who must
+fit a statement into working memory needs several concepts at once, and each is worthless
+alone. This holds for any bounded reader, human or machine. It formalizes Thurston's
+insistence that mathematics is about understanding~\cite{thurston}, and explains why that
+insistence matters.
+
+\section{The speed limit of compression}\label{sec:speed}
+
+How much can naming buy? Section~\ref{sec:theory} bounds unfolding per result. The right
+currency, though, is the \emph{named size} of a library: the total number of symbols
+written down.
+
+\paragraph{Problem.} Each result has unit own size and cites distinct earlier results.
+Its unfolded size $u_i=1+\sum_{j\in\mathrm{deps}(i)}u_j$ is the number of citation paths
+starting at $i$. The named cost of the first $n$ results is
+$C=\sum_{i<n}(1+|\mathrm{deps}(i)|)$: one symbol per result and one per citation. What is
+the largest possible $u_i$ for a given $C$?
+
+\begin{theorem}[Speed limit; \lean{ULib.u\_le}]\label{thm:speed}
+Every unfolded size satisfies
+\[
+u_i\;\le\;28\cdot(5/4)^{C}
+\]
+(in Lean: $4^{C}u_i\le 28\cdot5^{C}$).
+\end{theorem}
+
+\noindent\textbf{Proof idea.} Let $S_j$ be the largest total unfolded size of at most $j$
+distinct results so far: a ``top-$j$ sum''. The potential
+\[
+\Phi=4S_1+2S_2+S_3+28
+\]
+grows by at most a factor $(5/4)^{1+d}$ when a result citing $d$ others is added.
+\begin{itemize}
+\item The weights $(4,2,1)$ were found by linear programming.
+\item The required inequalities follow from three elementary properties of top-$j$ sums:
+  monotonicity, subadditivity $S_{a+b}\le S_a+S_b$, and the averaging bound
+  $jS_{j+1}\le(j+1)S_j$.
+\item For $d\le 9$, Lean's \lean{omega} finds each certificate (\lean{key\_small}). For
+  $d\ge10$ an explicit exponential estimate suffices.
+\end{itemize}
+\hfill$\square$
+
+\begin{theorem}[Golden constructions; \lean{fibLib\_u}, \lean{fibLib\_cost}, \lean{lucasLib\_top}, \lean{lucasLib\_cost}]
+\leavevmode
+\begin{itemize}
+\item \textbf{Fibonacci library.} If each result cites its two predecessors, then at cost
+  $3(n+1)$ the top result has unfolded size $F_{n+3}-1$.
+\item \textbf{Lucas library.} Take a leaf, a two-step chain, a Fibonacci core, and a final
+  result citing the top three. For $m\ge4$ this reaches exactly $2L_m-2$ at cost $3m$.
+\end{itemize}
+\end{theorem}
+
+\noindent So the optimal rate per symbol lies between $\varphi^{1/3}\approx1.174$ and
+$5/4$. The trivial product bound gives only $3^{1/3}\approx1.442$.
+
+\paragraph{Exact search.} The state of a library is the multiset of its unfolded sizes,
+and citing the largest available sizes is always optimal. This permits an exact search
+over Pareto-optimal states (within a citation window). It gives:
+\begin{center}\small
+\begin{tabular}{lcccccccccccc}
+\toprule
+$m$ & 4&5&6&7&8&9&10&11&12&13&14&15\\
+\midrule
+max at cost $3m$ & 12&20&34&56&92&150&244&396&642&1040&1684&2726\\
+$2L_m-2$ & 12&20&34&56&92&150&244&396&642&1040&1684&2726\\
+\bottomrule
+\end{tabular}
+\end{center}
+These values are exact for windows of up to 9 citations (cost $\le39$) and up to 5
+citations (cost $\le45$).
+
+\begin{conjecture}[Lucas law of compression]\label{conj:lucas}
+For every $m\ge4$, the largest unfolded size of a library of named cost $3m$ is exactly
+$2L_m-2$. In particular, the speed limit of compression is $\varphi^{1/3}$ per symbol.
+\end{conjecture}
+
+\paragraph{Why the golden ratio, and why the proof is hard.}
+\begin{itemize}
+\item \textbf{The optimal citation count is two.} Citing $d$ predecessors costs $d+1$ per
+  result and grows like the $d$-bonacci constant $\varphi_d$. Per symbol,
+  $\varphi_d^{1/(d+1)}$ is largest at $d=2$: $1.174$ against $1.165$ for $d=3$. Two is
+  the ``optimal radix'' of mathematical citation.
+\item \textbf{Linear potentials provably cannot reach the conjecture.} By LP duality, no
+  linear potential in top-$j$ sums certifies a rate below $1.2198$. A piecewise-linear
+  potential built from Fibonacci continuations fails on states holding many copies of
+  their largest value. This suggests the true value function has infinitely many linear
+  pieces.
+\item \textbf{A kindred conjecture.} The golden ratio is also the conjectured growth rate
+  of monotone paths on simple 3-polytopes~\cite{adz}, where the best upper bounds likewise
+  exceed $\varphi$.
+\end{itemize}
+
+\paragraph{Bounded readers reach exponentially far.} In the Fibonacci library every
+result has three symbols: itself and two citations (\lean{fibLib\_readable}). A reader who
+can hold three symbols can therefore check every step, yet the results reach unfolded size
+$\varphi^{C/3}$. No library can push this past $(5/4)^C$. Understanding scales
+exponentially with the library, and at a bounded rate.
 
 \section{Data and method}\label{sec:data}
 
@@ -317,6 +517,18 @@ Table~\ref{tab:auc} gives the main result.
   cited anywhere else in Mathlib, against $36.6\%$ of all theorems, so they are only
   slightly more reused than average.
 \end{itemize}
+
+\paragraph{The product is not what humans use.} Theorem~\ref{thm:exact} says the
+compression value of a concept is the product of occurrence and hidden size. We tested
+whether human labels, pooled over concepts and theorems (841 labelled constants, glue
+removed), track the product. They do not.
+\begin{itemize}
+\item Reuse alone: AUC $0.73$.
+\item Depth alone: AUC $0.59$.
+\item The product, $\log k+\log U$: AUC $0.62$.
+\end{itemize}
+Humans use each factor separately, by kind: occurrence for concepts, depth for theorems.
+They do not use the compression value itself. Taste is not compression.
 
 \begin{table}[t]
 \centering\small
@@ -512,6 +724,40 @@ cognition~\cite{chase,miller}. On this definition, ``can humans understand machi
 mathematics?'' becomes the quantitative question ``can the machine's library be taught?''
 \end{question}
 
+\subsection{Questions raised by the calculus}
+
+\begin{question}[Complexity of optimal naming]
+Is choosing the optimal naming $N$ NP-hard in the model of Section~\ref{sec:calculus}, as
+minimal fill-in is for elimination orderings~\cite{yannakakis}? By Theorem~\ref{thm:sub}
+the savings function is submodular. When it is also nonnegative, randomized double greedy
+gives a $1/2$-approximation~\cite{buchbinder}. Is there a better algorithm that exploits
+the rank-one structure?
+\end{question}
+
+\begin{question}[Where do increasing returns live?]
+Theorem~\ref{thm:compl} shows that bounded capacity creates complementarity.
+\begin{itemize}
+\item Is every complementarity between concepts in real mathematics explained by
+  capacity?
+\item Or does some come from the \emph{growth} of the body of theorems (new statements
+  become expressible), which a fixed-corpus model cannot see?
+\item Can Mathlib's history separate these two sources?
+\end{itemize}
+\end{question}
+
+\begin{question}[Renormalization of mathematics]
+Inlining is elimination, and elimination is integrating out. Is there a renormalization
+flow on libraries, with fixed points, under which Mathlib's $1.5\times$-per-level growth
+(Section~\ref{sec:results}) is a scaling exponent?
+\end{question}
+
+\begin{question}[Speed limit with general sizes]
+What is the speed limit when own sizes vary, or when citation multiplicities are allowed
+(a result using a lemma twice)? With multiplicities, doubling is free, and the limit
+should approach $3^{1/3}$, the optimal-radix constant of the product bound. Is the
+transition between $\varphi^{1/3}$ and $3^{1/3}$ sharp?
+\end{question}
+
 \subsection{Falsifiable conjectures}
 
 \begin{conjecture}[Growth law]
@@ -557,42 +803,54 @@ specific objects.
 
 \section{Conclusion}
 
-An open ``what is'' question led us to:
+An open ``what is'' question led to:
 \begin{itemize}
-\item a definition;
-\item theorems proved in Lean, including a sharp one;
-\item a growth law over 315{,}085 objects;
-\item a mechanical measure that recovers human concept taste at AUC $0.88$ and theorem
-  taste at AUC $0.78$;
-\item connections to proof complexity, information theory, biology, linguistics and
-  physics;
-\item questions we cannot yet answer.
+\item a definition, and an exact calculus for it (Theorems~\ref{thm:exact}--\ref{thm:compl});
+\item a proved speed limit and a golden conjecture with Lucas-number structure;
+\item a growth law over $315{,}085$ objects;
+\item a split of human taste into exactly the two factors the calculus predicts, though
+  humans do not use their product;
+\item connections from Gaussian elimination to renormalization, and from function words
+  to currency metabolites.
 \end{itemize}
-Fruitfulness is not unmeasurable. It is delayed and, in its ideal form, uncomputable, for
-every kind of mind.
+Two conclusions stand out.
+\begin{itemize}
+\item \textbf{Concepts are substitutes for compression, but complements for understanding.}
+  The explosive fruitfulness of great ideas is a property of bounded minds, and so of
+  every mind we know how to build.
+\item \textbf{Fruitfulness is not unmeasurable.} It is delayed, and in its ideal form
+  uncomputable, for every kind of mind.
+\end{itemize}
 
 \appendix
-\section{Lean index}
-All results are in \lean{Fruitfulness.lean}, namespace \lean{Fruitfulness}. They use only
-\lean{propext}, \lean{Classical.choice} and \lean{Quot.sound}, with no \lean{sorry}.
+\section{Lean index}\label{app:lean}
+There are three files, all compiling against Mathlib with no \lean{sorry}. Every theorem
+listed uses only \lean{propext}, \lean{Classical.choice} and \lean{Quot.sound}.
 
 \begin{center}\small
-\begin{tabular}{ll}
+\begin{tabular}{p{0.47\linewidth}p{0.47\linewidth}}
 \toprule
 Statement & Lean name \\
 \midrule
-Saving $(k-1)(b-1)-1$ & \lean{naming\_saves} \\
-Pays iff $(k-1)(b-1)>1$; pays when $k\ge2$, $b\ge3$ & \lean{naming\_pays\_iff}, \lean{naming\_pays\_of} \\
+\multicolumn{2}{l}{\emph{\lean{Fruitfulness.lean}: single names and unfolding}}\\
+Saving $(k-1)(b-1)-1$; pays iff $(k-1)(b-1)>1$ & \lean{naming\_saves}, \lean{naming\_pays\_iff} \\
 Used once never pays & \lean{naming\_once} \\
-Unfolded size $\ge$ own size & \lean{Library.size\_le\_unfold} \\
-$U(i)\le S(d+1)^{i+1}$ & \lean{Library.unfold\_le} \\
-$U(i)\le S\,2^i$ (any $d$) & \lean{Library.unfold\_le\_two\_pow} \\
-Complete library: $U(i)=2^i$ & \lean{completeLib\_unfold} \\
-Exchange lemma & \lean{sum\_le\_sum\_window} \\
-$T_d$ is monotone & \lean{tb\_mono} \\
-Sharp bound $U(i)\le S\,T_d(i)$ & \lean{Library.unfold\_le\_tb} \\
-Attained by the window library & \lean{windowLib\_unfold} \\
-Fibonacci library: $U(i)=F_{i+3}-1\ge2^{\lfloor i/2\rfloor}$ & \lean{fibLib\_unfold}, \lean{fibLib\_unfold\_ge} \\
+$U(i)\le S\,2^i$; attained by the complete library & \lean{Library.unfold\_le\_two\_pow}, \lean{completeLib\_unfold} \\
+Sharp $d$-bonacci bound; attained & \lean{Library.unfold\_le\_tb}, \lean{windowLib\_unfold} \\
+Fibonacci library $U(i)=F_{i+3}-1$ & \lean{fibLib\_unfold} \\
+\midrule
+\multicolumn{2}{l}{\emph{\lean{Naming.lean}: the calculus of naming}}\\
+Exact value $(o-1)(W-1)-1$ & \lean{Lib.gain\_eq} \\
+Rank-one updates of $W$, $P$, $o$ & \lean{Lib.W\_insert}, \lean{Lib.P\_insert}, \lean{Lib.occ\_insert} \\
+Every used result occurs & \lean{Lib.one\_le\_occ} \\
+Concepts are substitutes (submodularity) & \lean{Lib.substitutes} \\
+Bounded readers see complements & \lean{comprehension\_complements} \\
+\midrule
+\multicolumn{2}{l}{\emph{\lean{SpeedLimit.lean}: the speed limit}}\\
+Top-$j$ sums: subadditive, averaging bound & \lean{ULib.S\_add}, \lean{ULib.S\_avg} \\
+Potential step and speed limit $28(5/4)^C$ & \lean{ULib.}$\Phi$\lean{\_step}, \lean{ULib.u\_le} \\
+Fibonacci library at cost $3(n+1)$; three-symbol readability & \lean{fibLib\_u}, \lean{fibLib\_cost}, \lean{fibLib\_readable} \\
+Lucas library reaches $2L_m-2$ at cost $3m$ & \lean{lucasLib\_top}, \lean{lucasLib\_cost} \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -602,6 +860,10 @@ Fibonacci library: $U(i)=F_{i+3}-1\ge2^{\lfloor i/2\rfloor}$ & \lean{fibLib\_unf
 this paper.
 
 \begin{thebibliography}{99}\small
+\bibitem{adz} C.~A.~Athanasiadis, J.~A.~De~Loera, Z.~Zhang. Enumerative problems for arborescences and monotone paths on polytope graphs. \emph{J.\ Graph Theory} (2022).
+\bibitem{buchbinder} N.~Buchbinder, M.~Feldman, J.~Naor, R.~Schwartz. A tight linear time $(1/2)$-approximation for unconstrained submodular maximization. \emph{FOCS} 2012.
+\bibitem{nwf} G.~L.~Nemhauser, L.~A.~Wolsey, M.~L.~Fisher. An analysis of approximations for maximizing submodular set functions. \emph{Math.\ Programming} 14 (1978).
+\bibitem{yannakakis} M.~Yannakakis. Computing the minimum fill-in is NP-complete. \emph{SIAM J.\ Algebraic Discrete Methods} 2 (1981).
 \bibitem{bsiw} E.~Ben-Sasson, R.~Impagliazzo, A.~Wigderson. Near optimal separation of tree-like and general resolution. \emph{Combinatorica} 24 (2004).
 \bibitem{bennett} C.~H.~Bennett. Logical depth and physical complexity. In \emph{The Universal Turing Machine: A Half-Century Survey}, 1988.
 \bibitem{boolos} G.~Boolos. A curious inference. \emph{J.\ Philosophical Logic} 16 (1987).

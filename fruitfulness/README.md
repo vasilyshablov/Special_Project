@@ -1,6 +1,6 @@
 # What is fruitfulness? Measuring it on all of Mathlib
 
-**Paper:** [`paper/paper.pdf`](paper/paper.pdf), *Fruitfulness as Compression*, 10 pages.
+**Paper:** [`paper/paper.pdf`](paper/paper.pdf), *Fruitfulness as Compression: An Exact Calculus of Naming, a Speed Limit, and a Measurement of All of Mathlib*, 14 pages.
 **Working notes:** [`notes/thoughts.pdf`](notes/thoughts.pdf).
 
 This started from a debate claim: AI can't handle open "why / what is" questions, because
@@ -39,6 +39,37 @@ Every theorem below uses only the standard axioms `propext`, `Classical.choice` 
 
 So named concepts can make mathematics exponentially shorter, never more than exponentially
 shorter, and the exact value of a single concept is the explicit number `(k-1)(b-1) - 1`.
+
+## 2b. The calculus of naming (`Naming.lean`) and the speed limit (`SpeedLimit.lean`)
+
+Both files compile against Mathlib with no `sorry`.
+
+### The calculus of naming
+
+| Lean name | Statement |
+|---|---|
+| `Lib.gain_eq` | **Exact value.** In any library, naming `v` saves exactly `(occ(v) - 1)(W(v) - 1) - 1`. Here `occ(v)` is how often `v` occurs and `W(v)` is how much it hides. |
+| `Lib.W_insert`, `Lib.P_insert`, `Lib.occ_insert` | **Rank-one updates.** Naming `u` changes inlined sizes and occurrence counts by rank-one corrections. These are Sherman–Morrison / Schur-complement updates: inlining a concept is eliminating a variable. |
+| `Lib.substitutes` | **Concepts are substitutes.** If every result is used, the savings function is submodular: a concept is never worth more because others were named. |
+| `comprehension_complements` | **Bounded readers see complements.** For a capacity-3 reader, two names can each be useless alone and decisive together. |
+
+### The speed limit
+
+| Lean name | Statement |
+|---|---|
+| `ULib.u_le` | **Speed limit.** Every unfolded size is at most `28 · (5/4)^C`, where `C` is the named size of the library. Proved with a potential `4·S1 + 2·S2 + S3 + 28` on top-j sums; the weights were found by LP, and the per-case certificates are checked by `omega`. |
+| `fibLib_u`, `fibLib_cost`, `fibLib_readable` | **Golden lower bound.** At cost `3(n+1)` the top result reaches `F(n+3) - 1`, while every step stays readable with 3 symbols. |
+| `lucasLib_top`, `lucasLib_cost` | **Lucas library.** Reaches exactly `2·L_m - 2` at cost `3m`. |
+
+**Lucas conjecture (open).** For `m ≥ 4`, the maximum unfolded size at named cost `3m` is
+exactly `2·L_m - 2`, so the true speed limit is `φ^(1/3) ≈ 1.174` per symbol.
+- **Verified** by exact Pareto search for `4 ≤ m ≤ 15`.
+- **Why a new idea is needed.** Linear potentials provably cannot certify any rate below
+  1.2198, so a proof needs a nonlinear potential.
+
+**Negative empirical result.** Human labels do *not* track the compression value, the
+product `log k + log U` (AUC 0.62). They track its two factors separately, by kind: reuse
+for concepts, depth for theorems.
 
 ## 3. Measurement on Mathlib
 
