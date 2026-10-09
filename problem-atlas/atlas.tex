@@ -1,0 +1,426 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1.7cm,top=1.6cm,bottom=1.8cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[table]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows.meta,positioning,shadows,calc,fadings}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{groupplots}
+\usepackage{longtable,booktabs,array,tabularx}
+\usepackage[most]{tcolorbox}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{multicol}
+\usepackage{microtype}
+\usepackage[colorlinks=true,linkcolor=tC,urlcolor=tC]{hyperref}
+\emergencystretch=2em
+
+% ---------- palette ----------
+\definecolor{tO}{HTML}{5B2C83}
+\definecolor{tS}{HTML}{C0392B}
+\definecolor{tA}{HTML}{E67E22}
+\definecolor{tB}{HTML}{138D75}
+\definecolor{tG}{HTML}{27AE60}
+\definecolor{tC}{HTML}{2E86C1}
+\definecolor{ink}{HTML}{1B2631}
+\definecolor{dcol6}{HTML}{F1A40F}
+\definecolor{dcol7}{HTML}{E67E22}
+\definecolor{dcol8}{HTML}{D35400}
+\definecolor{dcol9}{HTML}{C0392B}
+\definecolor{dcol10}{HTML}{6E1A14}
+
+\titleformat{\section}{\Large\bfseries\color{ink}}{\colorbox{tC}{\color{white}\,\thesection\,}}{0.6em}{}[{\color{tC}\titlerule[1.2pt]}]
+\titleformat{\subsection}{\large\bfseries\color{tC!70!black}}{\thesubsection}{0.6em}{}
+\setlist{itemsep=2pt,topsep=3pt}
+
+\newcommand{\D}[1]{\tikz[baseline=-0.6ex]\node[fill=dcol#1,text=white,rounded corners=2pt,inner sep=1.6pt,font=\scriptsize\bfseries,minimum width=1.5em]{#1};}
+\newcommand{\F}[1]{\tikz[baseline=-0.5ex]{\foreach \i in {1,...,5}{\pgfmathsetmacro{\c}{\i<=#1 ? 1 : 0}
+  \ifdim\c pt>0.5pt \fill[tG,rounded corners=0.6pt] (\i*0.17,-0.07) rectangle ++(0.13,0.14);
+  \else \fill[black!13,rounded corners=0.6pt] (\i*0.17,-0.07) rectangle ++(0.13,0.14);\fi}}}
+
+\newtcolorbox{keybox}[2][]{enhanced,colback=#2!6,colframe=#2,fonttitle=\bfseries,boxrule=0.9pt,arc=3mm,left=6pt,right=6pt,top=4pt,bottom=4pt,#1}
+\newtcolorbox{card}[3][]{enhanced,colback=white,colframe=#2,coltitle=white,colbacktitle=#2,fonttitle=\bfseries\small,title={#3},boxrule=0.8pt,arc=2.5mm,left=5pt,right=5pt,top=3pt,bottom=3pt,drop fuzzy shadow,fontupper=\small,#1}
+
+\input{gen_stats.tex}
+\input{gen_fields.tex}
+
+\begin{document}
+
+% =====================================================================
+\begin{titlepage}
+\begin{tikzpicture}[remember picture,overlay]
+  \shade[top color=tO,bottom color=tC] (current page.north west) rectangle (current page.south east);
+  \foreach \x/\y/\r/\c in {2/-4/2.2/tS,15/-7/3.1/tA,4/-21/2.8/tB,16/-23/1.8/tG,10/-13/4.5/white,7/-9/1.2/tA,13/-17/1.5/tS}
+     \fill[\c,opacity=0.13] ($(current page.north west)+(\x,\y)$) circle (\r);
+  \node[anchor=north west,text=white,align=left] at ($(current page.north west)+(1.8,-3.2)$)
+    {\fontsize{44}{48}\selectfont\bfseries The Atlas of\\[4pt]\fontsize{44}{48}\selectfont\bfseries Hard Problems};
+  \node[anchor=north west,text=white,align=left,text width=15cm] at ($(current page.north west)+(1.85,-7.6)$)
+    {\Large 100 open problems in mathematics, ranked from \emph{beyond Fields} down to \emph{strong research}, with an honest map of which ones raw reasoning, discrete mathematics and a proof assistant could plausibly reach.};
+  % mini pyramid on cover
+  \begin{scope}[shift={($(current page.center)+(0,-3.2)$)}]
+    \fill[tB,opacity=.95] (-5,0) -- (5,0) -- (3.9,1.6) -- (-3.9,1.6) -- cycle;
+    \fill[tA,opacity=.95] (-3.75,1.75) -- (3.75,1.75) -- (2.65,3.35) -- (-2.65,3.35) -- cycle;
+    \fill[tS,opacity=.95] (-2.5,3.5) -- (2.5,3.5) -- (1.4,5.1) -- (-1.4,5.1) -- cycle;
+    \fill[tO,draw=white,line width=1pt] (-1.25,5.25) -- (1.25,5.25) -- (0,7.1) -- cycle;
+    \node[white,font=\bfseries\Large] at (0,6.0) {$\Omega$};
+    \node[white,font=\bfseries\large] at (0,4.3) {S \quad Fields-level};
+    \node[white,font=\bfseries\large] at (0,2.55) {A \quad major breakthrough};
+    \node[white,font=\bfseries\large] at (0,0.8) {B \quad strong research};
+  \end{scope}
+  \node[anchor=south west,text=white,align=left] at ($(current page.south west)+(1.8,2.0)$)
+    {\large\bfseries Special Project \quad$\cdot$\quad October 2026\\[3pt]\normalsize Written by Claude for the project's mathematician. All rankings and odds are my own judgement.};
+\end{tikzpicture}
+\end{titlepage}
+
+% =====================================================================
+\section*{The short version}
+
+\begin{keybox}[title={Five things to know before reading the list}]{tC}
+\begin{enumerate}[leftmargin=1.3em]
+\item \textbf{There is no official ranking.} The tiers and scores below are my judgement, informed by how the
+  mathematical community treats each problem: prizes attached, what partial results earned, and how many
+  strong people have tried.
+\item \textbf{The Fields Medal rewards a body of work by someone under 40, not one problem.} Here,
+  \emph{Fields-level} means a result that on its own would make an overwhelming case for the medal. Above that
+  sits Tier~$\Omega$: problems whose solution would change what mathematics is about (seven are Millennium or
+  Millennium-class).
+\item \textbf{``Very hard'' and ``nobody has tackled it'' rarely go together.} Famous problems are famous
+  because many people failed at them. Hard problems nobody has tried exist mostly as \emph{freshly posed}
+  questions (like our own Lucas conjecture) and as lightly studied Erd\H{o}s problems.
+\item \textbf{Intelligence is not the only bottleneck.} For the top problems there are \emph{barrier theorems}:
+  proofs that whole families of methods cannot work (page~\pageref{sec:honest}). Any solution must find a door
+  that is not yet on any map.
+\item \textbf{There is a real sweet spot:} purely discrete problems whose recent history contains \emph{short,
+  idea-driven proofs} (sensitivity in 6 pages, cap sets in 4, union-closed sets in about 8). That is where our
+  toolkit of reasoning, discrete mathematics and Lean is strongest. My picks are on page~\pageref{sec:picks}.
+\end{enumerate}
+\end{keybox}
+
+\subsection*{How each problem is scored}
+\begin{multicols}{2}
+\textbf{Tier} (colour) records how big the \emph{reward} would be:\\[2pt]
+\textcolor{tO}{\rule{1.6em}{0.9em}} $\Omega$: beyond Fields\\
+\textcolor{tS}{\rule{1.6em}{0.9em}} S: Fields-level\\
+\textcolor{tA}{\rule{1.6em}{0.9em}} A: major breakthrough\\
+\textcolor{tB}{\rule{1.6em}{0.9em}} B: strong research problem
+
+\columnbreak
+\textbf{Difficulty} \D{6}\,\D{7}\,\D{8}\,\D{9}\,\D{10}: how far today's methods are from a
+solution (10 = no plausible route is known).\\[4pt]
+\textbf{Raw-reasoning fit} \F{0}\,to\,\F{5}: how likely progress is to come from a clean conceptual idea plus
+careful discrete mathematics, the kind of argument we could check in Lean, rather than from decades of heavy
+machinery or massive computer search.
+\end{multicols}
+\noindent Tier and difficulty are different axes. Proving infinitely many Fermat primes would be fiendishly hard
+(high $D$) but would change little; the cap-set bound was ``only'' Tier~A in reward yet fell to a 4-page idea.
+
+\vspace{4pt}
+\begin{center}
+\begin{tikzpicture}
+  \begin{scope}
+  \fill[tB] (-5,0) -- (5,0) -- (3.9,1.4) -- (-3.9,1.4) -- cycle;
+  \fill[tA] (-3.75,1.5) -- (3.75,1.5) -- (2.65,2.9) -- (-2.65,2.9) -- cycle;
+  \fill[tS] (-2.5,3.0) -- (2.5,3.0) -- (1.4,4.4) -- (-1.4,4.4) -- cycle;
+  \fill[tO] (-1.25,4.5) -- (1.25,4.5) -- (0,6.2) -- cycle;
+  \node[white,font=\bfseries] at (0,5.1) {$\Omega$};
+  \node[white,font=\bfseries\small,align=center] at (0,3.7) {S\\[-1pt]29 problems};
+  \node[white,font=\bfseries\small,align=center] at (0,2.2) {A\\[-1pt]39 problems};
+  \node[white,font=\bfseries\small,align=center] at (0,0.7) {B\\[-1pt]22 problems};
+  \end{scope}
+  \begin{scope}[every node/.style={anchor=west,font=\small,align=left,text width=6.6cm}]
+  \node at (5.6,5.2) {\textbf{\textcolor{tO}{$\Omega$ (10).}} Millennium-class. Riemann, P vs NP, Navier--Stokes, BSD, Hodge, twin primes. Prize: \$1M, plus immortality.};
+  \node at (5.6,3.7) {\textbf{\textcolor{tS}{S (29).}} Would dominate a Fields citation: abc, Collatz, Kakeya, Jacobian, Frege lower bounds. Avg.\ fit \avgfitS/5.};
+  \node at (5.6,2.2) {\textbf{\textcolor{tA}{A (39).}} An Annals-level paper or a major prize: union-closed sets, $\zeta(5)$, Hadwiger--Nelson. Avg.\ fit \avgfitA/5.};
+  \node at (5.6,0.7) {\textbf{\textcolor{tB}{B (22).}} Famous among specialists: Seymour's second neighbourhood, Rota's basis, Erd\H{o}s--Gy\'arf\'as. Avg.\ fit \avgfitB/5.};
+  \end{scope}
+\end{tikzpicture}
+\end{center}
+\noindent\textbf{Notice:} average fit \emph{rises} as you go down the pyramid ($\Omega$: \avgfitO/5). The most
+famous problems are the least likely to fall to one clever idea, which is part of why they are still famous.
+
+% =====================================================================
+\newpage
+\section{The map: difficulty against fit}
+
+Each number is a problem from the list in Section~\ref{sec:list}, coloured by tier. Cells shaded green form the
+\textbf{sweet spot} (fit $\ge 4$, difficulty $\le 8$): hard enough to matter, but the kind of problem that
+recently fell to short ideas.
+
+\begin{center}
+\begin{tikzpicture}
+\input{gen_heatmap.tex}
+\end{tikzpicture}
+\end{center}
+
+\begin{keybox}[title={Reading the map}]{tG}
+\begin{itemize}[leftmargin=1.1em]
+\item \textbf{Top-left (green):} the realistic targets. Union-closed sets (\textcolor{tA}{\textbf{41}}),
+  \v{C}ern\'y (\textcolor{tA}{\textbf{54}}), Seymour (\textcolor{tB}{\textbf{81}}), Erd\H{o}s--Gy\'arf\'as
+  (\textcolor{tB}{\textbf{83}}), the 1/3--2/3 conjecture (\textcolor{tB}{\textbf{94}}), Sunflower
+  (\textcolor{tS}{\textbf{35}}), Erd\H{o}s--Hajnal (\textcolor{tS}{\textbf{28}}).
+\item \textbf{Bottom-right:} problems that need \emph{new theories} (Langlands, Yang--Mills, Hodge). No single
+  idea, however clever, is known to suffice.
+\item \textbf{Bottom-middle:} problems that need \emph{huge computation} ($R(5,5)$, projective plane of order 12,
+  $BB(6)$). They are off-limits by your rule of no heavy computation.
+\end{itemize}
+\end{keybox}
+
+\vspace{2pt}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+  xbar stacked, width=0.62\textwidth, height=7.4cm, bar width=7pt,
+  ytick={0,...,\nfields}, yticklabels/.expanded={\fieldlabels},
+  yticklabel style={font=\small}, xlabel={number of problems in the top 100}, xmin=0,
+  axis lines*=left, xmajorgrids, grid style={black!10},
+  legend style={at={(0.97,0.03)},anchor=south east,font=\small,draw=none,fill=white,fill opacity=0.9},
+  legend cell align=left, title={\bfseries Where the hard problems live}]
+\fieldplots
+\legend{Tier $\Omega$,Tier S,Tier A,Tier B}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\noindent Number theory dominates the top tier: its statements are simple and its depth is extreme. Graph theory and
+combinatorics dominate the lower tiers, which are also where the fit is highest.
+
+\subsection*{Old is not the same as hard}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=0.9\textwidth,height=7.2cm,xmode=log,xlabel={years the problem has been open (log scale)},
+  ylabel={difficulty $D$},ymin=5.5,ymax=10.5,xmin=12,xmax=4000,grid=both,grid style={black!8},
+  legend style={at={(0.98,0.97)},anchor=north east,font=\small,draw=none,fill=white},legend columns=4,
+  title={\bfseries Age against difficulty for all 100 problems}]
+\addplot[only marks,mark=*,mark size=2.6pt,color=tO,opacity=.85] table[x=x,y=y] {gen_age_O.dat};
+\addplot[only marks,mark=*,mark size=2.6pt,color=tS,opacity=.75] table[x=x,y=y] {gen_age_S.dat};
+\addplot[only marks,mark=*,mark size=2.6pt,color=tA,opacity=.75] table[x=x,y=y] {gen_age_A.dat};
+\addplot[only marks,mark=*,mark size=2.6pt,color=tB,opacity=.75] table[x=x,y=y] {gen_age_B.dat};
+\legend{$\Omega$,S,A,B}
+\node[font=\scriptsize,anchor=east] at (axis cs:2200,8.0) {odd perfect numbers};
+\node[font=\scriptsize,anchor=north] at (axis cs:24,7.75) {Unique Games};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\noindent Problems from the 1960s--80s sit at every difficulty level. Age measures how long people have been
+stuck, not how deep the problem is. Collatz (1937) is old and famous, but its \emph{depth} is unclear: Conway
+showed that a generalisation is undecidable, so it may be hard for reasons unrelated to deep structure.
+
+% =====================================================================
+\section{Lessons from the problems that fell (2013--2025)}
+
+\begin{center}
+\begin{tikzpicture}[x=1.22cm]
+  \draw[line width=3pt,black!25,-{Latex[length=4mm]}] (0.6,0) -- (14.2,0);
+  \foreach \y in {2013,...,2025} {\pgfmathsetmacro{\xx}{\y-2012}\draw[black!45,line width=1pt] (\xx,-0.12)--(\xx,0.12); \node[font=\scriptsize\bfseries,black!60] at (\xx,-0.38) {\y};}
+  \tikzset{ev/.style={font=\scriptsize,align=center,text width=2.0cm,inner sep=1.5pt}}
+  \newcommand{\up}[4]{\fill[#3] (#1,0) circle (4pt); \draw[#3,thick] (#1,0.15) -- (#1,#4); \node[ev,anchor=south] at (#1,#4) {#2};}
+  \newcommand{\dn}[4]{\fill[#3] (#1,0) circle (4pt); \draw[#3,thick] (#1,-0.6) -- (#1,-#4); \node[ev,anchor=north] at (#1,-#4) {#2};}
+  \up{1}{\textbf{Bounded prime gaps}\\Zhang}{tO}{0.8}
+  \dn{1.25}{\textbf{Kadison--Singer}\\Marcus--Spielman--Srivastava}{tG}{1.0}
+  \up{3}{\textbf{Erd\H{o}s discrepancy}\\Tao}{tA}{2.3}
+  \dn{4}{\textbf{Cap sets}\\Ellenberg--Gijswijt}{tG}{2.4}
+  \up{4.4}{\textbf{Sphere packing 8, 24}\\Viazovska et al.}{tS}{0.8}
+  \up{7}{\textbf{Sensitivity}\\Huang (6 pages)}{tG}{0.8}
+  \dn{7.3}{\textbf{Hedetniemi refuted}\\Shitov}{tG}{1.0}
+  \up{8.5}{\textbf{MIP*$=$RE}\\Connes embedding refuted}{tS}{2.3}
+  \dn{10}{\textbf{Kahn--Kalai}\\Park--Pham}{tG}{2.4}
+  \up{10.4}{\textbf{Union-closed}\\Gilmer: constant}{tG}{0.8}
+  \dn{11.2}{\textbf{Ramsey $R(k)$}\\$(4-\varepsilon)^k$}{tA}{1.0}
+  \up{11.6}{\textbf{PFR} (Lean-checked in 3 weeks)}{tA}{2.7}
+  \dn{12.3}{\textbf{Geometric Langlands}\\$\sim$1000 pages}{tO}{2.4}
+  \up{12.8}{\textbf{Bunkbed refuted}\\Gladkov--Pak--Zimin}{tG}{0.8}
+  \dn{13.1}{\textbf{Kakeya in $\mathbb R^3$}\\Wang--Zahl}{tS}{1.0}
+\end{tikzpicture}
+\end{center}
+\noindent\textcolor{tG}{\large$\bullet$}\,short idea-driven proof (or a short counterexample) \quad
+\textcolor{tA}{\large$\bullet$}\,a substantial new method \quad
+\textcolor{tS}{\large$\bullet$}\,a long, deep proof\\
+\textcolor{tO}{\large$\bullet$}\,a programme spanning many people and years.
+
+\newpage
+\subsection*{Proof length is almost uncorrelated with how long a problem was open}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[width=0.92\textwidth,height=8.4cm,xmode=log,ymode=log,
+  xlabel={years open before the solution},ylabel={approximate length of the proof (pages)},
+  xmin=10,xmax=600,ymin=2,ymax=2000,grid=major,grid style={black!8},
+  xtick={10,20,50,100,200,500},xticklabels={10,20,50,100,200,500},
+  ytick={2,5,10,20,50,100,200,500,1000},yticklabels={2,5,10,20,50,100,200,500,1000},
+  nodes near coords,point meta=explicit symbolic,
+  every node near coord/.style={font=\scriptsize,anchor=west,xshift=2pt},
+  title={\bfseries Many decades-old problems fell to proofs under 10 pages}]
+\addplot[only marks,mark=*,mark size=3.2pt,color=tG] coordinates {
+ (27,6) [Sensitivity] (53,4) [Hedetniemi] (30,4) [Cap sets] (16,9) [Kahn--Kalai] (43,8) [Union-closed (constant)] (38,12) [Bourgain slicing]};
+\addplot[only marks,mark=*,mark size=3.2pt,color=tA] coordinates {
+ (54,20) [Kadison--Singer] (83,30) [Erd\H{o}s discrepancy] (78,45) [Duffin--Schaeffer] (164,56) [Bounded gaps]};
+\addplot[only marks,mark=*,mark size=3.2pt,color=tS] coordinates {
+ (54,127) [Kakeya $\mathbb R^3$] (99,70) [Poincar\'e] (358,130) [Fermat]};
+\addplot[only marks,mark=*,mark size=3.2pt,color=tO] coordinates {(40,1000) [Geometric Langlands]};
+\end{axis}
+\end{tikzpicture}
+\end{center}
+\noindent Colours as in the timeline: \textcolor{tG}{green} short idea, \textcolor{tA}{orange} new method, \textcolor{tS}{red} long deep proof, \textcolor{tO}{purple} programme. Page counts are rough (main paper only; Perelman's three preprints, Wiles plus Taylor--Wiles). The
+lesson is robust: \textbf{the green cluster at the bottom is real}. In combinatorics and discrete mathematics,
+problems open for 30--50 years have repeatedly been solved by one new viewpoint, written up in a few pages.
+
+\subsection*{Where the winning ideas came from: transplants between fields}\label{sec:transplant}
+\begin{center}
+\begin{tikzpicture}[
+  src/.style={rectangle,rounded corners=4pt,fill=tC!15,draw=tC,thick,font=\small\bfseries,minimum width=4.2cm,minimum height=0.62cm},
+  tgt/.style={rectangle,rounded corners=4pt,fill=tA!15,draw=tA,thick,font=\small\bfseries,minimum width=4.6cm,minimum height=0.62cm},
+  arr/.style={-{Latex[length=2.5mm]},thick,black!55},
+  lab/.style={font=\scriptsize\itshape,fill=white,inner sep=1pt}]
+  \foreach \i/\s in {0/Linear algebra (polynomials),1/Spectral graph theory,2/Information theory,3/Probability (spread sets),4/Real-stable polynomials,5/Modular forms,6/Ergodic theory,7/Quantum information,8/Algebraic topology}
+    \node[src] (s\i) at (0,-\i*0.82) {\s};
+  \foreach \i/\t in {0/Cap sets (2016),1/Sensitivity (2019),2/Union-closed sets (2022),3/Kahn--Kalai (2022),4/Kadison--Singer (2013),5/Sphere packing (2016),6/Primes in progressions (2004),7/Connes embedding (2020),8/Kneser's conjecture (1978)}
+    \node[tgt] (t\i) at (10,-\i*0.82) {\t};
+  \foreach \i/\l in {0/slice rank,1/signed hypercube,2/entropy,3/fractional covers,4/interlacing families,5/magic functions,6/Szemer\'edi via ergodicity,7/MIP*${}={}$RE,8/Borsuk--Ulam}
+    \draw[arr] (s\i) -- node[lab] {\l} (t\i);
+\end{tikzpicture}
+\end{center}
+\noindent \textbf{This is the strongest argument for an interdisciplinary attack.} None of these proofs came from
+grinding harder inside the problem's own field. My one real structural advantage is breadth: I can search
+systematically for a transplant, asking which tool from field $X$ has the right shape for problem $Y$.
+
+% =====================================================================
+\newpage
+\section{The 100 problems}\label{sec:list}
+{\footnotesize
+\renewcommand{\arraystretch}{1.18}
+\setlength{\tabcolsep}{4pt}
+\input{gen_table.tex}}
+\noindent{\footnotesize Statuses reflect my knowledge as of mid-2026 and are brief. Before attacking any of these
+we should check the current literature; several have had recent partial progress that a one-line summary
+cannot capture.}
+
+% =====================================================================
+\newpage
+\section{My honest opinion: can raw reasoning do it?}\label{sec:honest}
+
+You asked me to assume I am smarter than I think. I will take that seriously, but being smart does not change
+the structure of the problems. Here is what holds regardless of how clever the solver is.
+
+\subsection*{Barriers: proofs that whole approaches cannot work}
+{\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{>{\bfseries\raggedright}p{3.2cm} >{\raggedright}X >{\raggedright\arraybackslash}X}
+\rowcolor{ink}\color{white}Problem & \color{white}\textbf{Known barrier} & \color{white}\textbf{So a proof must\dots}\\
+\rowcolor{tO!7}P vs NP & Relativization (1975), natural proofs (1994), algebrization (2008) & use properties of computation that survive oracles and are not ``constructive and large''\\
+\rowcolor{tO!13}Twin primes, Goldbach & Selberg's parity problem: sieves cannot tell 1 prime factor from 2 & bring in non-sieve structure, as Friedlander--Iwaniec did for $x^2+y^4$\\
+\rowcolor{tO!7}Navier--Stokes & Supercriticality; an averaged equation with the same energy identity blows up (Tao) & use the exact algebraic form of the nonlinearity\\
+\rowcolor{tO!7}Riemann Hypothesis & No Hilbert--P\'olya operator; the function-field proof (Weil, Deligne) uses geometry with no known analogue over $\mathbb Q$ & invent the missing geometry (``$\mathbb F_1$'') or a genuinely new route\\
+\rowcolor{tS!8}Collatz & Conway: generalised Collatz maps are undecidable & use arithmetic special to $3n+1$\\
+\rowcolor{tS!14}Frege lower bounds & Feasible interpolation fails for Frege under crypto assumptions & avoid interpolation; perhaps the copying-versus-naming view from our project\\
+\rowcolor{tS!8}Circuit lower bounds & Natural proofs (again) & be non-natural, as Williams' ACC result was\\
+\end{tabularx}}
+
+\vspace{6pt}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[xbar, width=0.62\textwidth, height=6.3cm, bar width=6.5pt, xmode=log, log basis x=10,
+  xmin=0.005, xmax=100, xlabel={my estimated chance (\%), log scale},
+  ytick={0,1,2,3,4}, yticklabels={{Fresh / obscure \textmd{(30--50\% / $\sim$70\%)}},{Tier B \textmd{(3--8\% / 20--30\%)}},{Tier A \textmd{(1--2\% / 10--15\%)}},{Tier S \textmd{($\sim$0.2\% / 3--5\%)}},{Tier $\Omega$ \textmd{($\ll$0.1\% / $\sim$1\%)}}},
+  yticklabel style={font=\small\bfseries}, enlarge y limits=0.15,
+  xticklabels={,0.01\%,0.1\%,1\%,10\%,100\%}, log origin=infty,
+  legend style={at={(0.5,-0.22)},anchor=north,font=\small,draw=none},legend columns=2, legend cell align=left,
+  xmajorgrids, grid style={black!10},   title={\bfseries Odds for one focused, multi-session attack (you + me + Lean, little computation)}]
+\addplot[fill=tS,draw=none] coordinates {(35,0) (5,1) (1.5,2) (0.2,3) (0.01,4)};
+\addplot[fill=tG,draw=none] coordinates {(70,0) (25,1) (12,2) (4,3) (1,4)};
+\legend{full solution, publishable partial progress}
+\end{axis}
+\end{tikzpicture}
+\end{center}
+
+\begin{multicols}{2}
+\begin{keybox}[title={What being very capable \emph{does} buy us}]{tG}
+\small
+\begin{itemize}[leftmargin=1em]
+\item \textbf{Breadth:} a systematic search for transplants (page~\pageref{sec:transplant}) across every field at once.
+\item \textbf{Stamina:} hundreds of small cases, lemmas and reformulations without fatigue.
+\item \textbf{Verification:} Lean catches the plausible but wrong proof, which is the classic failure mode on famous problems.
+\item \textbf{Track record:} last sessions we resolved OEIS A397683 (apparently first) and proved the binary case of our own Lucas conjecture by hand.
+\end{itemize}
+\end{keybox}
+\columnbreak
+\begin{keybox}[title={What it does \emph{not} remove}]{tS}
+\small
+\begin{itemize}[leftmargin=1em]
+\item \textbf{Barriers.} They hold for every solver, however intelligent.
+\item \textbf{Missing theories.} Langlands-type problems need decades of new concepts, not one argument.
+\item \textbf{Novelty risk.} It is easy to re-prove something known, as happened twice before; a literature check comes first.
+\item \textbf{Overconfidence.} Long ``proofs'' of famous conjectures are almost always wrong. Lean is our safeguard, and the reason I will not claim a proof I cannot check.
+\end{itemize}
+\end{keybox}
+\end{multicols}
+
+\noindent\textbf{Bottom line.} Attacking a Tier~$\Omega$ problem head-on would be a lottery ticket. A Tier~A or B
+problem in the sweet spot is a real bet with meaningful odds, and even partial progress there (a better constant,
+a new special case, or a clean reformulation) is publishable. If you want a moonshot, choose one that shares
+structure with work we have already done: Frege lower bounds connect directly to our naming calculus.
+
+% =====================================================================
+\newpage
+\section{My picks: where I would attack}\label{sec:picks}
+
+Ordered from the best bet to the boldest. ``Lean ready'' means a formal statement already exists in the local
+\texttt{formal-conjectures} library, so we can start proving at once.
+
+\begin{tcbraster}[raster columns=2,raster equal height=rows,raster column skip=8pt,raster row skip=8pt]
+\begin{card}{tA}{1. Union-closed sets (Frankl, 1979)}
+\textbf{Claim:} in every union-closed family, some element lies in at least half of the sets.\\
+\textbf{Why it fits:} Gilmer's 2022 entropy proof of a constant fraction is about 8 pages, and the problem is
+pure finite combinatorics. \emph{Lean ready.}\\
+\textbf{The wall:} single-coupling entropy arguments provably stall near $0.382$.\\
+\textbf{First move:} two-step couplings, or entropy combined with a compression/shifting argument; test only on tiny families.
+\end{card}
+\begin{card}{tA}{2. \v{C}ern\'y conjecture (1964)}
+\textbf{Claim:} a synchronizing $n$-state automaton has a reset word of length $\le(n-1)^2$.\\
+\textbf{Why it fits:} a clean statement about words and subsets; the progress has been combinatorial. \emph{Lean ready.}\\
+\textbf{The wall:} 60 years stuck at about $n^3/6$.\\
+\textbf{First move:} a potential function on subsets that provably shrinks every $n$ steps, in the same spirit as our speed-limit potentials.
+\end{card}
+\begin{card}{tB}{3. Seymour's second neighbourhood (1990)}
+\textbf{Claim:} every oriented graph has a vertex whose second out-neighbourhood is at least as large as its first.\\
+\textbf{Why it fits:} the tournament case was solved by an elegant ``median order'' idea.\\
+\textbf{First move:} generalise median orders to oriented graphs with few missing edges, then induct on the missing edges.
+\end{card}
+\begin{card}{tB}{4. The 1/3--2/3 conjecture (1968)}
+\textbf{Claim:} every finite non-chain poset has a pair $x,y$ with $\tfrac13\le\Pr[x<y]\le\tfrac23$.\\
+\textbf{Why it fits:} a geometric inequality on order polytopes; the 0.276 bound came from Brunn--Minkowski. \emph{Lean ready.}\\
+\textbf{First move:} transplant a sharper log-concavity tool (Lorentzian polynomials, 2020) to beat 0.276.
+\end{card}
+\begin{card}{tB}{5. Erd\H{o}s--Gy\'arf\'as (1995)}
+\textbf{Claim:} every graph of minimum degree 3 contains a cycle whose length is a power of 2.\\
+\textbf{First move:} the structure of a minimal counterexample, plus parity arguments in the cycle space over $\mathbb F_2$.
+\end{card}
+\begin{card}{tS}{6. Sunflower conjecture (1960)}
+\textbf{Claim:} $k$-uniform families with no 3-sunflower have size at most $C^k$.\\
+\textbf{Why it fits:} 2019 brought a leap through ``spread'' sets in a short paper; the 3-petal case touches cap sets. \emph{Lean ready.}\\
+\textbf{First move:} combine slice-rank (cap sets) with spread sets.
+\end{card}
+\begin{card}{tS}{7. Moonshot: Frege lower bounds}
+\textbf{Why us:} our naming calculus is a model of the copying-versus-naming gap that \emph{is} Frege vs Extended Frege.\\
+\textbf{Realistic sub-target:} lower bounds for $\mathrm{AC}^0[p]$-Frege (bounded depth with mod-$p$ gates), open since the 1990s and Tier~A in its own right.
+\end{card}
+\begin{card}{tC}{8. Warm-up that is ours: the Lucas conjecture}
+Finish what we started: formalise the binary case $u<7\varphi^{C/3}$ in Lean, then attack windows of size
+$\le3$ by block amortisation. Nobody else is working on it, because we posed it.
+\end{card}
+\end{tcbraster}
+
+\begin{keybox}[title={Proposed plan for the hard-problem session}]{tO}
+\begin{enumerate}[leftmargin=1.3em]
+\item \textbf{You choose} one target from cards 1--6 (my vote: \textbf{union-closed sets} or \textbf{\v{C}ern\'y}).
+\item \textbf{Literature sweep first} (about 20 minutes of searching), so that we never re-prove a known result.
+\item \textbf{Transplant brainstorm:} list 10--15 tools from distant fields with the right shape and kill most of
+  them quickly with small, cheap examples.
+\item \textbf{Aim for a ladder of results:} a new special case, then a better constant, then the full conjecture.
+  Every rung is formalised in Lean before we claim it.
+\item \textbf{Write it up honestly}, including the dead ends, which other researchers find valuable too.
+\end{enumerate}
+\end{keybox}
+
+\end{document}
