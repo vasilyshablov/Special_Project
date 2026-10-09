@@ -64,8 +64,11 @@ argument that does not use the Cauchy--Schwarz or AM--GM inequalities: after
 elementary bounds on complement degrees and a double count, everything reduces
 to the positivity of one explicit bivariate polynomial
 $P(k,t)$ on the positive integers. We also describe a self-contained Lean~4 /
-Mathlib formalization of this argument (about 220 lines), checked against
-the unchanged statement in \texttt{formal-conjectures}.
+Mathlib formalization of this argument, checked against the unchanged
+statement in \texttt{formal-conjectures}. We completed both the argument and the
+formalization before learning of the earlier work. Our formalization is about
+220 lines with three helper lemmas, compared with the roughly 330 lines and
+nine helper lemmas reported in pull request \#5221.
 \end{abstract}
 
 \section{Introduction}
@@ -90,9 +93,10 @@ We state plainly that the result in this note is \emph{already known}:
   (opened 31~August~2026; not merged as of 9~October~2026).
 \end{itemize}
 At the commit of \texttt{formal-conjectures} we worked against, the statement
-was still tagged \texttt{research open}; that is why we took it up, and we
-learned of the two works above afterwards. Our argument was found
-independently of both.
+was still tagged \texttt{research open}, and that is why we took it up. We
+found the argument, completed the Lean formalization and checked it before we
+searched for prior work. Only then did we learn of the two works above. Our
+argument was therefore found independently of both.
 
 \paragraph{What this note contributes.}
 Given the above, our contribution is modest:
@@ -107,8 +111,13 @@ Given the above, our contribution is modest:
   \texttt{sorry} in the existing \texttt{formal-conjectures} file without
   changing the statement.
 \end{enumerate}
-We have not compared our formalization with the one in~\cite{vatsj} line by
-line, and we make no claim about which is preferable.
+\paragraph{Size comparison.}
+Pull request \#5221 describes its proof as roughly 330 lines, including nine
+private helper lemmas~\cite{vatsj}. Our formalization is about 220 non-blank
+lines with three helper lemmas, so it is roughly a third shorter. Line counts
+depend on style, and we have not compared the two proofs line by line. We have
+not seen the length of Henry's informal proof~\cite{henry}, so we make no size
+comparison with it.
 
 \section{Statement}
 
