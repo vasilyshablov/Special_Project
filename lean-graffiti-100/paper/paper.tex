@@ -1,0 +1,494 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{fancyvrb}
+\usepackage{newunicodechar}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{url}
+\usepackage{microtype}
+\emergencystretch=2em
+
+% Unicode characters that appear in the Lean excerpts.
+\newunicodechar{ℝ}{\ensuremath{\mathbb{R}}}
+\newunicodechar{ℤ}{\ensuremath{\mathbb{Z}}}
+\newunicodechar{≤}{\ensuremath{\le}}
+\newunicodechar{⌈}{\ensuremath{\lceil}}
+\newunicodechar{⌉}{\ensuremath{\rceil}}
+\newunicodechar{ᶜ}{\ensuremath{^{\mathsf c}}}
+\newunicodechar{α}{\ensuremath{\alpha}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Gbar}{\overline{G}}
+\newcommand{\dbar}{\overline{d}}
+\newcommand{\lng}{\operatorname{length}}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+
+\fvset{fontsize=\small,frame=single,framesep=6pt,rulecolor=\color{black!40}}
+
+\title{An independent, Lean-verified proof of\\
+Written on the Wall II Conjecture 100}
+\author{Author: [your name]\\[2pt]
+\small Proof search and formalization assisted by Claude (Anthropic)}
+\date{October 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Conjecture~100 of DeLaVi\~na's \emph{Written on the Wall II} (WOWII), a list of
+conjectures produced by the program Graffiti.pc, states that every connected
+graph $G$ on at least two vertices satisfies
+$\alpha(G) \le \bigl\lceil (\max_v l(v) + \tfrac12 \lng(\Gbar))/2 \bigr\rceil$, where
+$l(v)$ is the independence number of the neighbourhood of $v$ and
+$\lng(\Gbar)$ is the Euclidean norm of the degree sequence of the complement.
+\textbf{This is not the first proof.} The conjecture was proved by Kias
+Henry~\cite{henry} (Zenodo, August 2026; the proof was reviewed by
+E.~DeLaVi\~na, who marked the conjecture as true), and a Lean formalization by
+the GitHub user vatsj was submitted to the \texttt{formal-conjectures}
+repository as pull request \#5221~\cite{vatsj}. We give an independent
+argument that does not use the Cauchy--Schwarz or AM--GM inequalities: after
+elementary bounds on complement degrees and a double count, everything reduces
+to the positivity of one explicit bivariate polynomial
+$P(k,t)$ on the positive integers. We also describe a self-contained Lean~4 /
+Mathlib formalization of this argument (about 220 lines), checked against
+the unchanged statement in \texttt{formal-conjectures}.
+\end{abstract}
+
+\section{Introduction}
+
+Graffiti.pc is a conjecture-generating program written by Ermelinda
+DeLaVi\~na; its output is collected in the online list \emph{Written on the
+Wall II} (WOWII)~\cite{wowii}. Google DeepMind's \path{formal-conjectures}
+repository~\cite{fc} contains Lean~4 statements of many WOWII conjectures,
+each tagged with a status. Conjecture~100 concerns the independence number,
+local independence numbers, and the degree sequence of the complement graph.
+
+\paragraph{Prior work.}
+We state plainly that the result in this note is \emph{already known}:
+\begin{itemize}
+\item Kias Henry, \emph{A Proof of Written on the Wall II Conjecture 100},
+  Zenodo, 13~August~2026, \href{https://doi.org/10.5281/zenodo.21914031}{doi:10.5281/zenodo.21914031}~\cite{henry}.
+  Henry's proof uses the Cauchy--Schwarz and AM--GM inequalities. It was
+  reviewed by E.~DeLaVi\~na, who marked the conjecture as true on the WOWII
+  page.
+\item A Lean proof by the GitHub user vatsj, submitted as pull
+  request~\#5221 to the \path{formal-conjectures} repository~\cite{vatsj}
+  (opened 31~August~2026; not merged as of 9~October~2026).
+\end{itemize}
+At the commit of \texttt{formal-conjectures} we worked against, the statement
+was still tagged \texttt{research open}; that is why we took it up, and we
+learned of the two works above afterwards. Our argument was found
+independently of both.
+
+\paragraph{What this note contributes.}
+Given the above, our contribution is modest:
+\begin{enumerate}
+\item A second, independent proof. It uses only pointwise lower bounds on
+  complement degrees, the inequalities $(x+y)^2 \ge x^2 + 2xy$ and
+  $c^2 \ge tc$ (for $c \ge t \ge 0$), and one double count. No
+  Cauchy--Schwarz or AM--GM step is needed. All of the arithmetic is collected
+  into a single polynomial inequality $P(k,t) > 0$ (Lemma~\ref{lem:poly}).
+\item A compact formalization in Lean~4 with Mathlib (about 220 non-blank
+  lines including the three arithmetic lemmas), which fills the
+  \texttt{sorry} in the existing \texttt{formal-conjectures} file without
+  changing the statement.
+\end{enumerate}
+We have not compared our formalization with the one in~\cite{vatsj} line by
+line, and we make no claim about which is preferable.
+
+\section{Statement}
+
+All graphs are finite and simple. For a graph $G$ with vertex set $V$ and $n = |V|$ we
+write $N(v)$ for the (open) neighbourhood of $v$, $\deg v = |N(v)|$,
+$\alpha(G)$ for the independence number, and $\Gbar$ for the complement, so
+that $\deg_{\Gbar}(v) = n-1-\deg v$.
+
+\begin{definition}
+For $v \in V$, let $l(v) = \alpha\bigl(G[N(v)]\bigr)$ be the independence
+number of the subgraph induced by the neighbourhood of $v$ (with $l(v)=0$
+if $N(v)=\emptyset$). The \emph{length} of a graph $H$ is the Euclidean norm
+of its degree sequence,
+$\lng(H) = \bigl(\sum_{v} \deg_H(v)^2\bigr)^{1/2}$.
+\end{definition}
+
+\begin{theorem}[WOWII Conjecture 100]\label{thm:main}
+Let $G$ be a connected graph with at least two vertices. Then
+\[
+  \alpha(G) \;\le\; \ceil{\frac{\max_{v} l(v) + \tfrac12\,\lng(\Gbar)}{2}}.
+\]
+\end{theorem}
+
+\begin{remark}
+The hypothesis $n \ge 2$ is needed. For the one-vertex graph $K_1$ we have
+$\alpha = 1$, $l(v) = 0$ and $\lng(\Gbar) = 0$, so the right-hand side is
+$0$. The WOWII text says only ``simple connected graph''; the
+\texttt{formal-conjectures} statement assumes the vertex type is nontrivial,
+and we do the same.
+\end{remark}
+
+\section{The proof}
+
+Fix $G$ as in Theorem~\ref{thm:main}. Throughout we use the following
+notation.
+\begin{itemize}
+\item $I$ is a maximum independent set, $a = |I| = \alpha(G)$.
+\item $O = V \setminus I$ and $m = |O|$.
+\item $K = \max_v l(v)$.
+\item $y(w) = |N(w) \cap I|$ for $w \in O$.
+\item $E = $ the number of edges between $I$ and $O$.
+\item $S = \sum_{v \in V} \deg_{\Gbar}(v)^2$, so $\lng(\Gbar) = \sqrt{S}$.
+\item $D = 2a - 2 - K$.
+\end{itemize}
+
+\subsection{Reduction}
+
+Since $a$ is an integer, $\ceil{x} \ge a$ holds if and only if $x > a-1$.
+With $x = (K + \tfrac12\sqrt S)/2$ this is equivalent to
+\begin{equation}\label{eq:goal}
+  \sqrt{S} \;>\; 2D = 2(2a-2-K).
+\end{equation}
+If $D < 0$ then \eqref{eq:goal} is immediate because $\sqrt S \ge 0$. So
+from now on we assume $D \ge 0$, and it suffices to prove
+\begin{equation}\label{eq:goal2}
+  S \;>\; 4D^2.
+\end{equation}
+
+\subsection{Elementary facts}
+
+\begin{lemma}\label{lem:facts}
+With the notation above:
+\begin{enumerate}
+\item[(1)] $y(w) \le l(w) \le K$ for every $w \in O$.
+\item[(2)] $a \le E \le K m$.
+\item[(3)] For $u \in I$, $\deg_{\Gbar}(u) \ge (a-1) + (m - \deg u)$, and
+  $m - \deg u \ge 0$. For $w \in O$, $\deg_{\Gbar}(w) \ge a - y(w)$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) The set $N(w) \cap I$ is independent in $G$ (it is a subset of $I$) and is
+contained in $N(w)$, so it is an independent set of $G[N(w)]$. Hence
+$y(w) \le \alpha(G[N(w)]) = l(w) \le K$.
+
+(2) Because $I$ is independent, every neighbour of a vertex $u \in I$ lies in
+$O$; hence $\deg u = |N(u) \cap O|$ and $E = \sum_{u \in I} \deg u$. Since $G$ is
+connected and has at least two vertices, every vertex has degree at least~$1$,
+so $E \ge |I| = a$. Counting the same edges from the $O$ side gives
+$E = \sum_{w \in O} y(w) \le K m$ by~(1).
+
+(3) For $u \in I$, the vertices of $I \setminus \{u\}$ are not adjacent to $u$
+in $G$, and neither are the vertices of $O \setminus N(u)$. Since
+$N(u) \subseteq O$, the latter set has $m - \deg u \ge 0$ elements. (In fact
+equality holds, but we only need the inequality.) For $w \in O$, the
+$a - y(w)$ vertices of $I \setminus N(w)$ are non-neighbours of $w$ distinct
+from $w$.
+\end{proof}
+
+Summing $m - \deg u$ over $u \in I$ and using (2) gives
+\begin{equation}\label{eq:amE}
+  \sum_{u \in I} (m - \deg u) \;=\; am - E \;\ge\; 0.
+\end{equation}
+
+\subsection{Case \texorpdfstring{$K \ge a$}{K >= a}}
+
+Here $0 \le D = 2a - 2 - K \le a - 2$, so $a \ge 2$. Keeping only the vertices
+of $I$ and using Lemma~\ref{lem:facts}(3),
+\[
+  S \;\ge\; \sum_{u \in I} \deg_{\Gbar}(u)^2 \;\ge\; a(a-1)^2.
+\]
+It remains to check $a(a-1)^2 > 4(a-2)^2 \ge 4D^2$. For $a = 2$ this reads
+$2 > 0$; for $a = 3$ it reads $12 > 4$; and for $a \ge 4$ we have
+$a(a-1)^2 \ge 4(a-1)^2 > 4(a-2)^2$. This proves~\eqref{eq:goal2}.
+
+\subsection{Case \texorpdfstring{$K < a$}{K < a}}
+
+Put $t = a - K \ge 1$. Note $K \ge 1$: otherwise $E \le Km = 0 < a$,
+contradicting Lemma~\ref{lem:facts}(2).
+
+\emph{Contribution of $I$.} For $x, y \ge 0$ we have
+$(x+y)^2 \ge x^2 + 2xy$. Applying this with $x = a-1$ and
+$y = m - \deg u$ (Lemma~\ref{lem:facts}(3)) and summing with~\eqref{eq:amE},
+\[
+  \sum_{u \in I} \deg_{\Gbar}(u)^2
+  \;\ge\; a(a-1)^2 + 2(a-1)(am - E).
+\]
+
+\emph{Contribution of $O$.} For $w \in O$ write $c_w = \deg_{\Gbar}(w)$. By
+Lemma~\ref{lem:facts}(1),(3), $c_w \ge a - y(w) \ge a - K = t > 0$, hence
+$c_w^2 \ge t\,c_w \ge t\,(a - y(w))$. Summing over $O$ and using
+$\sum_{w \in O} y(w) = E$,
+\[
+  \sum_{w \in O} \deg_{\Gbar}(w)^2 \;\ge\; t\,(am - E).
+\]
+
+\emph{Combining.} Adding the two bounds,
+\[
+  S \;\ge\; a(a-1)^2 + (2a - 2 + t)(am - E).
+\]
+By Lemma~\ref{lem:facts}(2), $am - E \ge am - Km = tm$, and
+$2a-2+t \ge 0$, so
+\begin{equation}\label{eq:S}
+  S \;\ge\; a(a-1)^2 + (2a-2+t)\,t\,m.
+\end{equation}
+Multiply~\eqref{eq:S} by $K > 0$ and use $Km \ge a$ (again Lemma~\ref{lem:facts}(2)):
+\[
+  K S \;\ge\; K a (a-1)^2 + (2a-2+t)\,t\,a.
+\]
+Since $D = 2a - 2 - K = a - 2 + t$, we get
+\begin{equation}\label{eq:KS}
+  K S - 4 K D^2 \;\ge\; K a (a-1)^2 + (2a - 2 + t)\,a\,t - 4K(a - 2 + t)^2 .
+\end{equation}
+Substituting $a = K + t$ and expanding, the right-hand side
+of~\eqref{eq:KS} equals $P(K,t)$, where
+\begin{equation}\label{eq:P}
+\begin{aligned}
+  P(k,t) \;=\;& k\,(k^3 - 6k^2 + 17k - 16)
+  \;+\; t\,k\,(3k^2 - 18k + 31) \\
+  &+\; t^2\,(3k^2 - 13k - 2) \;+\; t^3\,(k+3).
+\end{aligned}
+\end{equation}
+(We checked this identity by symbolic expansion in SymPy. In the Lean
+formalization the lemma \texttt{key\_poly} is stated in the unexpanded form of
+the right-hand side of~\eqref{eq:KS}, so the expansion is not a separate
+trusted step there.) By
+Lemma~\ref{lem:poly} below, $P(K,t) > 0$, so $K S > 4 K D^2$, and dividing
+by $K > 0$ gives~\eqref{eq:goal2}.
+
+\subsection{The polynomial inequality}
+
+\begin{lemma}\label{lem:poly}
+$P(k,t) > 0$ for all integers $k \ge 1$ and $t \ge 1$.
+\end{lemma}
+
+\begin{proof}
+\emph{The case $k \ge 5$.} Every term of~\eqref{eq:P} is then positive:
+\begin{itemize}
+\item $k^3 - 6k^2 + 17k - 16$ has a single real root, near $1.61$, and is
+  positive for $k \ge 2$ (its values at $k = 2,3,4,5$ are $2, 8, 20, 44$);
+\item $3k^2 - 18k + 31$ has discriminant $324 - 372 = -48 < 0$, so it is
+  positive for all real $k$;
+\item $3k^2 - 13k - 2$ has its larger root near $4.48$, so it is positive for
+  $k \ge 5$ (its value at $k=5$ is $8$);
+\item $k + 3 > 0$.
+\end{itemize}
+
+\emph{The cases $k \le 4$.} Here $P(k,\cdot)$ is an explicit cubic. Writing
+$t = s + 1$ with $s \ge 0$:
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+$k$ & $P(k,t)$ & in terms of $s = t-1 \ge 0$ \\
+\midrule
+$1$ & $4t^3 - 12t^2 + 16t - 4$ & $4s^3 + 4s + 4$ \\
+$2$ & $5t^3 - 16t^2 + 14t + 4$ & $5s^3 - s^2 - 3s + 7$ \\
+$3$ & $6t^3 - 14t^2 + 12t + 24$ & $6s^3 + 4s^2 + 2s + 28$ \\
+$4$ & $7t^3 - 6t^2 + 28t + 80$ & $7s^3 + 15s^2 + 37s + 109$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+For $k = 1, 3, 4$ all coefficients in $s$ are positive, so $P > 0$. For
+$k = 2$: at $s = 0$ the value is $7$, and for integers $s \ge 1$ we have
+$5s^3 - s^2 - 3s = s(5s^2 - s - 3) \ge 1$, so the value is at least $8$.
+\end{proof}
+
+\begin{remark}
+The arithmetic margin is small. By the case analysis above, the minimum of
+$P$ over positive integers is $P(1,1) = 4$ (the next smallest values with
+$k \le 4$ are $P(2,1) = 7$ and $P(2,2) = 8$, and $P(k,t) \ge 5 \cdot 44$ for
+$k \ge 5$). This says nothing about the tightness of Theorem~\ref{thm:main}
+itself, since the estimates leading to~\eqref{eq:S} and~\eqref{eq:KS} lose
+a lot for most graphs.
+\end{remark}
+
+\subsection{Conclusion}
+
+In both cases~\eqref{eq:goal2} holds whenever $D \ge 0$, hence
+$\sqrt{S} > 2(2a - 2 - K)$, i.e.
+$(K + \tfrac12\sqrt S)/2 > a - 1$, and therefore
+$\ceil{(K + \tfrac12 \lng(\Gbar))/2} \ge a = \alpha(G)$. This proves
+Theorem~\ref{thm:main}. \qed
+
+\section{Lean formalization}
+
+\subsection{Setting}
+
+The formalization lives in the file
+\begin{center}\small\path{FormalConjectures/WrittenOnTheWallII/GraphConjecture100.lean}\end{center}
+of \path{google-deepmind/formal-conjectures}~\cite{fc}, at commit
+\begin{center}\small\texttt{b3f26411f06b0b0ec1923da80b62585f23288d39},\end{center}
+built with Lean~4
+v4.33.1~\cite{lean4} and the Mathlib~\cite{mathlib} version pinned by that
+commit. The theorem statement is the repository's own, unchanged; we only
+replaced its \texttt{sorry} by a proof and changed the category attribute
+from \texttt{research open} to \texttt{research solved}. The statement is:
+
+\begin{Verbatim}
+theorem conjecture100 (G : SimpleGraph α) [DecidableRel G.Adj]
+    (h : G.Connected) :
+    let maxL := (Finset.univ.image (indepNeighborsCard G)).max' (by simp)
+    (G.indepNum : ℝ) ≤
+      ⌈((maxL : ℝ) + (1 / 2) * (degreeL2Norm Gᶜ : ℝ)) / 2⌉
+\end{Verbatim}
+
+\noindent
+Here the vertex type \texttt{α} carries \texttt{[Fintype α] [DecidableEq α]
+[Nontrivial α]}, so $G$ has at least two vertices.
+\texttt{indepNeighborsCard G v} is the independence number of the
+neighbourhood of \texttt{v}, and \texttt{degreeL2Norm H} is
+$\sqrt{\sum_v \deg_H(v)^2}$. Both are defined in the repository's shared
+utilities. The command \texttt{\#print axioms conjecture100} reports only
+\texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}, the
+standard axioms of Lean and Mathlib; in particular there is no
+\texttt{sorryAx}.
+
+\subsection{Structure}
+
+The proof follows Section~3 closely. Three private lemmas over $\mathbb{Z}$
+carry the arithmetic, and the main theorem does the combinatorics.
+
+\begin{itemize}
+\item \texttt{key\_poly (k t : ℤ)}: for $k, t \ge 1$,
+  $4k(k + 2t - 2)^2 < k(k+t)(k+t-1)^2 + (2(k+t) - 2 + t)(k+t)t$, which is
+  $P(k,t) > 0$ in unexpanded form. The proof splits on $k \le 4$ versus
+  $k \ge 5$. For $k \le 4$, \texttt{interval\_cases k} produces the four
+  cubics, each closed by \texttt{nlinarith} with nonnegative products of
+  $t-1$ as hints. For $k \ge 5$, \texttt{nlinarith} is given products of
+  $k-5 \ge 0$ and $t \ge 0$ as hints. (So the Lean certificate for $k \ge 5$
+  is a Positivstellensatz-style combination found by \texttt{nlinarith}, not
+  literally the term-by-term argument of Lemma~\ref{lem:poly}.)
+\item \texttt{arith\_lt}: the case $K < a$. From the integer hypotheses
+  $a \le E \le Km$, the $I$-bound
+  $a(a-1)^2 + 2(a-1)(am-E) \le X$ and the $O$-bound $(a-K)(am-E) \le Y$, it
+  derives $4(2a-2-K)^2 < X + Y$, following~\eqref{eq:S}--\eqref{eq:KS} and
+  calling \texttt{key\_poly}.
+\item \texttt{arith\_ge}: the case $a \le K$. From $a(a-1)^2 \le X$ and
+  $0 \le 2a-2-K$ it derives $4(2a-2-K)^2 < X$.
+\item \texttt{conjecture100}: obtains $I$, defines $y$, proves
+  Lemma~\ref{lem:facts} and the two sums, splits into the three cases
+  ($D < 0$, $K < a$, $K \ge a$), and finally passes from the integer
+  inequality $4D^2 < S$ to the real inequality with the ceiling.
+\end{itemize}
+
+\subsection{Mathlib API used}
+
+The combinatorial steps reduce to a handful of Mathlib lemmas.
+\begin{center}
+\small
+\begin{tabular}{p{0.5\textwidth}p{0.38\textwidth}}
+\toprule
+Mathlib declaration & Used for \\
+\midrule
+\texttt{SimpleGraph.exists\_isNIndepSet\_indepNum} & a maximum independent set $I$, $|I| = a$ \\
+\texttt{IsIndepSet.card\_le\_indepNum} & $y(w) \le l(w)$ and $a \ge 1$ \\
+\texttt{Preconnected.degree\_pos\_of\_nontrivial} & every degree is $\ge 1$ \\
+\texttt{neighborFinset\_compl} & neighbours in $\Gbar$ as $N(v)^{\mathsf c} \setminus \{v\}$ \\
+\texttt{Finset.sum\_card\_bipartiteAbove\_eq\_\allowbreak sum\_card\_bipartiteBelow} & double counting $E$ \\
+\texttt{Int.le\_ceil\_iff}, \texttt{Real.lt\_sqrt\_of\_sq\_lt} & the final reduction~\eqref{eq:goal} \\
+\texttt{nlinarith}, \texttt{interval\_cases}, \texttt{omega} & arithmetic \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+The whole proof, including the three arithmetic lemmas, occupies about 220
+non-blank lines. To check it:
+\begin{Verbatim}
+git clone https://github.com/google-deepmind/formal-conjectures
+cd formal-conjectures
+git checkout b3f26411f06b0b0ec1923da80b62585f23288d39
+git apply ../formal-conjectures.patch
+lake exe cache get
+lake build FormalConjectures.WrittenOnTheWallII.GraphConjecture100
+\end{Verbatim}
+
+\section{Computational check}
+
+Before the proof was found, the inequality was tested exhaustively on all
+connected graphs with $2 \le n \le 9$ vertices, generated with
+\texttt{geng} from nauty~\cite{nauty}. There are
+$1 + 2 + 6 + 21 + 112 + 853 + 11117 + 261080 = 273{,}192$ such graphs up to
+isomorphism. No counterexample was found. For this note we repeated the check
+with a separate script that avoids floating point: by the reduction
+in~\S3.1, the inequality holds if and only if $4a - 4 - 2K < 0$ or
+$S > (4a-4-2K)^2$, which is an integer comparison. The repeat also found no
+counterexample. This is evidence, not part of the proof; Graffiti.pc
+conjectures are by construction consistent with the program's own database
+of graphs.
+
+\section{Discussion}
+
+We have not studied the argument of~\cite{henry} in detail, beyond noting
+that it uses the Cauchy--Schwarz and AM--GM inequalities, so we do not
+attempt a detailed comparison. Our proof uses only the termwise bounds of
+Lemma~\ref{lem:facts}(3), the two elementary inequalities
+$(x+y)^2 \ge x^2 + 2xy$ and $c^2 \ge tc$, and the double count
+$a \le E \le Km$; the price is the case analysis in Lemma~\ref{lem:poly}.
+One practical consequence of this shape is that the formal proof needs no
+real analysis until the last step: every inequality before it is between
+integers, which \texttt{nlinarith} and \texttt{omega} handle directly.
+
+\paragraph{Acknowledgements.}
+The proof search and the Lean formalization were carried out with the
+assistance of Claude (Anthropic). We thank the maintainers of
+\texttt{formal-conjectures} for the formal statement and E.~DeLaVi\~na for
+maintaining WOWII.
+
+\begin{thebibliography}{9}
+
+\bibitem{wowii}
+E.~DeLaVi\~na,
+\emph{Written on the Wall II (Conjectures of Graffiti.pc)},
+\url{http://cms.dt.uh.edu/faculty/delavinae/research/wowII/}.
+
+\bibitem{henry}
+K.~Henry,
+\emph{A Proof of Written on the Wall II Conjecture 100},
+Zenodo, 13 August 2026,
+\href{https://doi.org/10.5281/zenodo.21914031}{doi:10.5281/zenodo.21914031}.
+
+\bibitem{vatsj}
+vatsj,
+\emph{Lean proof of WOWII Conjecture 100},
+pull request \#5221 to \path{google-deepmind/formal-conjectures},
+opened 31 August 2026,
+\url{https://github.com/google-deepmind/formal-conjectures/pull/5221}.
+
+\bibitem{fc}
+Google DeepMind,
+\emph{formal-conjectures}: a collection of formalized conjectures in Lean,
+\url{https://github.com/google-deepmind/formal-conjectures}.
+
+\bibitem{lean4}
+L.~de~Moura and S.~Ullrich,
+The Lean~4 theorem prover and programming language,
+in \emph{Automated Deduction -- CADE 28}, Lecture Notes in Comput. Sci.
+12699, Springer, 2021, 625--635.
+
+\bibitem{mathlib}
+The mathlib Community,
+The Lean mathematical library,
+in \emph{Proceedings of the 9th ACM SIGPLAN International Conference on
+Certified Programs and Proofs (CPP 2020)}, ACM, 2020, 367--381.
+
+\bibitem{nauty}
+B.~D. McKay and A.~Piperno,
+Practical graph isomorphism, II,
+\emph{J. Symbolic Comput.} \textbf{60} (2014), 94--112.
+
+\end{thebibliography}
+
+\end{document}
