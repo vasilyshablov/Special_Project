@@ -194,4 +194,91 @@ theorem fibLib_unfold_ge : ∀ i, 2 ^ (i / 2) ≤ fibLib.unfold i
     rw [show (i + 2) / 2 = i / 2 + 1 by omega, pow_succ]
     omega
 
+/-! ## 4. The sharp bound for bounded citations: `d`-bonacci growth -/
+
+/-- `tb d i = 1 + tb d (i-1) + ... + tb d (i-d)` (terms with negative index omitted). For
+`d = 2` this is the Fibonacci library; its growth rate is the `d`-bonacci constant. -/
+def tb (d i : ℕ) : ℕ := 1 + ∑ j ∈ Finset.Ico (i - d) i, if j < i then tb d j else 0
+termination_by i
+decreasing_by assumption
+
+theorem tb_eq (d i : ℕ) : tb d i = 1 + ∑ j ∈ Finset.Ico (i - d) i, tb d j := by
+  rw [tb]
+  congr 1
+  exact Finset.sum_congr rfl fun j hj => if_pos (Finset.mem_Ico.1 hj).2
+
+theorem tb_mono (d : ℕ) : Monotone (tb d) := by
+  apply monotone_nat_of_le_succ
+  intro i
+  rcases Nat.eq_zero_or_pos d with rfl | hd
+  · rw [tb_eq, tb_eq]; simp
+  · rw [tb_eq d (i + 1)]
+    have hmem : i ∈ Finset.Ico (i + 1 - d) (i + 1) := Finset.mem_Ico.2 ⟨by omega, by omega⟩
+    have := Finset.single_le_sum (f := tb d) (fun _ _ => Nat.zero_le _) hmem
+    omega
+
+/-- Exchange lemma: among sets of at most `d` indices below `i`, a monotone `f` has the
+largest sum on the last `d` indices. -/
+theorem sum_le_sum_window (f : ℕ → ℕ) (hf : Monotone f) (d i : ℕ) (A : Finset ℕ)
+    (hA : ∀ j ∈ A, j < i) (hcard : A.card ≤ d) :
+    ∑ j ∈ A, f j ≤ ∑ j ∈ Finset.Ico (i - d) i, f j := by
+  set W := Finset.Ico (i - d) i with hW
+  rw [← Finset.sum_inter_add_sum_sdiff A W, ← Finset.sum_inter_add_sum_sdiff W A,
+    Finset.inter_comm W A]
+  have hout : ∀ x ∈ A \ W, f x ≤ f (i - d) := by
+    intro x hx
+    rw [Finset.mem_sdiff, hW, Finset.mem_Ico] at hx
+    exact hf (by have := hA x hx.1; omega)
+  have hin : ∀ y ∈ W \ A, f (i - d) ≤ f y := by
+    intro y hy
+    rw [Finset.mem_sdiff, hW, Finset.mem_Ico] at hy
+    exact hf hy.1.1
+  have hc : (A \ W).card ≤ (W \ A).card := by
+    have h1 := Finset.card_sdiff_add_card_inter A W
+    have h2 := Finset.card_sdiff_add_card_inter W A
+    rw [Finset.inter_comm W A] at h2
+    rcases (A \ W).eq_empty_or_nonempty with he | ⟨x, hx⟩
+    · rw [he]; simp
+    · have hx' := hx
+      rw [Finset.mem_sdiff, hW, Finset.mem_Ico] at hx'
+      have hxi := hA x hx'.1
+      have hWc : W.card = d := by rw [hW, Nat.card_Ico]; omega
+      omega
+  have := calc ∑ x ∈ A \ W, f x ≤ (A \ W).card • f (i - d) := Finset.sum_le_card_nsmul _ _ _ hout
+    _ ≤ (W \ A).card • f (i - d) := Nat.mul_le_mul_right _ hc
+    _ ≤ ∑ y ∈ W \ A, f y := Finset.card_nsmul_le_sum _ _ _ hin
+  omega
+
+/-- Sharp bound: with own sizes `≤ S` and at most `d` citations per result,
+`unfold i ≤ S * tb d i`. -/
+theorem Library.unfold_le_tb (L : Library) (S d : ℕ) (hS : ∀ i, L.size i ≤ S)
+    (hd : ∀ i, (L.deps i).card ≤ d) : ∀ i, L.unfold i ≤ S * tb d i := by
+  intro i
+  induction i using Nat.strong_induction_on with
+  | _ i ih =>
+    rw [L.unfold_eq, tb_eq, mul_add, mul_one, Finset.mul_sum]
+    have h1 : ∑ j ∈ L.deps i, L.unfold j ≤ ∑ j ∈ L.deps i, S * tb d j :=
+      Finset.sum_le_sum fun j hj => ih j (L.acyclic i j hj)
+    have h2 : ∑ j ∈ L.deps i, S * tb d j ≤ ∑ j ∈ Finset.Ico (i - d) i, S * tb d j :=
+      sum_le_sum_window (fun j => S * tb d j) (fun a b hab => Nat.mul_le_mul_left _ (tb_mono d hab))
+        d i (L.deps i) (L.acyclic i) (hd i)
+    have := hS i
+    omega
+
+/-- The library in which every result cites its `d` predecessors. -/
+def windowLib (d : ℕ) : Library where
+  size _ := 1
+  deps i := Finset.Ico (i - d) i
+  acyclic _ _ hj := (Finset.mem_Ico.1 hj).2
+
+/-- The bound is attained: `windowLib d` has `unfold i = tb d i` exactly. -/
+theorem windowLib_unfold (d : ℕ) : ∀ i, (windowLib d).unfold i = tb d i := by
+  intro i
+  induction i using Nat.strong_induction_on with
+  | _ i ih =>
+    rw [(windowLib d).unfold_eq, tb_eq]
+    show 1 + _ = _
+    congr 1
+    exact Finset.sum_congr rfl fun j hj => ih j (Finset.mem_Ico.1 hj).2
+
 end Fruitfulness

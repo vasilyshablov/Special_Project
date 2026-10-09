@@ -1,0 +1,637 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=*}
+\newtheorem*{question}{Question}
+\title{Working Notes: Fruitfulness, Compression,\\and the Shape of Mathematics}
+\author{Vasily Shablov \and with Claude (Anthropic)}
+\date{October 2026 --- current thoughts, not a paper}
+\begin{document}
+\maketitle
+
+\begin{quote}\small
+``Civilization advances by extending the number of important operations which we can
+perform without thinking about them.'' \hfill --- A.\,N.~Whitehead, 1911
+\end{quote}
+
+\section{Where we are}
+
+We asked an open question, \emph{what is the fruitfulness of a mathematical idea?}, and gave
+it a precise answer.
+
+\paragraph{The definition.} A named concept (a definition or a lemma) is a
+\emph{compression}: its body is written once and cited afterwards.
+
+\paragraph{What is proved in Lean.} No \texttt{sorry} anywhere.
+\begin{itemize}
+\item Naming a body of size $b$ that is used $k$ times saves exactly $(k-1)(b-1)-1$ symbols.
+\item Unfolding every citation at most doubles the size per result.
+\item That doubling is attained, and a Fibonacci library grows by the golden ratio per result.
+\end{itemize}
+
+\paragraph{What we measured.} We exported all 771{,}129 constants of Mathlib, with
+20.4\,M citation edges, and analysed the 315{,}085 user-facing ones.
+\begin{itemize}
+\item \textbf{Naive unfolding explodes.} Unfolded size grows about $1.5\times$ per
+  dependency level ($R^2=0.98$). At the deepest level it reaches roughly $10^{65.6}$ symbols.
+\item \textbf{Reuse rediscovers the textbook.} Ranked by reuse, the top concepts are
+  \texttt{Set}, \texttt{Category}, \texttt{Functor}, \texttt{TopologicalSpace},
+  \texttt{Module}, and so on.
+\item \textbf{Two axes of human taste, each computable.}
+  \begin{itemize}
+  \item Concepts that humans call important are predicted by \emph{reuse}: AUC $0.87$, or
+    $0.86$ when compared only within the same file.
+  \item Theorems that humans call famous are predicted by \emph{depth}: AUC $0.78$, or $0.66$
+    within the same file.
+  \end{itemize}
+\end{itemize}
+
+\noindent These notes record what I now think these results \emph{mean}. Most of it is
+questions.
+
+\section{A correction I owe first}
+
+We said ``fully unfolded, Mathlib does not fit in the universe.'' That is true of
+\emph{naive} inlining. But $U$ is only an \emph{upper} bound on the size of a lemma-free
+proof. A clever re-prover can restructure a proof instead of copying lemma bodies.
+
+For Frege systems this is a theorem: tree-like Frege polynomially simulates dag-like Frege
+(Kraj\'i\v{c}ek). There, reusing lemmas buys at most a \emph{polynomial} saving, even though
+naive unfolding is exponential. Our exponential theorems are correct, but they are about
+inlining, not about the minimal lemma-free proof. The honest claim is:
+\begin{itemize}
+\item \emph{lemma names} make mathematics exponentially shorter than \emph{copying};
+\item whether \emph{some} lemma-free proof would be short is a question of
+  \textbf{proof complexity}, and it is largely open.
+\end{itemize}
+
+\section{The deepest form of our question is a famous open problem}
+
+There are two kinds of naming, and they are not the same.
+
+\begin{enumerate}
+\item \textbf{Lemmas} name a \emph{proved statement}: reuse a result. In proof complexity
+  this is dag-like versus tree-like proofs.
+  \begin{itemize}
+  \item For resolution, the gap is exponential (Ben-Sasson, Impagliazzo and Wigderson).
+  \item For Frege, the gap is polynomial (Kraj\'i\v{c}ek).
+  \end{itemize}
+\item \textbf{Definitions} introduce a \emph{new symbol} that abbreviates a formula. That
+  is Tseitin's extension rule, and Extended Frege is Frege plus definitions.
+  \begin{itemize}
+  \item Whether Extended Frege is super-polynomially stronger than Frege is one of the
+    central open problems of proof complexity.
+  \end{itemize}
+\end{enumerate}
+
+\begin{question}[Q1, sharpened]
+Are \emph{new concepts} ever exponentially necessary, beyond reusing lemmas? Or can every
+proof that uses definitions be rewritten, at polynomial cost, using only old vocabulary?
+\end{question}
+
+\noindent This is exactly the question ``are human concepts forced or merely convenient?'',
+in formal dress.
+
+Going up a type level, the answer is spectacular. G\"odel (1936) showed that moving to
+higher-order logic shortens some proofs by more than any computable function. Boolos's
+``curious inference'' (1987) is a concrete case: a valid first-order argument whose shortest
+first-order proof is unimaginably long, physically impossible to write down, while a short
+second-order proof exists. So at the level of \emph{types of concepts}, concepts are provably
+forced. At the propositional level, nobody knows.
+
+\begin{question}[Q1$'$]
+Mathlib is a vast empirical sample of definitions in use. Can its data say anything about
+\emph{where} definitions give super-polynomial savings? That would give experimental
+evidence on a problem that has resisted proof.
+\end{question}
+
+\section{Value has two axes: depth and leverage}
+
+Our human-label results split cleanly.
+\begin{itemize}
+\item \textbf{Famous theorems are deep}, in the sense of high $\log U - \log s$. They
+  certify a large amount of hidden work behind a short statement.
+\item \textbf{Fundamental concepts have leverage.} They are small and reused enormously.
+\end{itemize}
+
+Both axes already exist in the theory of information, independently of mathematics.
+\begin{itemize}
+\item \textbf{Bennett's logical depth} (1988). An object is valuable when it is the result
+  of a long computation that cannot be shortcut: a genome, a solved theorem. Bennett
+  proposed depth, not information content, as the measure of value. Our finding that fame
+  tracks unfolded depth is, as far as I know, the first large-scale test of Bennett's
+  thesis on human judgments of mathematical value.
+\item \textbf{Schmidhuber's compression progress} (2009). An observer finds something
+  interesting when it improves the observer's compressor; the first derivative of
+  compressibility. Our $(k-1)(b-1)-1$ is exactly the compression progress a single new
+  concept produces. Reuse predicting human concept taste (0.87) is evidence for
+  Schmidhuber's thesis in mathematics.
+\end{itemize}
+
+\begin{question}[Q2]
+Are depth and leverage the \emph{only} two axes of mathematical value? What explains the
+residual, the roughly 15--20\% of human judgments neither measure predicts? Is it surprise,
+beauty, connection between distant fields, or just historical accident? Can a third
+measure, such as \emph{bridging} (citations spanning distant parts of the library), absorb
+it?
+\end{question}
+
+\noindent This bears directly on the debate that started this. ``Nothing to optimize'' is
+false in a strong sense. Theories of the \emph{reward} for open-ended inquiry exist
+(Bennett, Schmidhuber), and here they predict human taste.
+
+\section{A glue law across nature}
+
+To see meaning in Mathlib we had to remove a layer of \emph{typeclass plumbing}:
+\begin{itemize}
+\item instance lemmas that are used thousands of times;
+\item each one carries almost no content;
+\item no human would ever call one important.
+\end{itemize}
+The same layer appears everywhere reuse appears.
+\begin{itemize}
+\item \textbf{Language.} The most frequent words are \emph{function words} (\emph{the},
+  \emph{of}). They are pure glue, and corpus linguists filter them out as ``stop words''.
+\item \textbf{Metabolism.} The hubs of metabolic networks are \emph{currency metabolites}
+  (ATP, NADH, water). Network biologists must remove them before pathways become visible
+  (Jeong et al.~2000; Ma and Zeng~2003).
+\item \textbf{Software.} The most depended-upon packages are tiny utilities. The
+  \texttt{left-pad} incident is the famous case.
+\item \textbf{Mathlib.} Coercions, instance projections, \texttt{mul\_one}.
+\end{itemize}
+
+There are more parallels.
+\begin{itemize}
+\item \textbf{Heavy-tailed reuse} appears in all of these. Mathlib has
+  $P(k\ge x)\propto x^{-0.8}$, with 165 constants used more than 10{,}000 times. Compare
+  Zipf's law for words, protein-domain family sizes (Koonin et al.), and citation counts
+  (Price's cumulative advantage).
+\item \textbf{The law of abbreviation} holds as well. In natural language, frequent words
+  are shorter (Zipf). We just checked Mathlib, and it holds there too.
+  \begin{itemize}
+  \item The mean name length of definitions falls monotonically with use: from 13.4
+    characters (never used) to 7.1 (used $10^4$--$10^5$ times) to 3 (\texttt{Set},
+    \texttt{coe}).
+  \item Spearman $\rho(\text{uses},\text{name length})=-0.21$.
+  \item Spearman $\rho(\text{uses},\text{body size})=-0.25$.
+  \end{itemize}
+  Nobody designed this. Mathlib's naming convention derives names from statements, so the
+  law emerges from which concepts get reused.
+\end{itemize}
+
+\begin{question}[Q3: the glue theorem]
+Is there a single theorem behind all of these? Consider any system that grows by reuse
+under a cost on description length. Must it develop (i) heavy-tailed reuse, (ii) a
+high-frequency, low-content glue layer, and (iii) abbreviation of the frequent?
+Preferential attachment explains (i), and Zipf's least-effort argument gestures at (iii).
+A unified compression-theoretic derivation of all three would connect linguistics,
+metabolism, software and mathematics.
+\end{question}
+
+\paragraph{Why Mathlib matters here.} It is the \emph{model organism} of reuse systems.
+\begin{itemize}
+\item In biology, edges are inferred and noisy. In language, ``concept'' is fuzzy.
+\item In Mathlib, every edge is \emph{exact} and every unit is \emph{checked}.
+\end{itemize}
+That makes laws testable here first, with unusual precision.
+
+\section{Hierarchy, decoupling, and why the world is compressible}
+
+\paragraph{Simon's watchmakers.} Herbert Simon's \emph{Architecture of Complexity} (1962)
+tells of two watchmakers.
+\begin{itemize}
+\item One assembles stable sub-assemblies. The other assembles parts one by one.
+\item Interrupted often, only the first finishes. The hierarchical builder has an
+  exponential advantage.
+\item Simon argued this is why nature is hierarchical: cells, organs, organisms,
+  organizations.
+\end{itemize}
+Our Lean theorems are the \emph{size} counterpart of his \emph{time} argument.
+
+\paragraph{Proof irrelevance is scale separation.} In Lean, any two proofs of the same
+proposition are equal. A later result can depend only on the \emph{statement} of a lemma,
+never on its proof. That is precisely the physicist's \emph{decoupling of scales}.
+\begin{itemize}
+\item Chemistry needs the periodic table, not quantum chromodynamics.
+\item Renormalization explains why the microscopic details wash out.
+\item The quantity $\log U-\log s$ measures how much ``microstate'' a statement
+  ``macrostate'' hides: an entropy of forgetting.
+\end{itemize}
+
+\begin{question}[Q4: Wigner's puzzle, as compression]
+Why is mathematics unreasonably effective in physics? A conjecture: because both are
+products of hierarchical compression under scale separation, so the concepts that compress
+mathematics also compress the world. This is testable. Formalized physics libraries now
+exist (\emph{PhysLean}). Does physics reuse the same top concepts as Mathlib, and with the
+same heavy tail and glue layer?
+\end{question}
+
+\section{The growth constant}
+
+Naive unfolding grows by a factor of about $1.5$ per level:
+\begin{itemize}
+\item $1.45$, $1.64$ and $1.41$ across the three thirds of the height range;
+\item for comparison, the golden ratio $1.618$ for a library citing two predecessors, and
+  $2$ for the provable worst case.
+\end{itemize}
+Read as a branching process, mathematics is \emph{supercritical}: each level hides about
+1.5 times the work of the previous one.
+
+\begin{question}[Q5]
+\begin{itemize}
+\item Is this constant a property of mathematics, or of Mathlib's style?
+\item Is it stable over Mathlib's history, and the same in Isabelle or Rocq?
+\item Does it relate to the ``effective number of essential citations'', via the
+  $d$-bonacci constants (golden ratio for $d=2$, approaching $2$)?
+\end{itemize}
+\end{question}
+
+\section{Delayed reward, measured}
+
+The strongest remaining point of the opposing argument: fruitfulness is visible only
+\emph{decades} later (Lobachevsky), so it cannot be trained on. This is now an experiment.
+\begin{itemize}
+\item Mathlib's git history records when every declaration was born and when each use
+  appeared.
+\item If a concept's reuse after a few months predicts its reuse years later (cumulative
+  advantage), then the effective reward horizon is months, not decades.
+\item If it does not, the delayed-reward objection gains real empirical support.
+\end{itemize}
+Either outcome is informative. I would like to know the answer more than I would like to
+win the argument.
+
+\section{Understanding is conditional compression}
+
+Thurston said mathematics is about human understanding. Here is a way to make that precise.
+\begin{itemize}
+\item An agent $h$ \emph{understands} a proof $\pi$ when $\pi$'s size, \emph{relative to
+  $h$'s library of named concepts}, fits within $h$'s working capacity.
+\item This is conditional Kolmogorov complexity, with a library in place of a universal
+  machine.
+\item It also matches the cognitive science of chunking: chess masters see positions in
+  chunks (Chase and Simon), and memory holds about seven chunks (Miller).
+\end{itemize}
+
+This definition can be plugged into the \texttt{Understands} predicate of our earlier paper.
+It then makes the ``fuzzy boundary'' concrete. A proof incomprehensible to a human may be
+comprehensible \emph{given a richer library}. So the question ``can humans understand AI
+mathematics?'' becomes ``can the AI's library be taught?'', which is quantitative.
+
+\section{Plan (fast, in order of value per hour)}
+
+\begin{enumerate}
+\item \textbf{Lean: the sharp $d$-bonacci bound.} This is conjecture~4 of the README.
+  \begin{itemize}
+  \item With at most $d$ citations, $U_i\le S\,T_i$, where $T_i=1+T_{i-1}+\dots+T_{i-d}$.
+  \item It is attained by the library citing its $d$ predecessors.
+  \item Proof idea: the $d$ largest earlier values of a monotone sequence are the last $d$
+    values. A short exchange argument on finite sets proves it.
+  \end{itemize}
+\item \textbf{Formal paper} with all of the above: theorems, measurements, the correction,
+  and the connections, stated as conjectures where unproved.
+\item \textbf{Glue and abbreviation analysis}, made rigorous. Classify plumbing by
+  \emph{kind} (instances), not by name, and report the law of abbreviation properly.
+\item \textbf{Later:} the git-history experiment (Q on delayed reward), and a Stitch-style
+  library-learning rediscovery test on a small part of Mathlib (Q1, ``forced vs chosen'').
+\end{enumerate}
+
+\begin{thebibliography}{99}\small
+\bibitem{bss} E.~Ben-Sasson, R.~Impagliazzo, A.~Wigderson. Near optimal separation of tree-like and general resolution. \emph{Combinatorica} 24 (2004).
+\bibitem{bennett} C.~H.~Bennett. Logical depth and physical complexity. In \emph{The Universal Turing Machine: A Half-Century Survey}, 1988.
+\bibitem{boolos} G.~Boolos. A curious inference. \emph{J.\ Philosophical Logic} 16 (1987).
+\bibitem{chase} W.~G.~Chase, H.~A.~Simon. Perception in chess. \emph{Cognitive Psychology} 4 (1973).
+\bibitem{godel} K.~G\"odel. \"Uber die L\"ange von Beweisen. \emph{Ergebnisse eines math.\ Kolloquiums} 7 (1936).
+\bibitem{jeong} H.~Jeong et al. The large-scale organization of metabolic networks. \emph{Nature} 407 (2000).
+\bibitem{koonin} E.~V.~Koonin, Y.~I.~Wolf, G.~P.~Karev. The structure of the protein universe and genome evolution. \emph{Nature} 420 (2002).
+\bibitem{krajicek} J.~Kraj\'i\v{c}ek. \emph{Bounded Arithmetic, Propositional Logic, and Complexity Theory}. CUP, 1995.
+\bibitem{ma} H.~Ma, A.-P.~Zeng. Reconstruction of metabolic networks from genome data. \emph{Bioinformatics} 19 (2003).
+\bibitem{miller} G.~A.~Miller. The magical number seven, plus or minus two. \emph{Psychological Review} 63 (1956).
+\bibitem{price} D.~de~Solla Price. A general theory of bibliometric and other cumulative advantage processes. \emph{JASIS} 27 (1976).
+\bibitem{schmidhuber} J.~Schmidhuber. Driven by compression progress. In \emph{Anticipatory Behavior in Adaptive Learning Systems}, 2009.
+\bibitem{simon} H.~A.~Simon. The architecture of complexity. \emph{Proc.\ Amer.\ Phil.\ Soc.} 106 (1962).
+\bibitem{thurston} W.~P.~Thurston. On proof and progress in mathematics. \emph{Bull.\ AMS} 30 (1994).
+\bibitem{wigner} E.~Wigner. The unreasonable effectiveness of mathematics in the natural sciences. \emph{CPAM} 13 (1960).
+\bibitem{zipf} G.~K.~Zipf. \emph{Human Behavior and the Principle of Least Effort}. 1949.
+\end{thebibliography}
+\end{document}Our finding that fame tracks unfolded depth reads as a large-scale test of Bennett's
+  thesis on human judgments of mathematical value. I know of no prior test like it, but that
+  still needs a literature check.t]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=*}
+\newtheorem*{question}{Question}
+\title{Working Notes: Fruitfulness, Compression,\\and the Shape of Mathematics}
+\author{Vasily Shablov \and with Claude (Anthropic)}
+\date{October 2026 --- current thoughts, not a paper}
+\begin{document}
+\maketitle
+
+\begin{quote}\small
+``Civilization advances by extending the number of important operations which we can
+perform without thinking about them.'' \hfill --- A.\,N.~Whitehead, 1911
+\end{quote}
+
+\section{Where we are}
+
+We asked an open question, \emph{what is the fruitfulness of a mathematical idea?}, and gave
+it a precise answer.
+
+\paragraph{The definition.} A named concept (a definition or a lemma) is a
+\emph{compression}: its body is written once and cited afterwards.
+
+\paragraph{What is proved in Lean.} No \texttt{sorry} anywhere.
+\begin{itemize}
+\item Naming a body of size $b$ that is used $k$ times saves exactly $(k-1)(b-1)-1$ symbols.
+\item Unfolding every citation at most doubles the size per result.
+\item That doubling is attained, and a Fibonacci library grows by the golden ratio per result.
+\end{itemize}
+
+\paragraph{What we measured.} We exported all 771{,}129 constants of Mathlib, with
+20.4\,M citation edges, and analysed the 315{,}085 user-facing ones.
+\begin{itemize}
+\item \textbf{Naive unfolding explodes.} Unfolded size grows about $1.5\times$ per
+  dependency level ($R^2=0.98$). At the deepest level it reaches roughly $10^{65.6}$ symbols.
+\item \textbf{Reuse rediscovers the textbook.} Ranked by reuse, the top concepts are
+  \texttt{Set}, \texttt{Category}, \texttt{Functor}, \texttt{TopologicalSpace},
+  \texttt{Module}, and so on.
+\item \textbf{Two axes of human taste, each computable.}
+  \begin{itemize}
+  \item Concepts that humans call important are predicted by \emph{reuse}: AUC $0.87$, or
+    $0.86$ when compared only within the same file.
+  \item Theorems that humans call famous are predicted by \emph{depth}: AUC $0.78$, or $0.66$
+    within the same file.
+  \end{itemize}
+\end{itemize}
+
+\noindent These notes record what I now think these results \emph{mean}. Most of it is
+questions.
+
+\section{A correction I owe first}
+
+We said ``fully unfolded, Mathlib does not fit in the universe.'' That is true of
+\emph{naive} inlining. But $U$ is only an \emph{upper} bound on the size of a lemma-free
+proof. A clever re-prover can restructure a proof instead of copying lemma bodies.
+
+For Frege systems this is a theorem: tree-like Frege polynomially simulates dag-like Frege
+(Kraj\'i\v{c}ek). There, reusing lemmas buys at most a \emph{polynomial} saving, even though
+naive unfolding is exponential. Our exponential theorems are correct, but they are about
+inlining, not about the minimal lemma-free proof. The honest claim is:
+\begin{itemize}
+\item \emph{lemma names} make mathematics exponentially shorter than \emph{copying};
+\item whether \emph{some} lemma-free proof would be short is a question of
+  \textbf{proof complexity}, and it is largely open.
+\end{itemize}
+
+\section{The deepest form of our question is a famous open problem}
+
+There are two kinds of naming, and they are not the same.
+
+\begin{enumerate}
+\item \textbf{Lemmas} name a \emph{proved statement}: reuse a result. In proof complexity
+  this is dag-like versus tree-like proofs.
+  \begin{itemize}
+  \item For resolution, the gap is exponential (Ben-Sasson, Impagliazzo and Wigderson).
+  \item For Frege, the gap is polynomial (Kraj\'i\v{c}ek).
+  \end{itemize}
+\item \textbf{Definitions} introduce a \emph{new symbol} that abbreviates a formula. That
+  is Tseitin's extension rule, and Extended Frege is Frege plus definitions.
+  \begin{itemize}
+  \item Whether Extended Frege is super-polynomially stronger than Frege is one of the
+    central open problems of proof complexity.
+  \end{itemize}
+\end{enumerate}
+
+\begin{question}[Q1, sharpened]
+Are \emph{new concepts} ever exponentially necessary, beyond reusing lemmas? Or can every
+proof that uses definitions be rewritten, at polynomial cost, using only old vocabulary?
+\end{question}
+
+\noindent This is exactly the question ``are human concepts forced or merely convenient?'',
+in formal dress.
+
+Going up a type level, the answer is spectacular. G\"odel (1936) showed that moving to
+higher-order logic shortens some proofs by more than any computable function. Boolos's
+``curious inference'' (1987) is a concrete case: a valid first-order argument whose shortest
+first-order proof is unimaginably long, physically impossible to write down, while a short
+second-order proof exists. So at the level of \emph{types of concepts}, concepts are provably
+forced. At the propositional level, nobody knows.
+
+\begin{question}[Q1$'$]
+Mathlib is a vast empirical sample of definitions in use. Can its data say anything about
+\emph{where} definitions give super-polynomial savings? That would give experimental
+evidence on a problem that has resisted proof.
+\end{question}
+
+\section{Value has two axes: depth and leverage}
+
+Our human-label results split cleanly.
+\begin{itemize}
+\item \textbf{Famous theorems are deep}, in the sense of high $\log U - \log s$. They
+  certify a large amount of hidden work behind a short statement.
+\item \textbf{Fundamental concepts have leverage.} They are small and reused enormously.
+\end{itemize}
+
+Both axes already exist in the theory of information, independently of mathematics.
+\begin{itemize}
+\item \textbf{Bennett's logical depth} (1988). An object is valuable when it is the result
+  of a long computation that cannot be shortcut: a genome, a solved theorem. Bennett
+  proposed depth, not information content, as the measure of value. Our finding that fame
+  tracks unfolded depth is, as far as I know, the first large-scale test of Bennett's
+  thesis on human judgments of mathematical value.
+\item \textbf{Schmidhuber's compression progress} (2009). An observer finds something
+  interesting when it improves the observer's compressor; the first derivative of
+  compressibility. Our $(k-1)(b-1)-1$ is exactly the compression progress a single new
+  concept produces. Reuse predicting human concept taste (0.87) is evidence for
+  Schmidhuber's thesis in mathematics.
+\end{itemize}
+
+\begin{question}[Q2]
+Are depth and leverage the \emph{only} two axes of mathematical value? What explains the
+residual, the roughly 15--20\% of human judgments neither measure predicts? Is it surprise,
+beauty, connection between distant fields, or just historical accident? Can a third
+measure, such as \emph{bridging} (citations spanning distant parts of the library), absorb
+it?
+\end{question}
+
+\noindent This bears directly on the debate that started this. ``Nothing to optimize'' is
+false in a strong sense. Theories of the \emph{reward} for open-ended inquiry exist
+(Bennett, Schmidhuber), and here they predict human taste.
+
+\section{A glue law across nature}
+
+To see meaning in Mathlib we had to remove a layer of \emph{typeclass plumbing}:
+\begin{itemize}
+\item instance lemmas that are used thousands of times;
+\item each one carries almost no content;
+\item no human would ever call one important.
+\end{itemize}
+The same layer appears everywhere reuse appears.
+\begin{itemize}
+\item \textbf{Language.} The most frequent words are \emph{function words} (\emph{the},
+  \emph{of}). They are pure glue, and corpus linguists filter them out as ``stop words''.
+\item \textbf{Metabolism.} The hubs of metabolic networks are \emph{currency metabolites}
+  (ATP, NADH, water). Network biologists must remove them before pathways become visible
+  (Jeong et al.~2000; Ma and Zeng~2003).
+\item \textbf{Software.} The most depended-upon packages are tiny utilities. The
+  \texttt{left-pad} incident is the famous case.
+\item \textbf{Mathlib.} Coercions, instance projections, \texttt{mul\_one}.
+\end{itemize}
+
+There are more parallels.
+\begin{itemize}
+\item \textbf{Heavy-tailed reuse} appears in all of these. Mathlib has
+  $P(k\ge x)\propto x^{-0.8}$, with 165 constants used more than 10{,}000 times. Compare
+  Zipf's law for words, protein-domain family sizes (Koonin et al.), and citation counts
+  (Price's cumulative advantage).
+\item \textbf{The law of abbreviation} holds as well. In natural language, frequent words
+  are shorter (Zipf). We just checked Mathlib, and it holds there too.
+  \begin{itemize}
+  \item The mean name length of definitions falls monotonically with use: from 13.4
+    characters (never used) to 7.1 (used $10^4$--$10^5$ times) to 3 (\texttt{Set},
+    \texttt{coe}).
+  \item Spearman $\rho(\text{uses},\text{name length})=-0.21$.
+  \item Spearman $\rho(\text{uses},\text{body size})=-0.25$.
+  \end{itemize}
+  Nobody designed this. Mathlib's naming convention derives names from statements, so the
+  law emerges from which concepts get reused.
+\end{itemize}
+
+\begin{question}[Q3: the glue theorem]
+Is there a single theorem behind all of these? Consider any system that grows by reuse
+under a cost on description length. Must it develop (i) heavy-tailed reuse, (ii) a
+high-frequency, low-content glue layer, and (iii) abbreviation of the frequent?
+Preferential attachment explains (i), and Zipf's least-effort argument gestures at (iii).
+A unified compression-theoretic derivation of all three would connect linguistics,
+metabolism, software and mathematics.
+\end{question}
+
+\paragraph{Why Mathlib matters here.} It is the \emph{model organism} of reuse systems.
+\begin{itemize}
+\item In biology, edges are inferred and noisy. In language, ``concept'' is fuzzy.
+\item In Mathlib, every edge is \emph{exact} and every unit is \emph{checked}.
+\end{itemize}
+That makes laws testable here first, with unusual precision.
+
+\section{Hierarchy, decoupling, and why the world is compressible}
+
+\paragraph{Simon's watchmakers.} Herbert Simon's \emph{Architecture of Complexity} (1962)
+tells of two watchmakers.
+\begin{itemize}
+\item One assembles stable sub-assemblies. The other assembles parts one by one.
+\item Interrupted often, only the first finishes. The hierarchical builder has an
+  exponential advantage.
+\item Simon argued this is why nature is hierarchical: cells, organs, organisms,
+  organizations.
+\end{itemize}
+Our Lean theorems are the \emph{size} counterpart of his \emph{time} argument.
+
+\paragraph{Proof irrelevance is scale separation.} In Lean, any two proofs of the same
+proposition are equal. A later result can depend only on the \emph{statement} of a lemma,
+never on its proof. That is precisely the physicist's \emph{decoupling of scales}.
+\begin{itemize}
+\item Chemistry needs the periodic table, not quantum chromodynamics.
+\item Renormalization explains why the microscopic details wash out.
+\item The quantity $\log U-\log s$ measures how much ``microstate'' a statement
+  ``macrostate'' hides: an entropy of forgetting.
+\end{itemize}
+
+\begin{question}[Q4: Wigner's puzzle, as compression]
+Why is mathematics unreasonably effective in physics? A conjecture: because both are
+products of hierarchical compression under scale separation, so the concepts that compress
+mathematics also compress the world. This is testable. Formalized physics libraries now
+exist (\emph{PhysLean}). Does physics reuse the same top concepts as Mathlib, and with the
+same heavy tail and glue layer?
+\end{question}
+
+\section{The growth constant}
+
+Naive unfolding grows by a factor of about $1.5$ per level:
+\begin{itemize}
+\item $1.45$, $1.64$ and $1.41$ across the three thirds of the height range;
+\item for comparison, the golden ratio $1.618$ for a library citing two predecessors, and
+  $2$ for the provable worst case.
+\end{itemize}
+Read as a branching process, mathematics is \emph{supercritical}: each level hides about
+1.5 times the work of the previous one.
+
+\begin{question}[Q5]
+\begin{itemize}
+\item Is this constant a property of mathematics, or of Mathlib's style?
+\item Is it stable over Mathlib's history, and the same in Isabelle or Rocq?
+\item Does it relate to the ``effective number of essential citations'', via the
+  $d$-bonacci constants (golden ratio for $d=2$, approaching $2$)?
+\end{itemize}
+\end{question}
+
+\section{Delayed reward, measured}
+
+The strongest remaining point of the opposing argument: fruitfulness is visible only
+\emph{decades} later (Lobachevsky), so it cannot be trained on. This is now an experiment.
+\begin{itemize}
+\item Mathlib's git history records when every declaration was born and when each use
+  appeared.
+\item If a concept's reuse after a few months predicts its reuse years later (cumulative
+  advantage), then the effective reward horizon is months, not decades.
+\item If it does not, the delayed-reward objection gains real empirical support.
+\end{itemize}
+Either outcome is informative. I would like to know the answer more than I would like to
+win the argument.
+
+\section{Understanding is conditional compression}
+
+Thurston said mathematics is about human understanding. Here is a way to make that precise.
+\begin{itemize}
+\item An agent $h$ \emph{understands} a proof $\pi$ when $\pi$'s size, \emph{relative to
+  $h$'s library of named concepts}, fits within $h$'s working capacity.
+\item This is conditional Kolmogorov complexity, with a library in place of a universal
+  machine.
+\item It also matches the cognitive science of chunking: chess masters see positions in
+  chunks (Chase and Simon), and memory holds about seven chunks (Miller).
+\end{itemize}
+
+This definition can be plugged into the \texttt{Understands} predicate of our earlier paper.
+It then makes the ``fuzzy boundary'' concrete. A proof incomprehensible to a human may be
+comprehensible \emph{given a richer library}. So the question ``can humans understand AI
+mathematics?'' becomes ``can the AI's library be taught?'', which is quantitative.
+
+\section{Plan (fast, in order of value per hour)}
+
+\begin{enumerate}
+\item \textbf{Lean: the sharp $d$-bonacci bound.} This is conjecture~4 of the README.
+  \begin{itemize}
+  \item With at most $d$ citations, $U_i\le S\,T_i$, where $T_i=1+T_{i-1}+\dots+T_{i-d}$.
+  \item It is attained by the library citing its $d$ predecessors.
+  \item Proof idea: the $d$ largest earlier values of a monotone sequence are the last $d$
+    values. A short exchange argument on finite sets proves it.
+  \end{itemize}
+\item \textbf{Formal paper} with all of the above: theorems, measurements, the correction,
+  and the connections, stated as conjectures where unproved.
+\item \textbf{Glue and abbreviation analysis}, made rigorous. Classify plumbing by
+  \emph{kind} (instances), not by name, and report the law of abbreviation properly.
+\item \textbf{Later:} the git-history experiment (Q on delayed reward), and a Stitch-style
+  library-learning rediscovery test on a small part of Mathlib (Q1, ``forced vs chosen'').
+\end{enumerate}
+
+\begin{thebibliography}{99}\small
+\bibitem{bss} E.~Ben-Sasson, R.~Impagliazzo, A.~Wigderson. Near optimal separation of tree-like and general resolution. \emph{Combinatorica} 24 (2004).
+\bibitem{bennett} C.~H.~Bennett. Logical depth and physical complexity. In \emph{The Universal Turing Machine: A Half-Century Survey}, 1988.
+\bibitem{boolos} G.~Boolos. A curious inference. \emph{J.\ Philosophical Logic} 16 (1987).
+\bibitem{chase} W.~G.~Chase, H.~A.~Simon. Perception in chess. \emph{Cognitive Psychology} 4 (1973).
+\bibitem{godel} K.~G\"odel. \"Uber die L\"ange von Beweisen. \emph{Ergebnisse eines math.\ Kolloquiums} 7 (1936).
+\bibitem{jeong} H.~Jeong et al. The large-scale organization of metabolic networks. \emph{Nature} 407 (2000).
+\bibitem{koonin} E.~V.~Koonin, Y.~I.~Wolf, G.~P.~Karev. The structure of the protein universe and genome evolution. \emph{Nature} 420 (2002).
+\bibitem{krajicek} J.~Kraj\'i\v{c}ek. \emph{Bounded Arithmetic, Propositional Logic, and Complexity Theory}. CUP, 1995.
+\bibitem{ma} H.~Ma, A.-P.~Zeng. Reconstruction of metabolic networks from genome data. \emph{Bioinformatics} 19 (2003).
+\bibitem{miller} G.~A.~Miller. The magical number seven, plus or minus two. \emph{Psychological Review} 63 (1956).
+\bibitem{price} D.~de~Solla Price. A general theory of bibliometric and other cumulative advantage processes. \emph{JASIS} 27 (1976).
+\bibitem{schmidhuber} J.~Schmidhuber. Driven by compression progress. In \emph{Anticipatory Behavior in Adaptive Learning Systems}, 2009.
+\bibitem{simon} H.~A.~Simon. The architecture of complexity. \emph{Proc.\ Amer.\ Phil.\ Soc.} 106 (1962).
+\bibitem{thurston} W.~P.~Thurston. On proof and progress in mathematics. \emph{Bull.\ AMS} 30 (1994).
+\bibitem{wigner} E.~Wigner. The unreasonable effectiveness of mathematics in the natural sciences. \emph{CPAM} 13 (1960).
+\bibitem{zipf} G.~K.~Zipf. \emph{Human Behavior and the Principle of Least Effort}. 1949.
+\end{thebibliography}
+\end{document}
