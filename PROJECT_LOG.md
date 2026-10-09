@@ -107,6 +107,10 @@ also contains:
 **Update, 9 Oct 2026:** cross-referenced against `github.com/openai/math` (released 6 Oct 2026: 372 claimed
 result families, 3 papers withdrawn the next day). 30 of the 100 atlas problems now carry an AI claim.
 - **Our picks with no AI claim:** union-closed sets, Černý, 1/3–2/3, Erdős–Gyárfás, sunflower, Erdős–Hajnal.
+- **Calibration note (user's instruction):** much has now been solved or claimed, including Millennium-level
+  work. The Navier–Stokes forced-case blow-up (Sep 2026) is Lean-checked, but Clay still lists the problem as
+  open and it is under review. Do not treat Tier Ω as unreachable. The binding constraint for us is compute
+  budget, not impossibility.
 - **New suggested niche:** audit a claimed result. Check that its Lean statement really is the conjecture, find
   any gap, and write the short human proof.
 

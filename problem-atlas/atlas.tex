@@ -95,9 +95,11 @@
 \item \textbf{``Very hard'' and ``nobody has tackled it'' rarely go together.} Famous problems are famous
   because many people failed at them. Hard problems nobody has tried exist mostly as \emph{freshly posed}
   questions (like our own Lucas conjecture) and as lightly studied Erd\H{o}s problems.
-\item \textbf{Intelligence is not the only bottleneck.} For the top problems there are \emph{barrier theorems}:
-  proofs that whole families of methods cannot work (page~\pageref{sec:honest}). Any solution must find a door
-  that is not yet on any map.
+\item \textbf{Barriers constrain, but they no longer mean ``out of reach''.} The top problems have
+  \emph{barrier theorems}, proofs that whole families of methods cannot work (page~\pageref{sec:honest}). Yet in
+  2026 AI systems produced claimed Millennium-level progress anyway: a Lean-checked Navier--Stokes blow-up (forced
+  case), plus partial results on Riemann, Hodge and BSD (see the update page). The doors exist; finding them took
+  new viewpoints and, so far, enormous computation.
 \item \textbf{There is a real sweet spot:} purely discrete problems whose recent history contains \emph{short,
   idea-driven proofs} (sensitivity in 6 pages, cap sets in 4, union-closed sets in about 8). That is where our
   toolkit of reasoning, discrete mathematics and Lean is strongest. My picks are on page~\pageref{sec:picks}.
@@ -432,7 +434,13 @@ the structure of the problems. Here is what holds regardless of how clever the s
 \end{keybox}
 \end{multicols}
 
-\noindent\textbf{Bottom line.} Attacking a Tier~$\Omega$ problem head-on would be a lottery ticket. A Tier~A or B
+\noindent\textbf{Revision (9 Oct 2026).} The odds above were written before I had read this year's news, and
+for the top tiers they are too pessimistic \emph{about what is possible}. The Navier--Stokes claim shows that
+Tier~$\Omega$ is reachable in principle. What the chart still measures is \emph{our} setup: OpenAI's proof used
+about 10{,}000 agents for 88 hours (millions of dollars), and our rule is minimal computation. With reasoning
+alone, the gap is our compute budget, not a law of nature.
+
+\noindent\textbf{Bottom line.} Attacking a Tier~$\Omega$ problem head-on, \emph{with our budget}, is still a long shot. A Tier~A or B
 problem in the sweet spot is a real bet with meaningful odds, and even partial progress there (a better constant,
 a new special case, or a clean reformulation) is publishable. If you want a moonshot, choose one that shares
 structure with work we have already done: Frege lower bounds connect directly to our naming calculus.
