@@ -208,3 +208,18 @@ lake env lean Fruitfulness.lean                          # the theorems
 
 `data/labels.json` is extracted from Mathlib's `docs/{100,1000,undergrad,overview}.yaml`.
 The two large generated files, `graph.tsv` and `visible.tsv`, are not committed.
+
+## Status and next steps (end of session)
+
+See [`../PROJECT_LOG.md`](../PROJECT_LOG.md) for the full handoff.
+
+- **Explainer:** `notes/where_we_are.pdf` explains the Lucas conjecture and Frege vs
+  Extended Frege.
+- **Attack notes:** `notes/attempt.pdf` covers the attack on the Lucas conjecture.
+- **New theorem proved by hand (not yet in Lean):** if every result cites at most 2
+  others, `u < 7·φ^(C/3)`, so the golden speed limit is exact for binary libraries.
+- **Open:** the general Lucas conjecture. The obstruction is runs of near-equal values.
+- **Next:**
+  1. Formalize the binary theorem in Lean.
+  2. Try block amortization for windows of size at most 3.
+  3. Split the paper into a theory paper and an empirical paper.
