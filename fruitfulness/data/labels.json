@@ -1,0 +1,7192 @@
+{
+"irrational_sqrt_two": [
+[
+"100",
+"The Irrationality of the Square Root of 2"
+]
+],
+"Complex.exists_root": [
+[
+"100",
+"Fundamental Theorem of Algebra"
+],
+[
+"undergrad",
+"$\\C$ is algebraically closed"
+],
+[
+"overview",
+"$\\C$ is algebraically closed"
+]
+],
+"Rat.instDenumerable": [
+[
+"100",
+"The Denumerability of the Rational Numbers"
+]
+],
+"EuclideanGeometry.dist_sq_eq_dist_sq_add_dist_sq_iff_angle_eq_pi_div_two": [
+[
+"100",
+"Pythagorean Theorem"
+],
+[
+"1000",
+"Pythagorean theorem"
+]
+],
+"legendreSym.quadratic_reciprocity": [
+[
+"100",
+"Law of Quadratic Reciprocity"
+],
+[
+"1000",
+"Quadratic reciprocity theorem"
+],
+[
+"overview",
+"quadratic reciprocity"
+]
+],
+"jacobiSym.quadratic_reciprocity": [
+[
+"100",
+"Law of Quadratic Reciprocity"
+],
+[
+"1000",
+"Quadratic reciprocity theorem"
+]
+],
+"Theorems100.area_disc": [
+[
+"100",
+"The Area of a Circle"
+]
+],
+"Nat.ModEq.pow_totient": [
+[
+"100",
+"Euler\u2019s Generalization of Fermat\u2019s Little Theorem"
+],
+[
+"1000",
+"Euler's theorem"
+]
+],
+"Nat.exists_infinite_primes": [
+[
+"100",
+"The Infinitude of Primes"
+],
+[
+"1000",
+"Euclid's theorem"
+]
+],
+"hasSum_zeta_two": [
+[
+"100",
+"Euler\u2019s Summation of 1 + (1/2)^2 + (1/3)^2 + \u2026."
+],
+[
+"1000",
+"Basel problem"
+]
+],
+"intervalIntegral.integral_hasStrictDerivAt_of_tendsto_ae_right": [
+[
+"100",
+"Fundamental Theorem of Integral Calculus"
+],
+[
+"1000",
+"Fundamental theorem of calculus"
+]
+],
+"intervalIntegral.integral_eq_sub_of_hasDeriv_right_of_le": [
+[
+"100",
+"Fundamental Theorem of Integral Calculus"
+],
+[
+"1000",
+"Fundamental theorem of calculus"
+],
+[
+"overview",
+"fundamental theorem of calculus, part 2"
+]
+],
+"AbelRuffini.exists_not_solvable_by_rad": [
+[
+"100",
+"Insolvability of General Higher Degree Equations (Abel-Ruffini Theorem)"
+],
+[
+"1000",
+"Abel\u2013Ruffini theorem"
+]
+],
+"Complex.cos_add_sin_mul_I_pow": [
+[
+"100",
+"De Moivre\u2019s Formula"
+],
+[
+"1000",
+"De Moivre's theorem"
+]
+],
+"Liouville.transcendental": [
+[
+"100",
+"Liouville\u2019s Theorem and the Construction of Transcendental Numbers"
+]
+],
+"Nat.sum_four_squares": [
+[
+"100",
+"Four Squares Theorem"
+],
+[
+"1000",
+"Lagrange's four-square theorem"
+],
+[
+"overview",
+"sum of four squares"
+]
+],
+"Nat.Prime.sq_add_sq": [
+[
+"100",
+"All Primes (1 mod 4) Equal the Sum of Two Squares"
+],
+[
+"1000",
+"Fermat's theorem on sums of two squares"
+],
+[
+"overview",
+"sum of two squares"
+]
+],
+"Cardinal.not_countable_real": [
+[
+"100",
+"The Non-Denumerability of the Continuum"
+],
+[
+"1000",
+"Uncountability of the continuum"
+]
+],
+"PythagoreanTriple.classification": [
+[
+"100",
+"Formula for Pythagorean Triples"
+]
+],
+"Function.Embedding.schroeder_bernstein": [
+[
+"100",
+"Schroeder-Bernstein Theorem"
+],
+[
+"1000",
+"Cantor\u2013Bernstein\u2013Schroeder theorem"
+]
+],
+"Real.tendsto_sum_pi_div_four": [
+[
+"100",
+"Leibniz\u2019s Series for Pi"
+]
+],
+"EuclideanGeometry.angle_add_angle_add_angle_eq_pi": [
+[
+"100",
+"Sum of the Angles of a Triangle"
+]
+],
+"Ballot.ballot_problem": [
+[
+"100",
+"The Ballot Problem"
+],
+[
+"1000",
+"Bertrand's ballot theorem"
+]
+],
+"Real.tendsto_sum_range_one_div_nat_succ_atTop": [
+[
+"100",
+"Divergence of the Harmonic Series"
+]
+],
+"taylor_mean_remainder_lagrange": [
+[
+"100",
+"Taylor\u2019s Theorem"
+],
+[
+"1000",
+"Taylor's theorem"
+],
+[
+"undergrad",
+"Taylor's theorem with Lagrange form for remainder"
+]
+],
+"taylor_mean_remainder_cauchy": [
+[
+"100",
+"Taylor\u2019s Theorem"
+],
+[
+"1000",
+"Taylor's theorem"
+]
+],
+"map_add_eq_sum_add_integral_iteratedFDeriv": [
+[
+"100",
+"Taylor\u2019s Theorem"
+],
+[
+"undergrad",
+"Taylor's theorem with integral form for remainder"
+]
+],
+"Theorems100.cubic_eq_zero_iff": [
+[
+"100",
+"The Solution of a Cubic"
+],
+[
+"1000",
+"Solutions of a general cubic equation"
+]
+],
+"Real.geom_mean_le_arith_mean_weighted": [
+[
+"100",
+"Arithmetic Mean/Geometric Mean"
+]
+],
+"Pell.eq_pell": [
+[
+"100",
+"Solutions to Pell\u2019s Equation"
+],
+[
+"1000",
+"Solutions to Pell's equation"
+]
+],
+"Pell.exists_of_not_isSquare": [
+[
+"100",
+"Solutions to Pell\u2019s Equation"
+],
+[
+"1000",
+"Solutions to Pell's equation"
+]
+],
+"MeasureTheory.exists_ne_zero_mem_lattice_of_measure_mul_two_pow_lt_measure": [
+[
+"100",
+"Minkowski\u2019s Fundamental Theorem"
+],
+[
+"1000",
+"Minkowski's theorem"
+]
+],
+"Theorems100.inverse_triangle_sum": [
+[
+"100",
+"Sum of the Reciprocals of the Triangular Numbers"
+]
+],
+"add_pow": [
+[
+"100",
+"The Binomial Theorem"
+],
+[
+"1000",
+"Binomial theorem"
+]
+],
+"Nat.Partition.card_odds_eq_card_distincts": [
+[
+"100",
+"The Partition Theorem"
+],
+[
+"1000",
+"Euler's partition theorem"
+]
+],
+"Theorems100.quartic_eq_zero_iff": [
+[
+"100",
+"The Solution of the General Quartic Equation"
+],
+[
+"1000",
+"Solutions of a general quartic equation"
+]
+],
+"ProbabilityTheory.tendstoInDistribution_inv_sqrt_mul_sum_sub": [
+[
+"100",
+"The Central Limit Theorem"
+],
+[
+"1000",
+"Central limit theorem"
+],
+[
+"undergrad",
+"central limit theorem"
+],
+[
+"overview",
+"central limit theorem"
+]
+],
+"Nat.infinite_setOfPred_prime_and_eq_mod": [
+[
+"100",
+"Dirichlet\u2019s Theorem"
+],
+[
+"1000",
+"Dirichlet's theorem on arithmetic progressions"
+]
+],
+"Matrix.aeval_self_charpoly": [
+[
+"100",
+"The Cayley-Hamilton Theorem"
+],
+[
+"1000",
+"Cayley\u2013Hamilton theorem"
+],
+[
+"undergrad",
+"Cayley-Hamilton theorem"
+],
+[
+"overview",
+"Cayley-Hamilton theorem"
+]
+],
+"ZMod.wilsons_lemma": [
+[
+"100",
+"Wilson\u2019s Lemma"
+],
+[
+"1000",
+"Wilson's theorem"
+]
+],
+"Finset.card_powerset": [
+[
+"100",
+"The Number of Subsets of a Set"
+]
+],
+"Konigsberg.not_isEulerian": [
+[
+"100",
+"K\u00f6nigsberg Bridges Problem"
+]
+],
+"EuclideanGeometry.mul_dist_eq_mul_dist_of_cospherical_of_angle_eq_pi": [
+[
+"100",
+"Product of Segments of Chords"
+]
+],
+"Theorems100.heron": [
+[
+"100",
+"Heron\u2019s Formula"
+]
+],
+"Finset.card_powersetCard": [
+[
+"100",
+"Formula for the Number of Combinations"
+]
+],
+"Finset.mem_powersetCard": [
+[
+"100",
+"Formula for the Number of Combinations"
+]
+],
+"ProbabilityTheory.strong_law_ae": [
+[
+"100",
+"The Laws of Large Numbers"
+],
+[
+"undergrad",
+"strong law of large numbers"
+],
+[
+"overview",
+"strong law of large numbers"
+]
+],
+"Nat.gcd_eq_gcd_ab": [
+[
+"100",
+"Bezout\u2019s Theorem"
+],
+[
+"1000",
+"B\u00e9zout's identity"
+]
+],
+"Affine.Triangle.prod_dist_div_dist_eq_one_of_mem_line_of_mem_line": [
+[
+"100",
+"Theorem of Ceva"
+],
+[
+"1000",
+"Ceva's theorem"
+]
+],
+"MeasureTheory.submartingale_iff_expected_stoppedValue_mono": [
+[
+"100",
+"Fair Games Theorem"
+],
+[
+"1000",
+"Optional stopping theorem"
+],
+[
+"overview",
+"optional stopping theorem"
+]
+],
+"Function.cantor_surjective": [
+[
+"100",
+"Cantor\u2019s Theorem"
+],
+[
+"1000",
+"Cantor's theorem"
+]
+],
+"deriv.lhopital_zero_nhds": [
+[
+"100",
+"L\u2019Hopital\u2019s Rule"
+]
+],
+"EuclideanGeometry.angle_eq_angle_of_dist_eq": [
+[
+"100",
+"Isosceles Triangle Theorem"
+]
+],
+"geom_sum_Ico": [
+[
+"100",
+"Sum of a Geometric Series"
+]
+],
+"NNReal.hasSum_geometric": [
+[
+"100",
+"Sum of a Geometric Series"
+]
+],
+"Finset.sum_range_id": [
+[
+"100",
+"Sum of an arithmetic series"
+]
+],
+"EuclideanDomain.gcd": [
+[
+"100",
+"Greatest Common Divisor Algorithm"
+]
+],
+"EuclideanDomain.gcd_dvd": [
+[
+"100",
+"Greatest Common Divisor Algorithm"
+]
+],
+"EuclideanDomain.dvd_gcd": [
+[
+"100",
+"Greatest Common Divisor Algorithm"
+]
+],
+"Theorems100.Nat.eq_two_pow_mul_prime_mersenne_of_even_perfect": [
+[
+"100",
+"The Perfect Number Theorem"
+],
+[
+"1000",
+"Euclid\u2013Euler theorem"
+]
+],
+"Subgroup.card_subgroup_dvd_card": [
+[
+"100",
+"Order of a Subgroup"
+],
+[
+"1000",
+"Lagrange's theorem (group theory)"
+],
+[
+"overview",
+"Lagrange's theorem"
+]
+],
+"Sylow.exists_subgroup_card_pow_prime": [
+[
+"100",
+"Sylow\u2019s Theorem"
+],
+[
+"1000",
+"Sylow theorems"
+],
+[
+"overview",
+"first Sylow theorem"
+]
+],
+"Sylow.isPretransitive_of_finite": [
+[
+"100",
+"Sylow\u2019s Theorem"
+],
+[
+"1000",
+"Sylow theorems"
+],
+[
+"overview",
+"second Sylow theorem"
+]
+],
+"Sylow.card_dvd_index": [
+[
+"100",
+"Sylow\u2019s Theorem"
+],
+[
+"1000",
+"Sylow theorems"
+]
+],
+"card_sylow_modEq_one": [
+[
+"100",
+"Sylow\u2019s Theorem"
+],
+[
+"1000",
+"Sylow theorems"
+],
+[
+"overview",
+"third Sylow theorem"
+]
+],
+"Theorems100.erdos_szekeres": [
+[
+"100",
+"Ascending or Descending Sequences (Erd\u0151s\u2013Szekeres Theorem)"
+],
+[
+"1000",
+"Erd\u0151s\u2013Szekeres theorem"
+]
+],
+"Nat": [
+[
+"100",
+"The Principle of Mathematical Induction"
+],
+[
+"undergrad",
+"recurrent sequences"
+],
+[
+"overview",
+"natural number"
+]
+],
+"exists_deriv_eq_slope": [
+[
+"100",
+"The Mean Value Theorem"
+],
+[
+"1000",
+"Mean value theorem"
+]
+],
+"fourierCoeff": [
+[
+"100",
+"Fourier Series"
+]
+],
+"hasSum_fourier_series_L2": [
+[
+"100",
+"Fourier Series"
+]
+],
+"sum_range_pow": [
+[
+"100",
+"Sum of kth powers"
+]
+],
+"sum_Ico_pow": [
+[
+"100",
+"Sum of kth powers"
+]
+],
+"inner_mul_inner_self_le": [
+[
+"100",
+"The Cauchy-Schwarz Inequality"
+],
+[
+"undergrad",
+"Cauchy-Schwarz inequality"
+],
+[
+"overview",
+"Cauchy-Schwarz inequality"
+]
+],
+"norm_inner_le_norm": [
+[
+"100",
+"The Cauchy-Schwarz Inequality"
+]
+],
+"intermediate_value_Icc": [
+[
+"100",
+"The Intermediate Value Theorem"
+],
+[
+"1000",
+"Intermediate value theorem"
+],
+[
+"undergrad",
+"intermediate value theorem"
+],
+[
+"overview",
+"intermediate value theorem"
+]
+],
+"Nat.primeFactorsList_unique": [
+[
+"100",
+"The Fundamental Theorem of Arithmetic"
+],
+[
+"1000",
+"Fundamental theorem of arithmetic"
+]
+],
+"Int.euclideanDomain": [
+[
+"100",
+"The Fundamental Theorem of Arithmetic"
+],
+[
+"1000",
+"Fundamental theorem of arithmetic"
+],
+[
+"undergrad",
+"$\\Z$ is a Euclidean ring"
+]
+],
+"EuclideanDomain.to_principal_ideal_domain": [
+[
+"100",
+"The Fundamental Theorem of Arithmetic"
+],
+[
+"1000",
+"Fundamental theorem of arithmetic"
+]
+],
+"UniqueFactorizationMonoid": [
+[
+"100",
+"The Fundamental Theorem of Arithmetic"
+],
+[
+"1000",
+"Fundamental theorem of arithmetic"
+],
+[
+"undergrad",
+"unique factorisation domain (UFD)"
+],
+[
+"overview",
+"unique factorisation domain"
+]
+],
+"UniqueFactorizationMonoid.factors_unique": [
+[
+"100",
+"The Fundamental Theorem of Arithmetic"
+],
+[
+"1000",
+"Fundamental theorem of arithmetic"
+]
+],
+"Theorems100.Real.tendsto_sum_one_div_prime_atTop": [
+[
+"100",
+"Divergence of the Prime Reciprocal Series"
+]
+],
+"not_summable_one_div_on_primes": [
+[
+"100",
+"Divergence of the Prime Reciprocal Series"
+]
+],
+"Theorems100.\u00ab82\u00bb.cannot_cube_a_cube": [
+[
+"100",
+"Dissection of Cubes (J.E. Littlewood\u2019s \u2018elegant\u2019 proof)"
+]
+],
+"Theorems100.friendship_theorem": [
+[
+"100",
+"The Friendship Theorem"
+],
+[
+"1000",
+"Friendship theorem"
+]
+],
+"Nat.three_dvd_iff": [
+[
+"100",
+"Divisibility by 3 Rule"
+]
+],
+"MeasureTheory.lintegral": [
+[
+"100",
+"Lebesgue Measure and Integration"
+],
+[
+"undergrad",
+"integral of positive measurable functions"
+],
+[
+"overview",
+"integral of positive measurable functions"
+]
+],
+"card_derangements_eq_numDerangements": [
+[
+"100",
+"Derangements Formula"
+]
+],
+"numDerangements_sum": [
+[
+"100",
+"Derangements Formula"
+]
+],
+"Polynomial.dvd_iff_isRoot": [
+[
+"100",
+"The Factor and Remainder Theorems"
+]
+],
+"Polynomial.mod_X_sub_C_eq_C_eval": [
+[
+"100",
+"The Factor and Remainder Theorems"
+]
+],
+"Stirling.tendsto_stirlingSeq_sqrt_pi": [
+[
+"100",
+"Stirling\u2019s Formula"
+],
+[
+"1000",
+"Stirling's theorem"
+]
+],
+"norm_add_le": [
+[
+"100",
+"The Triangle Inequality"
+]
+],
+"Theorems100.birthday": [
+[
+"100",
+"The Birthday Problem"
+]
+],
+"Theorems100.birthday_measure": [
+[
+"100",
+"The Birthday Problem"
+]
+],
+"EuclideanGeometry.dist_sq_eq_dist_sq_add_dist_sq_sub_two_mul_dist_mul_dist_mul_cos_angle": [
+[
+"100",
+"The Law of Cosines"
+]
+],
+"EuclideanGeometry.mul_dist_add_mul_dist_eq_mul_dist_of_cospherical": [
+[
+"100",
+"Ptolemy\u2019s Theorem"
+],
+[
+"1000",
+"Ptolemy's theorem"
+]
+],
+"Finset.inclusion_exclusion_sum_biUnion": [
+[
+"100",
+"Principle of Inclusion/Exclusion"
+]
+],
+"Finset.inclusion_exclusion_card_biUnion": [
+[
+"100",
+"Principle of Inclusion/Exclusion"
+]
+],
+"Finset.inclusion_exclusion_sum_inf_compl": [
+[
+"100",
+"Principle of Inclusion/Exclusion"
+]
+],
+"Finset.inclusion_exclusion_card_inf_compl": [
+[
+"100",
+"Principle of Inclusion/Exclusion"
+]
+],
+"Matrix.mulVec_cramer": [
+[
+"100",
+"Cramer\u2019s Rule"
+]
+],
+"Nat.bertrand": [
+[
+"100",
+"Bertrand\u2019s Postulate"
+],
+[
+"1000",
+"Bertrand's postulate"
+]
+],
+"BuffonsNeedle.buffon_short": [
+[
+"100",
+"Buffon Needle Problem"
+]
+],
+"BuffonsNeedle.buffon_long": [
+[
+"100",
+"Buffon Needle Problem"
+]
+],
+"Polynomial.roots_countP_pos_le_signVariations": [
+[
+"100",
+"Descartes Rule of Signs"
+]
+],
+"LipschitzOnWith.ae_differentiableWithinAt": [
+[
+"1000",
+"Rademacher's theorem"
+]
+],
+"Besicovitch.exists_disjoint_closedBall_covering_ae": [
+[
+"1000",
+"Besicovitch covering theorem"
+]
+],
+"Submodule.isPrimary_decomposition_pairwise_ne_radical": [
+[
+"1000",
+"Lasker\u2013Noether theorem"
+]
+],
+"Equiv.Perm.subgroupOfMulAction": [
+[
+"1000",
+"Cayley's theorem"
+],
+[
+"overview",
+"Cayley's theorem"
+]
+],
+"MeasureTheory.Integrable.fourierInv_fourier_eq": [
+[
+"1000",
+"Fourier theorem"
+]
+],
+"Continuous.fourierInv_fourier_eq": [
+[
+"1000",
+"Fourier theorem"
+],
+[
+"1000",
+"Fourier inversion theorem"
+],
+[
+"undergrad",
+"Fourier inversion formula"
+],
+[
+"overview",
+"inversion formula"
+]
+],
+"isInteger_of_is_root_of_monic": [
+[
+"1000",
+"Integral root theorem"
+]
+],
+"num_dvd_of_is_root": [
+[
+"1000",
+"Rational root theorem"
+]
+],
+"den_dvd_of_is_root": [
+[
+"1000",
+"Rational root theorem"
+]
+],
+"ProbabilityTheory.cond_eq_inv_mul_cond_mul": [
+[
+"1000",
+"Bayes' theorem"
+]
+],
+"ZMod.pow_card_sub_one_eq_one": [
+[
+"1000",
+"Fermat's little theorem"
+]
+],
+"exists_ratio_deriv_eq_ratio_slope": [
+[
+"1000",
+"Mean value theorem"
+],
+[
+"undergrad",
+"mean value theorem"
+],
+[
+"undergrad",
+"mean value theorem"
+],
+[
+"overview",
+"mean value theorem"
+]
+],
+"MeasureTheory.Measure.haveLebesgueDecomposition_of_sigmaFinite": [
+[
+"1000",
+"Lebesgue's decomposition theorem"
+]
+],
+"Complex.isAlgClosed": [
+[
+"1000",
+"Fundamental theorem of algebra"
+],
+[
+"overview",
+"fundamental theorem of algebra"
+]
+],
+"exists_deriv_eq_zero": [
+[
+"1000",
+"Rolle's theorem"
+],
+[
+"undergrad",
+"Rolle's theorem"
+],
+[
+"overview",
+"Rolle's theorem"
+]
+],
+"Ideal.quotientInfRingEquivPiQuotient": [
+[
+"1000",
+"Chinese remainder theorem"
+],
+[
+"undergrad",
+"Chinese remainder theorem"
+],
+[
+"overview",
+"Chinese remainder theorem"
+]
+],
+"ZMod.chineseRemainder": [
+[
+"1000",
+"Chinese remainder theorem"
+]
+],
+"ContractingWith.exists_fixedPoint": [
+[
+"1000",
+"Banach fixed-point theorem"
+],
+[
+"undergrad",
+"contraction mapping theorem"
+],
+[
+"overview",
+"contraction mapping theorem"
+]
+],
+"MeasureTheory.Conservative.ae_mem_imp_frequently_image_mem": [
+[
+"1000",
+"Poincar\u00e9 recurrence theorem"
+]
+],
+"Metric.isCompact_iff_isClosed_bounded": [
+[
+"1000",
+"Heine\u2013Borel theorem"
+],
+[
+"undergrad",
+"compact subsets of $\\R$"
+],
+[
+"overview",
+"Heine-Borel theorem (proper metric space version)"
+]
+],
+"FiniteDimensional.proper": [
+[
+"1000",
+"Heine\u2013Borel theorem"
+],
+[
+"undergrad",
+"Heine-Borel theorem (closed bounded subsets are compact in finite dimension)"
+],
+[
+"overview",
+"Heine-Borel theorem (finite-dimensional normed spaces are proper)"
+]
+],
+"MeasureTheory.OuterMeasure.caratheodory": [
+[
+"1000",
+"Carath\u00e9odory's theorem (measure theory)"
+]
+],
+"PowerSeries.WithPiTopology.hasProd_one_sub_X_pow": [
+[
+"1000",
+"Pentagonal number theorem"
+]
+],
+"EuclideanGeometry.Sphere.thales_theorem": [
+[
+"1000",
+"Thales's theorem"
+]
+],
+"MulAction.orbitEquivQuotientStabilizer": [
+[
+"1000",
+"Orbit-stabilizer theorem"
+],
+[
+"undergrad",
+"quotient space"
+]
+],
+"LinearMap.rank_range_add_rank_ker": [
+[
+"1000",
+"Rank\u2013nullity theorem"
+]
+],
+"Complex.tendsto_tsum_powerSeries_nhdsWithin_stolzCone": [
+[
+"1000",
+"Abel's theorem"
+]
+],
+"Real.tendsto_tsum_powerSeries_nhdsWithin_lt": [
+[
+"1000",
+"Abel's theorem"
+]
+],
+"MeasureTheory.integral_divergence_of_hasFDerivAt_off_countable": [
+[
+"1000",
+"Divergence theorem"
+],
+[
+"overview",
+"divergence theorem"
+]
+],
+"AkraBazziRecurrence.isBigO_asympBound": [
+[
+"1000",
+"Akra\u2013Bazzi theorem"
+]
+],
+"Language.isRegular_iff_finite_range_leftQuotient": [
+[
+"1000",
+"Myhill\u2013Nerode theorem"
+]
+],
+"tendsto_subseq_of_frequently_bounded": [
+[
+"1000",
+"Bolzano\u2013Weierstrass theorem"
+]
+],
+"tendsto_subseq_of_bounded": [
+[
+"1000",
+"Bolzano\u2013Weierstrass theorem"
+],
+[
+"undergrad",
+"Bolzano-Weierstrass theorem"
+]
+],
+"SimpleGraph.tutte": [
+[
+"1000",
+"Tutte theorem"
+]
+],
+"IsPicardLindelof.exists_eq_forall_mem_Icc_hasDerivWithinAt": [
+[
+"1000",
+"Picard\u2013Lindel\u00f6f theorem"
+],
+[
+"undergrad",
+"Cauchy-Lipschitz Theorem"
+]
+],
+"Finset.all_card_le_biUnion_card_iff_exists_injective": [
+[
+"1000",
+"Hall's marriage theorem"
+],
+[
+"overview",
+"Hall's marriage theorem"
+]
+],
+"SimpleGraph.exists_isPerfectMatching_of_forall_ncard_le": [
+[
+"1000",
+"Hall's marriage theorem"
+]
+],
+"WeakDual.isCompact_polar": [
+[
+"1000",
+"Banach\u2013Alaoglu theorem"
+]
+],
+"Multiset.prod_X_add_C_eq_sum_esymm": [
+[
+"1000",
+"Vieta's formulas"
+]
+],
+"Differentiable.apply_eq_apply_of_bounded": [
+[
+"1000",
+"Liouville's theorem (complex analysis)"
+],
+[
+"overview",
+"Liouville theorem"
+]
+],
+"Monotone.tendstoLocallyUniformly_of_forall_tendsto": [
+[
+"1000",
+"Dini's theorem"
+]
+],
+"fixedPoints.completeLattice": [
+[
+"1000",
+"Knaster\u2013Tarski theorem"
+]
+],
+"Finset.sum_pow_eq_sum_piAntidiag_of_commute": [
+[
+"1000",
+"Multinomial theorem"
+]
+],
+"closure_convexHull_extremePoints": [
+[
+"1000",
+"Krein\u2013Milman theorem"
+]
+],
+"MeasureTheory.TendstoInDistribution.continuous_comp_prodMk_of_tendstoInMeasure_const": [
+[
+"1000",
+"Slutsky's theorem"
+]
+],
+"MonoidAlgebra.Submodule.exists_isCompl": [
+[
+"1000",
+"Maschke's theorem"
+],
+[
+"undergrad",
+"Maschke theorem"
+]
+],
+"Polynomial.isNoetherianRing": [
+[
+"1000",
+"Hilbert's basis theorem"
+],
+[
+"overview",
+"Hilbert basis theorem"
+]
+],
+"exists_hasDerivWithinAt_eq_of_gt_of_lt": [
+[
+"1000",
+"Darboux's theorem (analysis)"
+]
+],
+"exists_hasDerivWithinAt_eq_of_lt_of_gt": [
+[
+"1000",
+"Darboux's theorem (analysis)"
+]
+],
+"Set.OrdConnected.image_hasDerivWithinAt": [
+[
+"1000",
+"Darboux's theorem (analysis)"
+]
+],
+"Set.OrdConnected.image_derivWithin": [
+[
+"1000",
+"Darboux's theorem (analysis)"
+]
+],
+"Set.OrdConnected.image_deriv": [
+[
+"1000",
+"Darboux's theorem (analysis)"
+]
+],
+"Convex.image_hasDerivWithinAt": [
+[
+"1000",
+"Darboux's theorem (analysis)"
+]
+],
+"Convex.image_derivWithin": [
+[
+"1000",
+"Darboux's theorem (analysis)"
+]
+],
+"Convex.image_deriv": [
+[
+"1000",
+"Darboux's theorem (analysis)"
+]
+],
+"exists_hasDerivWithinAt_eq_of_ge_of_le": [
+[
+"1000",
+"Darboux's theorem (analysis)"
+]
+],
+"exists_hasDerivWithinAt_eq_of_le_of_ge": [
+[
+"1000",
+"Darboux's theorem (analysis)"
+]
+],
+"ZMod.erdos_ginzburg_ziv": [
+[
+"1000",
+"Erd\u0151s\u2013Ginzburg\u2013Ziv theorem"
+],
+[
+"overview",
+"Erd\u0151s\u2013Ginzburg\u2013Ziv theorem"
+]
+],
+"Finset.erdos_ko_rado": [
+[
+"1000",
+"Erd\u0151s\u2013Ko\u2013Rado theorem"
+]
+],
+"char_dvd_card_solutions_of_sum_lt": [
+[
+"1000",
+"Chevalley\u2013Warning theorem"
+]
+],
+"IsLocalExtr.deriv_eq_zero": [
+[
+"1000",
+"Fermat's theorem (stationary points)"
+]
+],
+"IsLocalExtr.fderiv_eq_zero": [
+[
+"1000",
+"Fermat's theorem (stationary points)"
+]
+],
+"EuclideanGeometry.dist_sq_mul_dist_add_dist_sq_mul_dist": [
+[
+"1000",
+"Stewart's theorem"
+]
+],
+"IsCompact.exists_isMinOn": [
+[
+"1000",
+"Extreme value theorem"
+],
+[
+"overview",
+"extreme value theorem"
+]
+],
+"Combinatorics.exists_mono_homothetic_copy": [
+[
+"1000",
+"Van der Waerden's theorem"
+],
+[
+"overview",
+"van der Waerden theorem"
+]
+],
+"CompactSpace.uniformContinuous_of_continuous": [
+[
+"1000",
+"Heine\u2013Cantor theorem"
+],
+[
+"undergrad",
+"Heine-Cantor theorem"
+],
+[
+"overview",
+"Heine-Cantor theorem"
+]
+],
+"IsSimpleRing.exists_algEquiv_matrix_divisionRing": [
+[
+"1000",
+"Wedderburn\u2013Artin theorem"
+]
+],
+"IsSemisimpleRing.exists_algEquiv_pi_matrix_divisionRing": [
+[
+"1000",
+"Wedderburn\u2013Artin theorem"
+]
+],
+"Irrational.beattySeq_symmDiff_beattySeq_pos": [
+[
+"1000",
+"Beatty's theorem"
+]
+],
+"compl_beattySeq": [
+[
+"1000",
+"Beatty's theorem"
+]
+],
+"Besicovitch.ae_tendsto_measure_inter_div": [
+[
+"1000",
+"Lebesgue's density theorem"
+]
+],
+"ImplicitFunctionData.implicitFunction": [
+[
+"1000",
+"Implicit function theorem"
+],
+[
+"undergrad",
+"implicit function theorem"
+],
+[
+"overview",
+"implicit function theorem"
+]
+],
+"FormalMultilinearSeries.radius_inv_eq_limsup": [
+[
+"1000",
+"Cauchy\u2013Hadamard theorem"
+]
+],
+"exists_extension_norm_eq": [
+[
+"1000",
+"Hahn\u2013Banach theorem"
+],
+[
+"overview",
+"Hahn-Banach theorem"
+]
+],
+"extend_partialOrder": [
+[
+"1000",
+"Szpilrajn extension theorem"
+]
+],
+"EuclideanGeometry.dist_sq_add_dist_sq_eq_two_mul_dist_midpoint_sq_add_half_dist_sq": [
+[
+"1000",
+"Apollonius's theorem"
+]
+],
+"HasStrictFDerivAt.to_localInverse": [
+[
+"1000",
+"Inverse function theorem"
+],
+[
+"overview",
+"inverse function theorem"
+]
+],
+"ContinuousMap.subalgebra_topologicalClosure_eq_top_of_separatesPoints": [
+[
+"1000",
+"Stone\u2013Weierstrass theorem"
+],
+[
+"overview",
+"Stone-Weierstrass theorem"
+]
+],
+"littleWedderburn": [
+[
+"1000",
+"Wedderburn's little theorem"
+]
+],
+"ContinuousLinearMap.isOpenMap": [
+[
+"1000",
+"Open mapping theorem (functional analysis)"
+],
+[
+"undergrad",
+"Banach open mapping theorem"
+],
+[
+"overview",
+"Banach open mapping theorem"
+]
+],
+"AnalyticOnNhd.is_constant_or_isOpen": [
+[
+"1000",
+"Open mapping theorem (complex analysis)"
+]
+],
+"eigenvalue_mem_ball": [
+[
+"1000",
+"Gershgorin circle theorem"
+]
+],
+"Polynomial.rootSet_derivative_subset_convexHull_rootSet": [
+[
+"1000",
+"Gauss\u2013Lucas theorem"
+]
+],
+"Polynomial.eq_centerMass_of_eval_derivative_eq_zero": [
+[
+"1000",
+"Gauss\u2013Lucas theorem"
+]
+],
+"Combinatorics.Line.exists_mono_in_high_dimension": [
+[
+"1000",
+"Hales\u2013Jewett theorem"
+],
+[
+"overview",
+"Hales-Jewett theorem"
+]
+],
+"AnalyticOnNhd.eqOn_of_preconnected_of_frequently_eq": [
+[
+"1000",
+"Identity theorem"
+],
+[
+"undergrad",
+"principle of analytic continuation"
+],
+[
+"overview",
+"principle of analytic continuation"
+]
+],
+"SimpleGraph.isTuranMaximal_iff_nonempty_iso_turanGraph": [
+[
+"1000",
+"Tur\u00e1n's theorem"
+],
+[
+"overview",
+"Tur\u00e1n's theorem"
+]
+],
+"IsCompact.nonempty_sInter_of_directed_nonempty_isCompact_isClosed": [
+[
+"1000",
+"Cantor's intersection theorem"
+]
+],
+"dense_sInter_of_isOpen": [
+[
+"1000",
+"Baire category theorem"
+]
+],
+"tendsto_of_tendsto_of_tendsto_of_le_of_le'": [
+[
+"1000",
+"Squeeze theorem"
+]
+],
+"QuotientGroup.quotientKerEquivRange": [
+[
+"1000",
+"Isomorphism theorem"
+],
+[
+"1000",
+"Fundamental theorem on homomorphisms"
+],
+[
+"overview",
+"first isomorphism theorem"
+]
+],
+"QuotientGroup.quotientInfEquivProdNormalQuotient": [
+[
+"1000",
+"Isomorphism theorem"
+],
+[
+"overview",
+"second isomorphism theorem"
+]
+],
+"QuotientGroup.quotientQuotientEquivQuotient": [
+[
+"1000",
+"Isomorphism theorem"
+],
+[
+"1000",
+"Lattice theorem"
+],
+[
+"overview",
+"third isomorphism theorem"
+]
+],
+"MeasureTheory.tendsto_integral_of_dominated_convergence": [
+[
+"1000",
+"Dominated convergence theorem"
+],
+[
+"undergrad",
+"dominated convergence theorem"
+],
+[
+"overview",
+"dominated convergence theorem"
+]
+],
+"MeasureTheory.FiniteMeasure.tendsto_lintegral_nn_of_le_const": [
+[
+"1000",
+"Bounded convergence theorem"
+]
+],
+"MeasureTheory.tendsto_lintegral_nn_filter_of_le_const": [
+[
+"1000",
+"Bounded convergence theorem"
+]
+],
+"LinearMap.continuous_of_isClosed_graph": [
+[
+"1000",
+"Closed graph theorem"
+]
+],
+"FirstOrder.Language.exists_elementaryEmbedding_card_eq": [
+[
+"1000",
+"L\u00f6wenheim\u2013Skolem theorem"
+],
+[
+"overview",
+"L\u00f6wenheim-Skolem"
+]
+],
+"MvPolynomial.vanishingIdeal_zeroLocus_eq_radical": [
+[
+"1000",
+"Hilbert's Nullstellensatz"
+],
+[
+"overview",
+"Nullstellensatz"
+]
+],
+"Cardinal.sum_lt_prod": [
+[
+"1000",
+"K\u00f6nig's theorem (set theory)"
+]
+],
+"isCompact_pi_infinite": [
+[
+"1000",
+"Tychonoff's theorem"
+]
+],
+"exists_prime_orderOf_dvd_card": [
+[
+"1000",
+"Cauchy's theorem (group theory)"
+]
+],
+"Complex.isConservativeOn_and_continuousOn_iff_isDifferentiableOn": [
+[
+"1000",
+"Morera's theorem"
+]
+],
+"CategoryTheory.Abelian.freyd_mitchell": [
+[
+"1000",
+"Mitchell's embedding theorem"
+]
+],
+"MeasureTheory.integral_prod": [
+[
+"1000",
+"Fubini's theorem"
+],
+[
+"undergrad",
+"Fubini's theorem"
+],
+[
+"overview",
+"Fubini's theorem"
+]
+],
+"FirstOrder.Language.Theory.isSatisfiable_iff_isFinitelySatisfiable": [
+[
+"1000",
+"Compactness theorem"
+],
+[
+"overview",
+"Compactness theorem"
+]
+],
+"MeasureTheory.integral_tendsto_of_tendsto_of_antitone": [
+[
+"1000",
+"Monotone convergence theorem"
+]
+],
+"MeasureTheory.lintegral_tendsto_of_tendsto_of_monotone": [
+[
+"1000",
+"Monotone convergence theorem"
+]
+],
+"Choose.lucas_theorem": [
+[
+"1000",
+"Lucas's theorem"
+]
+],
+"Nat.zeckendorfEquiv": [
+[
+"1000",
+"Zeckendorf's theorem"
+]
+],
+"MeasureTheory.Measure.absolutelyContinuous_iff_withDensity_rnDeriv_eq": [
+[
+"1000",
+"Radon\u2013Nikodym theorem"
+]
+],
+"MeasureTheory.tendstoUniformlyOn_of_ae_tendsto": [
+[
+"1000",
+"Egorov's theorem"
+]
+],
+"TopologicalSpace.metrizableSpace_of_t3_secondCountable": [
+[
+"1000",
+"Metrization theorems"
+]
+],
+"NumberField.Units.basisModTorsion": [
+[
+"1000",
+"Dirichlet's unit theorem"
+]
+],
+"NumberField.Units.exist_unique_eq_mul_prod": [
+[
+"1000",
+"Dirichlet's unit theorem"
+],
+[
+"overview",
+"Dirichlet unit theorem"
+]
+],
+"AddCircle.exists_norm_nsmul_le": [
+[
+"1000",
+"Dirichlet's approximation theorem"
+]
+],
+"Real.exists_int_int_abs_mul_sub_le": [
+[
+"1000",
+"Dirichlet's approximation theorem"
+]
+],
+"Real.exists_nat_abs_mul_sub_round_le": [
+[
+"1000",
+"Dirichlet's approximation theorem"
+]
+],
+"Real.exists_rat_abs_sub_le_and_den_le": [
+[
+"1000",
+"Dirichlet's approximation theorem"
+]
+],
+"doublyStochastic_eq_convexHull_permMatrix": [
+[
+"1000",
+"Birkhoff\u2013Von Neumann theorem"
+]
+],
+"subgroupIsFreeOfIsFree": [
+[
+"1000",
+"Nielsen\u2013Schreier theorem"
+]
+],
+"exists_embedding_euclidean_of_compact": [
+[
+"1000",
+"Whitney embedding theorem"
+]
+],
+"BoundedContinuousFunction.exists_extension_norm_eq_of_isClosedEmbedding": [
+[
+"1000",
+"Tietze extension theorem"
+]
+],
+"InnerProductSpace.toDual": [
+[
+"1000",
+"Riesz representation theorem"
+],
+[
+"undergrad",
+"dual isomorphism in the Euclidean case"
+],
+[
+"undergrad",
+"Riesz representation theorem"
+],
+[
+"overview",
+"Fr\u00e9chet-Riesz representation of the dual of a Hilbert space"
+]
+],
+"banach_steinhaus": [
+[
+"1000",
+"Banach\u2013Steinhaus theorem"
+],
+[
+"overview",
+"Banach-Steinhaus theorem"
+]
+],
+"tsum_sq_fourierCoeff": [
+[
+"1000",
+"Parseval's theorem"
+],
+[
+"undergrad",
+"Parseval theorem"
+],
+[
+"overview",
+"Parseval formula for Fourier series"
+]
+],
+"exists_wellFoundedLT": [
+[
+"1000",
+"Well-ordering theorem"
+]
+],
+"Convex.radon_partition": [
+[
+"1000",
+"Radon's theorem"
+]
+],
+"LinearMap.IsSymmetric.continuous": [
+[
+"1000",
+"Hellinger&ndash;Toeplitz theorem"
+]
+],
+"BoundedContinuousFunction.arzela_ascoli": [
+[
+"1000",
+"Arzel\u00e0\u2013Ascoli theorem"
+],
+[
+"undergrad",
+"Arzela-Ascoli theorem"
+],
+[
+"overview",
+"Arzela-Ascoli theorem"
+]
+],
+"FirstOrder.Language.Ultraproduct.sentence_realize": [
+[
+"1000",
+"\u0141o\u015b' theorem"
+]
+],
+"Matrix.invOf_add_mul_mul'": [
+[
+"1000",
+"Binomial inverse theorem"
+]
+],
+"Hindman.FP_partition_regular": [
+[
+"1000",
+"Hindman's theorem"
+]
+],
+"MeasureTheory.SignedMeasure.exists_isCompl_positive_negative": [
+[
+"1000",
+"Hahn decomposition theorem"
+]
+],
+"Convex.helly_theorem": [
+[
+"1000",
+"Helly's theorem"
+]
+],
+"QuadraticForm.equivalent_one_zero_neg_one_weighted_sum_squared": [
+[
+"1000",
+"Sylvester's law of inertia"
+],
+[
+"undergrad",
+"Sylvester's law of inertia (existence)"
+],
+[
+"undergrad",
+"real classification"
+]
+],
+"Nat.Partrec.Code.smn": [
+[
+"1000",
+"Smn theorem"
+]
+],
+"CategoryTheory.finrank_endomorphism_simple_eq_one": [
+[
+"1000",
+"Schur's lemma"
+]
+],
+"ComputablePred.rice": [
+[
+"1000",
+"Rice's theorem"
+],
+[
+"overview",
+"Rice theorem"
+]
+],
+"Nat.Partrec.Code.fixed_point\u2082": [
+[
+"1000",
+"Kleene's recursion theorem"
+]
+],
+"MeasureTheory.ProbabilityMeasure.tendsto_iff_tendsto_charFun": [
+[
+"1000",
+"L\u00e9vy continuity theorem"
+]
+],
+"Field.exists_primitive_element": [
+[
+"1000",
+"Primitive element theorem"
+]
+],
+"SchwartzMap.integral_inner_fourier_fourier": [
+[
+"1000",
+"Plancherel theorem"
+],
+[
+"undergrad",
+"Plancherel\u2019s theorem"
+]
+],
+"Affine.Simplex.point_vsub_centroid_eq_smul_vsub": [
+[
+"1000",
+"Commandino's theorem"
+]
+],
+"NormedRing.algEquivComplexOfComplete": [
+[
+"1000",
+"Gelfand\u2013Mazur theorem"
+]
+],
+"NormedAlgebra.Complex.algEquivOfNormMul": [
+[
+"1000",
+"Gelfand\u2013Mazur theorem"
+]
+],
+"NormedAlgebra.Real.nonempty_algEquiv_or": [
+[
+"1000",
+"Gelfand\u2013Mazur theorem"
+]
+],
+"IsAntichain.sperner": [
+[
+"1000",
+"Sperner's theorem"
+],
+[
+"overview",
+"Sperner's theorem"
+]
+],
+"Subgroup.exists_left_complement'_of_coprime": [
+[
+"1000",
+"Schur\u2013Zassenhaus theorem"
+]
+],
+"EuclideanGeometry.Sphere.dist_sq_eq_mul_dist_of_tangent_and_secant": [
+[
+"1000",
+"Tangent-secant theorem"
+]
+],
+"VitaliFamily.ae_tendsto_lintegral_div": [
+[
+"1000",
+"Lebesgue differentiation theorem"
+]
+],
+"Ideal.exists_ideal_over_prime_of_isIntegral_of_isDomain": [
+[
+"1000",
+"Going-up and going-down theorems"
+]
+],
+"Ideal.exists_ideal_over_prime_of_isIntegral_of_isPrime": [
+[
+"1000",
+"Going-up and going-down theorems"
+]
+],
+"Algebra.HasGoingDown.iff_generalizingMap_primeSpectrumComap": [
+[
+"1000",
+"Going-up and going-down theorems"
+]
+],
+"Algebra.HasGoingDown.of_comap_localRingHom_surjective": [
+[
+"1000",
+"Going-up and going-down theorems"
+]
+],
+"convexHull_eq_union": [
+[
+"1000",
+"Carath\u00e9odory's theorem (convex hull)"
+],
+[
+"overview",
+"Carath\u00e9odory's theorem"
+]
+],
+"CompositionSeries.jordan_holder": [
+[
+"1000",
+"Jordan\u2013H\u00f6lder theorem"
+]
+],
+"MeasureTheory.AddContent.measure": [
+[
+"1000",
+"Carath\u00e9odory's extension theorem"
+]
+],
+"MeasureTheory.AddContent.measure_eq": [
+[
+"1000",
+"Carath\u00e9odory's extension theorem"
+]
+],
+"Rat.AbsoluteValue.equiv_real_or_padic": [
+[
+"1000",
+"Ostrowski's theorem"
+]
+],
+"RatFunc.valuation_isEquiv_infty_or_adic": [
+[
+"1000",
+"Ostrowski's theorem"
+]
+],
+"Complex.borelCaratheodory": [
+[
+"1000",
+"Borel\u2013Carath\u00e9odory theorem"
+]
+],
+"Vitali.exists_disjoint_covering_ae": [
+[
+"1000",
+"Vitali covering theorem"
+]
+],
+"Finset.kruskal_katona": [
+[
+"1000",
+"Kruskal\u2013Katona theorem"
+],
+[
+"overview",
+"Kruskal-Katona theorem"
+]
+],
+"PadicInt.hasSum_mahler": [
+[
+"1000",
+"Mahler's theorem"
+]
+],
+"MeasureTheory.Measure.div_mem_nhds_one_of_haar_pos": [
+[
+"1000",
+"Steinhaus theorem"
+]
+],
+"mk_eq_mk_of_basis": [
+[
+"1000",
+"Dimension theorem for vector spaces"
+]
+],
+"exists_norm_eq_iInf_of_complete_convex": [
+[
+"1000",
+"Hilbert projection theorem"
+],
+[
+"undergrad",
+"Hilbert projection theorem"
+]
+],
+"riesz_extension": [
+[
+"1000",
+"M. Riesz extension theorem"
+]
+],
+"PowerSeries.exists_isWeierstrassFactorization": [
+[
+"1000",
+"Weierstrass preparation theorem"
+]
+],
+"Bernoulli.vonStaudt_clausen": [
+[
+"1000",
+"Von Staudt\u2013Clausen theorem"
+]
+],
+"Ideal.height_le_one_of_isPrincipal_of_mem_minimalPrimes": [
+[
+"1000",
+"Krull's principal ideal theorem"
+]
+],
+"Complex.HadamardThreeLines.norm_le_interpStrip_of_mem_verticalClosedStrip": [
+[
+"1000",
+"Hadamard three-lines theorem"
+]
+],
+"fixedPoints.lfp_eq_sSup_iterate": [
+[
+"1000",
+"Kleene fixed-point theorem"
+]
+],
+"niven": [
+[
+"1000",
+"Niven's theorem"
+]
+],
+"PhragmenLindelof.horizontal_strip": [
+[
+"1000",
+"Phragm\u00e9n\u2013Lindel\u00f6f theorem"
+],
+[
+"overview",
+"Phragmen-Lindel\u00f6f principle"
+]
+],
+"four_functions_theorem": [
+[
+"1000",
+"Four functions theorem"
+],
+[
+"overview",
+"Four functions theorem"
+]
+],
+"ax_grothendieck_zeroLocus": [
+[
+"1000",
+"Ax\u2013Grothendieck theorem"
+]
+],
+"CategoryTheory.Monad.monadicOfCreatesGSplitCoequalizers": [
+[
+"1000",
+"Beck's monadicity theorem"
+]
+],
+"ChainCompletePartialOrder.nonempty_fixedPoints_of_inflationary": [
+[
+"1000",
+"Bourbaki\u2013Witt theorem"
+]
+],
+"MeasureTheory.TendstoInDistribution.continuous_comp": [
+[
+"1000",
+"Continuous mapping theorem"
+]
+],
+"corners_theorem_nat": [
+[
+"1000",
+"Corners theorem"
+],
+[
+"overview",
+"Corners theorem"
+]
+],
+"EuclideanGeometry.exterior_angle_eq_angle_add_angle": [
+[
+"1000",
+"Exterior angle theorem"
+]
+],
+"MeasureTheory.lintegral_liminf_le": [
+[
+"1000",
+"Fatou\u2013Lebesgue theorem"
+],
+[
+"undergrad",
+"Fatou's lemma"
+],
+[
+"overview",
+"Fatou's lemma"
+]
+],
+"ProbabilityTheory.IsGaussian.exists_integrable_exp_sq": [
+[
+"1000",
+"Fernique's theorem"
+]
+],
+"Subgroup.commutator_inf_eq_focalSubgroup": [
+[
+"1000",
+"Focal subgroup theorem"
+]
+],
+"Nat.Partition.card_restricted_eq_card_countRestricted": [
+[
+"1000",
+"Glaisher's theorem"
+]
+],
+"hahnEmbedding_isOrderedAddMonoid": [
+[
+"1000",
+"Hahn embedding theorem"
+]
+],
+"Polynomial.abc": [
+[
+"1000",
+"Mason\u2013Stothers theorem"
+]
+],
+"mellinInv_mellin_eq": [
+[
+"1000",
+"Mellin inversion theorem"
+]
+],
+"ProbabilityTheory.tendsto_choose_mul_pow_of_tendsto_mul_atTop": [
+[
+"1000",
+"Poisson limit theorem"
+]
+],
+"isCompact_setOfPred_finiteMeasure_mass_le_compl_isCompact_le": [
+[
+"1000",
+"Prokhorov's theorem"
+]
+],
+"isCompact_setOfPred_finiteMeasure_mass_eq_compl_isCompact_le": [
+[
+"1000",
+"Prokhorov's theorem"
+]
+],
+"isCompact_setOfPred_probabilityMeasure_mass_eq_compl_isCompact_le": [
+[
+"1000",
+"Prokhorov's theorem"
+]
+],
+"isCompact_closure_of_isTightMeasureSet": [
+[
+"1000",
+"Prokhorov's theorem"
+]
+],
+"MeasurableEmbedding.schroederBernstein": [
+[
+"1000",
+"Schroeder\u2013Bernstein theorem for measurable spaces"
+]
+],
+"MvPolynomial.schwartz_zippel_sup_sum": [
+[
+"1000",
+"Schwartz\u2013Zippel theorem"
+]
+],
+"Matrix.det_one_add_mul_comm": [
+[
+"1000",
+"Sylvester's determinant theorem"
+]
+],
+"Module.equiv_free_prod_directSum": [
+[
+"1000",
+"Structure theorem for finitely generated modules over a principal ideal domain"
+],
+[
+"overview",
+"structure theorem"
+]
+],
+"IsCoercive.continuousLinearEquivOfBilin": [
+[
+"1000",
+"Lax\u2013Milgram theorem"
+],
+[
+"undergrad",
+"Lax-Milgram theorem"
+],
+[
+"overview",
+"Lax-Milgram theorem"
+]
+],
+"MeasureTheory.tendstoInMeasure_iff_tendsto_Lp": [
+[
+"1000",
+"Vitali convergence theorem"
+]
+],
+"Pell.matiyasevic": [
+[
+"1000",
+"Matiyasevich's theorem"
+],
+[
+"overview",
+"Matiyasevi\u010d's theorem"
+]
+],
+"LatticeHom.birkhoffSet": [
+[
+"1000",
+"Birkhoff's representation theorem"
+]
+],
+"jacobson_density": [
+[
+"1000",
+"Jacobson density theorem"
+]
+],
+"LieModule.exists_nontrivial_weightSpace_of_isSolvable": [
+[
+"1000",
+"Lie's theorem"
+]
+],
+"ProbabilityTheory.Kernel.traj": [
+[
+"1000",
+"Ionescu-Tulcea theorem"
+]
+],
+"Order.iso_of_countable_dense": [
+[
+"1000",
+"Cantor's isomorphism theorem"
+]
+],
+"Module": [
+[
+"undergrad",
+"vector space"
+],
+[
+"overview",
+"module"
+],
+[
+"overview",
+"vector space"
+]
+],
+"Prod.instModule": [
+[
+"undergrad",
+"product of vector spaces"
+]
+],
+"Subspace": [
+[
+"undergrad",
+"vector subspace"
+]
+],
+"Submodule.hasQuotient": [
+[
+"undergrad",
+"quotient space"
+],
+[
+"overview",
+"quotient space"
+]
+],
+"Submodule.completeLattice": [
+[
+"undergrad",
+"sum of subspaces"
+]
+],
+"DirectSum.IsInternal": [
+[
+"undergrad",
+"direct sum"
+]
+],
+"Submodule.exists_isCompl": [
+[
+"undergrad",
+"complementary subspaces"
+]
+],
+"LinearIndependent": [
+[
+"undergrad",
+"linear independence"
+]
+],
+"Submodule.span": [
+[
+"undergrad",
+"generating sets"
+]
+],
+"Module.Basis": [
+[
+"undergrad",
+"bases"
+],
+[
+"overview",
+"basis"
+]
+],
+"Module.Basis.ofVectorSpace": [
+[
+"undergrad",
+"existence of bases"
+]
+],
+"LinearMap": [
+[
+"undergrad",
+"linear map"
+],
+[
+"overview",
+"linear map"
+]
+],
+"LinearMap.range": [
+[
+"undergrad",
+"range of a linear map"
+]
+],
+"LinearMap.ker": [
+[
+"undergrad",
+"kernel of a linear map"
+]
+],
+"Module.End.instAlgebra": [
+[
+"undergrad",
+"algebra of endomorphisms of a vector space"
+]
+],
+"LinearMap.GeneralLinearGroup": [
+[
+"undergrad",
+"general linear group"
+],
+[
+"overview",
+"general linear group"
+]
+],
+"Module.Dual": [
+[
+"undergrad",
+"dual vector space"
+],
+[
+"overview",
+"dual vector space"
+]
+],
+"Module.Basis.dualBasis": [
+[
+"undergrad",
+"dual basis"
+],
+[
+"overview",
+"dual basis"
+]
+],
+"Module.Dual.transpose": [
+[
+"undergrad",
+"transpose of a linear map"
+]
+],
+"Submodule.dualAnnihilator": [
+[
+"undergrad",
+"orthogonality"
+]
+],
+"FiniteDimensional": [
+[
+"undergrad",
+"finite-dimensionality"
+],
+[
+"overview",
+"finite-dimensionality"
+]
+],
+"Module.Basis.equivFun": [
+[
+"undergrad",
+"isomorphism with $K^n$"
+],
+[
+"overview",
+"isomorphism with $K^n$"
+]
+],
+"LinearMap.rank": [
+[
+"undergrad",
+"rank of a linear map"
+]
+],
+"Set.finrank": [
+[
+"undergrad",
+"rank of a set of vectors"
+]
+],
+"https://www.math.tamu.edu/~fnarc/psfiles/rank2005.pdf": [
+[
+"undergrad",
+"rank of a system of linear equations"
+]
+],
+"Module.evalEquiv": [
+[
+"undergrad",
+"isomorphism with bidual"
+],
+[
+"overview",
+"isomorphism with bidual"
+]
+],
+"MultilinearMap": [
+[
+"undergrad",
+"multilinear map"
+],
+[
+"overview",
+"multilinear map"
+]
+],
+"Module.Basis.det": [
+[
+"undergrad",
+"determinant of vectors"
+]
+],
+"LinearMap.det": [
+[
+"undergrad",
+"determinant of endomorphisms"
+]
+],
+"Matrix.SpecialLinearGroup": [
+[
+"undergrad",
+"special linear group"
+],
+[
+"undergrad",
+"special linear group"
+]
+],
+"Orientation": [
+[
+"undergrad",
+"orientation of a $\\R$-vector space"
+]
+],
+"Matrix": [
+[
+"undergrad",
+"commutative-ring-valued matrices"
+],
+[
+"undergrad",
+"field-valued matrices"
+],
+[
+"overview",
+"ring-valued matrix"
+]
+],
+"LinearMap.toMatrix": [
+[
+"undergrad",
+"matrix representation of a linear map"
+],
+[
+"overview",
+"matrix representation of a linear map"
+]
+],
+"basis_toMatrix_mul_linearMap_toMatrix_mul_basis_toMatrix": [
+[
+"undergrad",
+"change of basis"
+]
+],
+"Matrix.rank": [
+[
+"undergrad",
+"rank of a matrix"
+]
+],
+"Matrix.det": [
+[
+"undergrad",
+"determinant"
+],
+[
+"overview",
+"determinant"
+]
+],
+"Matrix.inv": [
+[
+"undergrad",
+"invertibility"
+],
+[
+"overview",
+"invertibility"
+]
+],
+"https://en.wikipedia.org/wiki/Elementary_matrix#Operations": [
+[
+"undergrad",
+"elementary row operations"
+],
+[
+"undergrad",
+"elementary column operations"
+]
+],
+"Matrix.Pivot.exists_list_transvec_mul_mul_list_transvec_eq_diagonal": [
+[
+"undergrad",
+"Gaussian elimination"
+]
+],
+"https://en.wikipedia.org/wiki/Row_echelon_form#Reduced_row_echelon_form": [
+[
+"undergrad",
+"row-reduced matrices"
+]
+],
+"Polynomial.annIdeal": [
+[
+"undergrad",
+"annihilating polynomials"
+]
+],
+"minpoly": [
+[
+"undergrad",
+"minimal polynomial"
+],
+[
+"overview",
+"minimal polynomial"
+]
+],
+"Matrix.charpoly": [
+[
+"undergrad",
+"characteristic polynomial"
+],
+[
+"overview",
+"characteristic polynomial"
+]
+],
+"Module.End.HasEigenvalue": [
+[
+"undergrad",
+"eigenvalue"
+],
+[
+"overview",
+"eigenvalue"
+]
+],
+"Module.End.HasEigenvector": [
+[
+"undergrad",
+"eigenvector"
+],
+[
+"overview",
+"eigenvector"
+]
+],
+"https://en.wikipedia.org/wiki/Diagonalizable_matrix": [
+[
+"undergrad",
+"diagonalization"
+]
+],
+"https://en.wikipedia.org/wiki/Triangular_matrix#Triangularisability": [
+[
+"undergrad",
+"triangularization"
+]
+],
+"Module.End.invtSubmodule": [
+[
+"undergrad",
+"invariant subspaces of an endomorphism"
+]
+],
+"Module.End.genEigenspace": [
+[
+"undergrad",
+"generalized eigenspaces"
+]
+],
+"https://fr.wikipedia.org/wiki/Lemme_des_noyaux": [
+[
+"undergrad",
+"kernels lemma"
+]
+],
+"Module.End.exists_isNilpotent_isSemisimple": [
+[
+"undergrad",
+"Jordan-Chevalley-Dunford decomposition"
+]
+],
+"https://en.wikipedia.org/wiki/Jordan_normal_form": [
+[
+"undergrad",
+"Jordan normal form"
+]
+],
+"Representation.IsIrreducible": [
+[
+"undergrad",
+"irreducible representation"
+]
+],
+"FDRep.finrank_hom_simple_simple": [
+[
+"undergrad",
+"Schur's lemma"
+]
+],
+"NormedSpace.exp": [
+[
+"undergrad",
+"matrix exponential"
+]
+],
+"Group": [
+[
+"undergrad",
+"group"
+],
+[
+"overview",
+"group"
+]
+],
+"MonoidHom": [
+[
+"undergrad",
+"group morphism"
+],
+[
+"overview",
+"group morphism"
+]
+],
+"Prod.instGroup": [
+[
+"undergrad",
+"direct product of groups"
+]
+],
+"Subgroup": [
+[
+"undergrad",
+"subgroup"
+],
+[
+"overview",
+"subgroup"
+]
+],
+"Subgroup.closure": [
+[
+"undergrad",
+"subgroup generated by a subset"
+],
+[
+"overview",
+"subgroup generated by a subset"
+]
+],
+"orderOf": [
+[
+"undergrad",
+"order of an element"
+]
+],
+"Subgroup.Normal": [
+[
+"undergrad",
+"normal subgroup"
+],
+[
+"overview",
+"normal subgroup"
+]
+],
+"QuotientGroup.Quotient.group": [
+[
+"undergrad",
+"quotient group"
+],
+[
+"overview",
+"quotient group"
+]
+],
+"MulAction": [
+[
+"undergrad",
+"group action"
+],
+[
+"overview",
+"group action"
+]
+],
+"MulAction.stabilizer": [
+[
+"undergrad",
+"stabilizer of a point"
+]
+],
+"MulAction.orbit": [
+[
+"undergrad",
+"orbit"
+]
+],
+"MulAction.selfEquivSigmaOrbitsQuotientStabilizer": [
+[
+"undergrad",
+"class formula"
+],
+[
+"overview",
+"class formula"
+]
+],
+"ConjClasses": [
+[
+"undergrad",
+"conjugacy classes"
+]
+],
+"IsCyclic": [
+[
+"undergrad",
+"cyclic group"
+],
+[
+"overview",
+"cyclic group"
+]
+],
+"AddCommGroup.equiv_free_prod_directSum_zmod": [
+[
+"undergrad",
+"finite type abelian groups"
+],
+[
+"overview",
+"structure of finitely generated abelian groups"
+]
+],
+"Complex.mem_rootsOfUnity": [
+[
+"undergrad",
+"complex roots of unity"
+]
+],
+"Complex.isPrimitiveRoot_iff": [
+[
+"undergrad",
+"primitive complex roots of unity"
+]
+],
+"Equiv.Perm": [
+[
+"undergrad",
+"permutation group of a type"
+],
+[
+"overview",
+"permutation group of a type"
+]
+],
+"Equiv.Perm.truncSwapFactors": [
+[
+"undergrad",
+"decomposition into transpositions"
+]
+],
+"Equiv.Perm.truncCycleFactors": [
+[
+"undergrad",
+"decomposition into cycles with disjoint support"
+]
+],
+"Equiv.Perm.sign": [
+[
+"undergrad",
+"signature"
+]
+],
+"alternatingGroup": [
+[
+"undergrad",
+"alternating group"
+],
+[
+"overview",
+"alternating group"
+]
+],
+"Matrix.GeneralLinearGroup": [
+[
+"undergrad",
+"general linear group"
+]
+],
+"Matrix.orthogonalGroup": [
+[
+"undergrad",
+"orthogonal group"
+],
+[
+"undergrad",
+"orthogonal group"
+]
+],
+"Matrix.specialOrthogonalGroup": [
+[
+"undergrad",
+"special orthogonal group"
+],
+[
+"undergrad",
+"special orthogonal group"
+]
+],
+"Matrix.unitaryGroup": [
+[
+"undergrad",
+"unitary group"
+],
+[
+"undergrad",
+"unitary group"
+]
+],
+"Matrix.specialUnitaryGroup": [
+[
+"undergrad",
+"special unitary group"
+],
+[
+"undergrad",
+"special unitary group"
+]
+],
+"https://proofwiki.org/wiki/Irreducible_Representations_of_Abelian_Group": [
+[
+"undergrad",
+"representations of abelian groups"
+]
+],
+"https://kconrad.math.uconn.edu/blurbs/grouptheory/charthy.pdf": [
+[
+"undergrad",
+"dual groups"
+]
+],
+"FDRep.char_orthonormal": [
+[
+"undergrad",
+"orthogonality of irreducible characters"
+],
+[
+"overview",
+"orthogonality of characters"
+]
+],
+"https://en.wikipedia.org/wiki/Fourier_transform_on_finite_groups#Fourier_transform_for_finite_abelian_groups": [
+[
+"undergrad",
+"Fourier transform for finite abelian groups"
+]
+],
+"https://en.wikipedia.org/wiki/Fourier_transform_on_finite_groups#Transform_of_a_convolution": [
+[
+"undergrad",
+"convolution"
+]
+],
+"https://en.wikipedia.org/wiki/Class_function": [
+[
+"undergrad",
+"class function over a group"
+]
+],
+"FDRep.character": [
+[
+"undergrad",
+"characters of a finite-dimensional representation"
+],
+[
+"overview",
+"character"
+]
+],
+"https://en.wikipedia.org/wiki/Character_theory#Orthogonality_relations": [
+[
+"undergrad",
+"orthonormal basis of irreducible characters"
+]
+],
+"Ring": [
+[
+"undergrad",
+"ring"
+],
+[
+"overview",
+"ring"
+]
+],
+"Subring": [
+[
+"undergrad",
+"subrings"
+],
+[
+"overview",
+"subring"
+]
+],
+"RingHom": [
+[
+"undergrad",
+"ring morphisms"
+],
+[
+"overview",
+"ring morphism"
+]
+],
+"Int.instCommRing": [
+[
+"undergrad",
+"ring structure $\\Z$"
+]
+],
+"Pi.ring": [
+[
+"undergrad",
+"product of rings"
+]
+],
+"Ideal": [
+[
+"undergrad",
+"ideal of a commutative ring"
+],
+[
+"overview",
+"ideal of a commutative ring"
+]
+],
+"Ideal.Quotient.ring": [
+[
+"undergrad",
+"quotient rings"
+],
+[
+"overview",
+"quotient ring"
+]
+],
+"Ideal.IsPrime": [
+[
+"undergrad",
+"prime ideals"
+],
+[
+"overview",
+"prime ideal"
+]
+],
+"Ideal.IsMaximal": [
+[
+"undergrad",
+"maximal ideals"
+],
+[
+"overview",
+"maximal ideal"
+]
+],
+"https://en.wikipedia.org/wiki/Algebra_over_a_field#Generalization:_algebra_over_a_ring": [
+[
+"undergrad",
+"algebra over a commutative ring"
+]
+],
+"Algebra": [
+[
+"undergrad",
+"associative algebra over a commutative ring"
+],
+[
+"overview",
+"associative algebra over a commutative ring"
+]
+],
+"Irreducible": [
+[
+"undergrad",
+"irreducible elements"
+],
+[
+"undergrad",
+"irreducible polynomial"
+],
+[
+"overview",
+"irreducible element"
+],
+[
+"overview",
+"irreducible polynomial"
+]
+],
+"Invertible": [
+[
+"undergrad",
+"invertible elements"
+]
+],
+"IsCoprime": [
+[
+"undergrad",
+"coprime elements"
+],
+[
+"overview",
+"coprime element"
+]
+],
+"GCDMonoid.gcd": [
+[
+"undergrad",
+"greatest common divisor"
+],
+[
+"overview",
+"greatest common divisor"
+]
+],
+"GCDMonoid.lcm": [
+[
+"undergrad",
+"least common multiple"
+],
+[
+"overview",
+"least common multiple"
+]
+],
+"MvPolynomial.uniqueFactorizationMonoid": [
+[
+"undergrad",
+"$A[{X_i}]$ is a UFD when $A$ is a UFD"
+],
+[
+"overview",
+"$A[{X_i}]$ is a UFD when $A$ is a UFD"
+]
+],
+"Submodule.IsPrincipal": [
+[
+"undergrad",
+"principal ideal domain"
+],
+[
+"overview",
+"principal ideal domain"
+]
+],
+"EuclideanDomain": [
+[
+"undergrad",
+"Euclidean rings"
+],
+[
+"overview",
+"Euclidean domain"
+]
+],
+"Nat.xgcd": [
+[
+"undergrad",
+"Euclid's' algorithm"
+],
+[
+"overview",
+"Euclid's' algorithm"
+]
+],
+"Int.ModEq": [
+[
+"undergrad",
+"congruence in $\\Z$"
+]
+],
+"Prime": [
+[
+"undergrad",
+"prime numbers"
+]
+],
+"exists_gcd_eq_mul_add_mul": [
+[
+"undergrad",
+"B\u00e9zout's identity"
+]
+],
+"ZMod.unitOfCoprime": [
+[
+"undergrad",
+"$\\Z/n\\Z$ and its invertible elements"
+]
+],
+"Nat.totient": [
+[
+"undergrad",
+"Euler's totient function ($\\varphi$)"
+],
+[
+"overview",
+"Euler's totient function ($\\varphi$)"
+]
+],
+"Polynomial.instEuclideanDomain": [
+[
+"undergrad",
+"$K[X]$ is a Euclidean ring when $K$ is a field"
+],
+[
+"overview",
+"$K[X]$ is Euclidean"
+]
+],
+"Polynomial.cyclotomic": [
+[
+"undergrad",
+"cyclotomic polynomials in $\\Q[X]$"
+]
+],
+"Polynomial.irreducible_of_eisenstein_criterion": [
+[
+"undergrad",
+"Eisenstein's criterion"
+],
+[
+"overview",
+"Eisenstein's criterion"
+]
+],
+"MvPolynomial": [
+[
+"undergrad",
+"polynomial algebra in one or several indeterminates over a commutative ring"
+],
+[
+"overview",
+"polynomial in several indeterminates"
+]
+],
+"Polynomial.roots": [
+[
+"undergrad",
+"roots of a polynomial"
+],
+[
+"overview",
+"roots of a polynomial"
+]
+],
+"Polynomial.rootMultiplicity": [
+[
+"undergrad",
+"multiplicity"
+],
+[
+"overview",
+"multiplicity"
+]
+],
+"Polynomial.coeff_eq_esymm_roots_of_card": [
+[
+"undergrad",
+"relationship between the coefficients and the roots of a split polynomial"
+]
+],
+"MvPolynomial.mul_esymm_eq_sum": [
+[
+"undergrad",
+"Newton's identities"
+]
+],
+"Polynomial.derivative": [
+[
+"undergrad",
+"polynomial derivative"
+]
+],
+"MvPolynomial.sum_homogeneousComponent": [
+[
+"undergrad",
+"decomposition into sums of homogeneous polynomials"
+]
+],
+"MvPolynomial.IsSymmetric": [
+[
+"undergrad",
+"symmetric polynomials"
+]
+],
+"Field": [
+[
+"undergrad",
+"fields"
+],
+[
+"overview",
+"field"
+]
+],
+"ringChar": [
+[
+"undergrad",
+"characteristic of a ring"
+],
+[
+"overview",
+"characteristic of a ring"
+]
+],
+"CharZero": [
+[
+"undergrad",
+"characteristic zero"
+],
+[
+"overview",
+"characteristic zero"
+]
+],
+"CharP": [
+[
+"undergrad",
+"characteristic p"
+],
+[
+"overview",
+"characteristic p"
+]
+],
+"Subfield": [
+[
+"undergrad",
+"Subfields"
+],
+[
+"overview",
+"subfield"
+]
+],
+"frobenius": [
+[
+"undergrad",
+"Frobenius morphisms"
+],
+[
+"overview",
+"Frobenius morphism"
+]
+],
+"Rat.instField": [
+[
+"undergrad",
+"field $\\Q$ of rational numbers"
+]
+],
+"Real.instField": [
+[
+"undergrad",
+"field $\\R$ of real numbers"
+],
+[
+"undergrad",
+"field structure"
+]
+],
+"Complex.instField": [
+[
+"undergrad",
+"field $\\C$ of complex numbers"
+]
+],
+"IsFractionRing": [
+[
+"undergrad",
+"field of fractions of an integral domain"
+],
+[
+"overview",
+"field of fractions of an integral domain"
+]
+],
+"IsAlgebraic": [
+[
+"undergrad",
+"algebraic elements"
+]
+],
+"Transcendental": [
+[
+"undergrad",
+"transcendental elements"
+]
+],
+"Algebra.IsAlgebraic": [
+[
+"undergrad",
+"algebraic extensions"
+],
+[
+"overview",
+"algebraic extension"
+]
+],
+"IsAlgClosed": [
+[
+"undergrad",
+"algebraically closed fields"
+],
+[
+"overview",
+"algebraically closed field"
+]
+],
+"AdjoinRoot": [
+[
+"undergrad",
+"rupture fields"
+],
+[
+"overview",
+"rupture field"
+]
+],
+"Polynomial.SplittingField": [
+[
+"undergrad",
+"splitting fields"
+],
+[
+"overview",
+"splitting field"
+]
+],
+"Mathlib/FieldTheory/Finite/Basic.html": [
+[
+"undergrad",
+"finite fields"
+]
+],
+"RatFunc": [
+[
+"undergrad",
+"rational fraction fields with one indeterminate over a field"
+]
+],
+"https://en.wikipedia.org/wiki/Partial_fraction_decomposition#General_result": [
+[
+"undergrad",
+"$\\R(X)$-partial fraction decomposition"
+]
+],
+"https://en.wikipedia.org/wiki/Partial_fraction_decomposition#Statement": [
+[
+"undergrad",
+"$\\C(X)$-partial fraction decomposition"
+]
+],
+"LinearMap.BilinForm": [
+[
+"undergrad",
+"bilinear forms"
+],
+[
+"overview",
+"bilinear form"
+]
+],
+"LinearMap.BilinForm.IsAlt": [
+[
+"undergrad",
+"alternating bilinear forms"
+],
+[
+"overview",
+"alternating bilinear form"
+]
+],
+"LinearMap.BilinForm.IsSymm": [
+[
+"undergrad",
+"symmetric bilinear forms"
+],
+[
+"overview",
+"symmetric bilinear form"
+]
+],
+"LinearMap.BilinForm.Nondegenerate": [
+[
+"undergrad",
+"nondegenerate forms"
+]
+],
+"LinearMap.BilinForm.toMatrix": [
+[
+"undergrad",
+"matrix representation"
+],
+[
+"overview",
+"matrix representation"
+]
+],
+"LinearMap.BilinForm.toMatrix_comp": [
+[
+"undergrad",
+"change of coordinates"
+]
+],
+"QuadraticForm": [
+[
+"undergrad",
+"quadratic form"
+],
+[
+"overview",
+"quadratic form"
+]
+],
+"QuadraticMap.polar": [
+[
+"undergrad",
+"polar form of a quadratic"
+],
+[
+"overview",
+"polar form of a quadratic"
+]
+],
+"LinearMap.BilinForm.iIsOrtho": [
+[
+"undergrad",
+"orthogonal elements"
+]
+],
+"LinearMap.BilinForm.leftAdjointOfNondegenerate": [
+[
+"undergrad",
+"adjoint endomorphism"
+]
+],
+"QuadraticForm.sigPos_of_equiv_weightedSumSquares": [
+[
+"undergrad",
+"Sylvester's law of inertia (uniqueness)"
+]
+],
+"QuadraticForm.equivalent_weightedSumSquares_of_isAlgClosed": [
+[
+"undergrad",
+"complex classification"
+]
+],
+"InnerProductSpace.gramSchmidt_orthogonal": [
+[
+"undergrad",
+"Gram-Schmidt orthogonalisation"
+]
+],
+"InnerProductSpace": [
+[
+"undergrad",
+"Euclidean vector spaces"
+],
+[
+"undergrad",
+"Hermitian vector spaces"
+],
+[
+"overview",
+"Inner product space, over $R$ or $C$"
+]
+],
+"Submodule.orthogonal": [
+[
+"undergrad",
+"orthogonal complement"
+],
+[
+"overview",
+"orthogonal complement"
+]
+],
+"InnerProductSpace.Core.toNorm": [
+[
+"undergrad",
+"norm"
+]
+],
+"maximal_orthonormal_iff_basis_of_finiteDimensional": [
+[
+"undergrad",
+"orthonormal bases"
+]
+],
+"IsSelfAdjoint": [
+[
+"undergrad",
+"self-adjoint endomorphism"
+],
+[
+"overview",
+"self-adjoint operator"
+]
+],
+"IsStarNormal": [
+[
+"undergrad",
+"normal endomorphism"
+]
+],
+"LinearMap.IsSymmetric.eigenvectorBasis_apply_self_apply": [
+[
+"undergrad",
+"diagonalization of a self-adjoint endomorphism"
+],
+[
+"overview",
+"diagonalization of self-adjoint endomorphisms"
+]
+],
+"https://en.wikipedia.org/wiki/Spectral_theorem#Normal_matrices": [
+[
+"undergrad",
+"diagonalization of normal endomorphisms"
+]
+],
+"https://fr.wikipedia.org/wiki/Th%C3%A9or%C3%A8me_spectral#Formalisation_alg%C3%A9brique": [
+[
+"undergrad",
+"simultaneous diagonalization of two real quadratic forms, with one positive-definite"
+]
+],
+"LinearIsometryEquiv.reflections_generate": [
+[
+"undergrad",
+"decomposition of an orthogonal transformation as a product of reflections"
+]
+],
+"https://en.wikipedia.org/wiki/Polar_decomposition": [
+[
+"undergrad",
+"polar decompositions in $\\mathrm{GL}(n, \\R)$"
+],
+[
+"undergrad",
+"polar decompositions in $\\mathrm{GL}(n, \\C)$"
+]
+],
+"crossProduct": [
+[
+"undergrad",
+"cross product"
+]
+],
+"triple_product_eq_det": [
+[
+"undergrad",
+"triple product"
+]
+],
+"AddTorsor": [
+[
+"undergrad",
+"affine space"
+],
+[
+"overview",
+"affine space"
+]
+],
+"AffineMap": [
+[
+"undergrad",
+"affine function"
+],
+[
+"overview",
+"affine function"
+]
+],
+"AffineSubspace": [
+[
+"undergrad",
+"affine subspace"
+],
+[
+"overview",
+"affine subspace"
+]
+],
+"Finset.affineCombination": [
+[
+"undergrad",
+"barycenter"
+],
+[
+"overview",
+"barycenter"
+]
+],
+"affineSpan": [
+[
+"undergrad",
+"affine span"
+],
+[
+"overview",
+"affine span"
+]
+],
+"AffineEquiv.group": [
+[
+"undergrad",
+"affine groups"
+]
+],
+"https://en.wikipedia.org/wiki/Affine_transformation#Properties": [
+[
+"undergrad",
+"affine property"
+]
+],
+"https://en.wikipedia.org/wiki/Homothety": [
+[
+"undergrad",
+"group generated by homotheties and translations"
+]
+],
+"https://fr.wikipedia.org/wiki/Affinit%C3%A9_(math%C3%A9matiques)": [
+[
+"undergrad",
+"transformations fixing a basis of directions"
+]
+],
+"Convex": [
+[
+"undergrad",
+"convex subsets"
+]
+],
+"convexHull": [
+[
+"undergrad",
+"convex hull of a subset of an affine real space"
+]
+],
+"Set.extremePoints": [
+[
+"undergrad",
+"extreme point"
+]
+],
+"AffineIsometryEquiv": [
+[
+"undergrad",
+"isometries of a Euclidean affine space"
+]
+],
+"AffineIsometryEquiv.instGroup": [
+[
+"undergrad",
+"group of isometries of a Euclidean affine space"
+]
+],
+"InnerProductGeometry.angle": [
+[
+"undergrad",
+"angles between vectors"
+],
+[
+"overview",
+"angle"
+]
+],
+"Orientation.two_zsmul_oangle_sub_eq_two_zsmul_oangle_sub_of_norm_eq": [
+[
+"undergrad",
+"inscribed angle theorem"
+]
+],
+"EuclideanGeometry.Concyclic": [
+[
+"undergrad",
+"cocyclicity"
+]
+],
+"Real": [
+[
+"undergrad",
+"definition of $\\R$"
+],
+[
+"overview",
+"real number"
+]
+],
+"Real.linearOrder": [
+[
+"undergrad",
+"order"
+]
+],
+"Filter.Tendsto": [
+[
+"undergrad",
+"convergence"
+],
+[
+"undergrad",
+"limits"
+],
+[
+"overview",
+"limit of a map with respect to filters"
+]
+],
+"MapClusterPt": [
+[
+"undergrad",
+"limit point"
+]
+],
+"Mathlib/Order/LiminfLimsup.html": [
+[
+"undergrad",
+"limit infimum and supremum"
+],
+[
+"overview",
+"limit infimum and supremum"
+]
+],
+"CauchySeq": [
+[
+"undergrad",
+"Cauchy sequences"
+],
+[
+"overview",
+"Cauchy sequence"
+]
+],
+"Real.metricSpace": [
+[
+"undergrad",
+"metric structure"
+]
+],
+"Real.instCompleteSpace": [
+[
+"undergrad",
+"completeness of R"
+]
+],
+"setOfPred_isPreconnected_eq_of_ordered": [
+[
+"undergrad",
+"connected subsets of $\\R$"
+]
+],
+"AddSubgroup.dense_or_cyclic": [
+[
+"undergrad",
+"additive subgroups of $\\R$"
+]
+],
+"https://en.wikipedia.org/wiki/Series_(mathematics)#Convergent_series": [
+[
+"undergrad",
+"Convergence of real-valued series"
+]
+],
+"tsum_geometric_of_norm_lt_one": [
+[
+"undergrad",
+"Geometric series"
+]
+],
+"Real.summable_one_div_nat_rpow": [
+[
+"undergrad",
+"convergence of $p$-series for $p>1$"
+]
+],
+"http://braise.univ-rennes1.fr/donnees/ParamHTML/S%E9ries%20num%E9riques/Con/Sommation%20des%20relations%20de%20comparaison/cst.ps": [
+[
+"undergrad",
+"summation of comparison relations"
+]
+],
+"AntitoneOn.tsum_le_integral": [
+[
+"undergrad",
+"comparison of a series and an integral"
+]
+],
+"https://en.wikipedia.org/wiki/Series_(mathematics)#Evaluation_of_truncation_errors": [
+[
+"undergrad",
+"error estimation"
+]
+],
+"https://en.wikipedia.org/wiki/Absolute_convergence": [
+[
+"undergrad",
+"absolute convergence"
+]
+],
+"https://en.wikipedia.org/wiki/Cauchy_product": [
+[
+"undergrad",
+"products of series"
+]
+],
+"Antitone.tendsto_alternating_series_of_tendsto_zero": [
+[
+"undergrad",
+"alternating series"
+]
+],
+"Continuous": [
+[
+"undergrad",
+"continuity"
+],
+[
+"undergrad",
+"continuous functions"
+],
+[
+"overview",
+"continuous function"
+]
+],
+"ContinuousOn.image_Icc": [
+[
+"undergrad",
+"image of a segment"
+]
+],
+"OrderIso.continuous": [
+[
+"undergrad",
+"continuity of monotone functions"
+]
+],
+"OrderIso.toHomeomorph": [
+[
+"undergrad",
+"continuity of inverse functions"
+]
+],
+"HasDerivAt": [
+[
+"undergrad",
+"derivative at a point"
+],
+[
+"undergrad",
+"differentiable functions"
+]
+],
+"deriv_comp": [
+[
+"undergrad",
+"derivative of a composition of functions"
+]
+],
+"HasStrictDerivAt.of_local_left_inverse": [
+[
+"undergrad",
+"derivative of the inverse of a function"
+]
+],
+"iteratedDeriv": [
+[
+"undergrad",
+"higher-order derivatives of functions"
+]
+],
+"ContDiff": [
+[
+"undergrad",
+"$C^k$ functions"
+],
+[
+"undergrad",
+"$k$-times continuously differentiable functions"
+],
+[
+"overview",
+"$C^k$ function"
+]
+],
+"https://en.wikipedia.org/wiki/Piecewise#Continuity_and_differentiability_of_piecewise_functions": [
+[
+"undergrad",
+"piecewise $C^k$ functions"
+]
+],
+"deriv_mul": [
+[
+"undergrad",
+"Leibniz formula"
+]
+],
+"https://en.wikipedia.org/wiki/Taylor%27s_theorem#Taylor's_theorem_in_one_real_variable": [
+[
+"undergrad",
+"Taylor's theorem with little-o remainder"
+]
+],
+"taylor_integral_remainder_of_absolutelyContinuous": [
+[
+"undergrad",
+"Taylor's theorem with integral form for remainder"
+]
+],
+"https://en.wikipedia.org/wiki/Taylor_series": [
+[
+"undergrad",
+"Taylor series expansions"
+]
+],
+"Polynomial.eval": [
+[
+"undergrad",
+"polynomial functions"
+]
+],
+"RatFunc.eval": [
+[
+"undergrad",
+"rational functions"
+]
+],
+"Real.log": [
+[
+"undergrad",
+"logarithms"
+],
+[
+"overview",
+"logarithm"
+]
+],
+"Real.exp": [
+[
+"undergrad",
+"exponential"
+],
+[
+"overview",
+"exponential"
+]
+],
+"Real.rpow": [
+[
+"undergrad",
+"power functions"
+]
+],
+"Real.sin": [
+[
+"undergrad",
+"trigonometric functions"
+],
+[
+"overview",
+"trigonometric functions"
+]
+],
+"Real.sinh": [
+[
+"undergrad",
+"hyperbolic trigonometric functions"
+],
+[
+"overview",
+"hyperbolic trigonometric functions"
+]
+],
+"Real.arcsin": [
+[
+"undergrad",
+"inverse trigonometric functions"
+],
+[
+"overview",
+"inverse trigonometric functions"
+]
+],
+"Real.arsinh": [
+[
+"undergrad",
+"inverse hyperbolic trigonometric functions"
+],
+[
+"overview",
+"inverse hyperbolic trigonometric functions"
+]
+],
+"BoxIntegral.integralSum": [
+[
+"undergrad",
+"Riemann sums"
+]
+],
+"Continuous.deriv_integral": [
+[
+"undergrad",
+"antiderivative of a continuous function"
+]
+],
+"intervalIntegral.integral_deriv_smul_comp": [
+[
+"undergrad",
+"change of variable"
+]
+],
+"intervalIntegral.integral_mul_deriv_eq_deriv_mul": [
+[
+"undergrad",
+"integration by parts"
+]
+],
+"https://en.wikipedia.org/wiki/Improper_integral": [
+[
+"undergrad",
+"improper integrals"
+]
+],
+"https://en.wikipedia.org/wiki/Conditional_convergence": [
+[
+"undergrad",
+"absolute vs conditional convergence of improper integrals"
+]
+],
+"https://mathbooks.unl.edu/Calculus/sec-5-11-comparison.html": [
+[
+"undergrad",
+"comparison test for improper integrals"
+]
+],
+"tendsto_pi_nhds": [
+[
+"undergrad",
+"pointwise convergence"
+]
+],
+"TendstoUniformly": [
+[
+"undergrad",
+"uniform convergence"
+],
+[
+"overview",
+"uniform convergence"
+]
+],
+"https://en.wikipedia.org/wiki/Normal_convergence": [
+[
+"undergrad",
+"normal convergence"
+]
+],
+"continuous_of_uniform_approx_of_continuous": [
+[
+"undergrad",
+"continuity of the limit of a sequence of functions"
+]
+],
+"continuous_tsum": [
+[
+"undergrad",
+"continuity of the sum of a series of functions"
+]
+],
+"hasFDerivAt_of_tendstoUniformly": [
+[
+"undergrad",
+"differentiability of the limit of a sequence of functions"
+]
+],
+"differentiable_tsum": [
+[
+"undergrad",
+"differentiability of the sum of a series of functions"
+]
+],
+"polynomialFunctions_closure_eq_top": [
+[
+"undergrad",
+"Weierstrass polynomial approximation theorem"
+]
+],
+"span_fourier_closure_eq_top": [
+[
+"undergrad",
+"Weierstrass trigonometric approximation theorem"
+]
+],
+"ConvexOn": [
+[
+"undergrad",
+"convex functions of a real variable"
+],
+[
+"undergrad",
+"convexity of functions on an open convex subset of $\\R^n$"
+],
+[
+"overview",
+"convex function"
+]
+],
+"ConvexOn.continuousOn": [
+[
+"undergrad",
+"continuity"
+]
+],
+"https://en.wikipedia.org/wiki/Convex_function#Functions_of_one_variable": [
+[
+"undergrad",
+"differentiability"
+]
+],
+"convexOn_of_deriv2_nonneg": [
+[
+"undergrad",
+"characterizations of convexity"
+],
+[
+"overview",
+"characterization of convexity"
+]
+],
+"Mathlib/Analysis/MeanInequalities.html": [
+[
+"undergrad",
+"convexity inequalities"
+],
+[
+"overview",
+"convexity inequalities"
+]
+],
+"FormalMultilinearSeries.radius": [
+[
+"undergrad",
+"radius of convergence"
+]
+],
+"HasFPowerSeriesOnBall.continuousOn": [
+[
+"undergrad",
+"continuity"
+]
+],
+"HasFPowerSeriesOnBall.differentiableOn": [
+[
+"undergrad",
+"differentiability with respect to the complex variable"
+]
+],
+"Complex.exp": [
+[
+"undergrad",
+"complex exponential"
+]
+],
+"Complex.cos": [
+[
+"undergrad",
+"cos"
+]
+],
+"Complex.sin": [
+[
+"undergrad",
+"sin"
+]
+],
+"Complex.hasSum_cos": [
+[
+"undergrad",
+"cos"
+]
+],
+"Complex.hasSum_sin": [
+[
+"undergrad",
+"sin"
+]
+],
+"Complex.hasSum_taylorSeries_log": [
+[
+"undergrad",
+"log"
+]
+],
+"DifferentiableOn": [
+[
+"undergrad",
+"holomorphic functions"
+],
+[
+"undergrad",
+"differentiable functions on an open subset of $\\R^n$"
+]
+],
+"Complex.two_pi_I_inv_smul_circleIntegral_sub_inv_smul_of_differentiable_on_off_countable": [
+[
+"undergrad",
+"Cauchy formulas"
+]
+],
+"DifferentiableOn.analyticAt": [
+[
+"undergrad",
+"analyticity of a holomorphic function"
+],
+[
+"overview",
+"analyticity of holomorphic functions"
+]
+],
+"AnalyticAt.eventually_eq_zero_or_eventually_ne_zero": [
+[
+"undergrad",
+"principle of isolated zeros"
+],
+[
+"overview",
+"principle of isolated zeros"
+]
+],
+"Complex.eventually_eq_of_isLocalMax_norm": [
+[
+"undergrad",
+"maximum principle"
+],
+[
+"overview",
+"maximum modulus principle"
+]
+],
+"TendstoLocallyUniformlyOn.differentiableOn": [
+[
+"undergrad",
+"holomorphic stability under uniform convergence"
+]
+],
+"Metric.isOpen_iff": [
+[
+"undergrad",
+"topology of a metric space"
+]
+],
+"TopologicalSpace.induced": [
+[
+"undergrad",
+"induced topology"
+],
+[
+"overview",
+"induced topology"
+]
+],
+"metricSpacePi": [
+[
+"undergrad",
+"finite product of metric spaces"
+]
+],
+"Metric.tendsto_atTop": [
+[
+"undergrad",
+"limits of sequences"
+]
+],
+"ClusterPt": [
+[
+"undergrad",
+"cluster points"
+],
+[
+"overview",
+"cluster point"
+]
+],
+"Homeomorph": [
+[
+"undergrad",
+"homeomorphisms"
+]
+],
+"isCompact_iff_finite_subcover": [
+[
+"undergrad",
+"compactness in terms of open covers (Borel-Lebesgue)"
+],
+[
+"overview",
+"compactness in terms of open covers (Borel-Lebesgue)"
+]
+],
+"isCompact_iff_isSeqCompact": [
+[
+"undergrad",
+"sequential compactness is equivalent to compactness (Bolzano-Weierstrass)"
+],
+[
+"overview",
+"sequential compactness is equivalent to compactness (Bolzano-Weierstrass)"
+]
+],
+"ConnectedSpace": [
+[
+"undergrad",
+"connectedness"
+],
+[
+"overview",
+"connectedness"
+]
+],
+"connectedComponent": [
+[
+"undergrad",
+"connected components"
+]
+],
+"IsPathConnected": [
+[
+"undergrad",
+"path connectedness"
+]
+],
+"LipschitzWith": [
+[
+"undergrad",
+"Lipschitz functions"
+],
+[
+"overview",
+"Lipschitz continuity"
+]
+],
+"Metric.uniformContinuous_iff": [
+[
+"undergrad",
+"uniformly continuous functions"
+],
+[
+"overview",
+"uniformly continuous function"
+]
+],
+"Metric.complete_of_cauchySeq_tendsto": [
+[
+"undergrad",
+"complete metric spaces"
+]
+],
+"NormSMulClass.toIsBoundedSMul": [
+[
+"undergrad",
+"topology on a normed vector space"
+],
+[
+"overview",
+"topology on a normed vector space"
+]
+],
+"LinearEquiv.toContinuousLinearEquiv": [
+[
+"undergrad",
+"equivalence of norms in finite dimension"
+],
+[
+"overview",
+"equivalence of norms in finite dimension"
+]
+],
+"PiLp.normedSpace": [
+[
+"undergrad",
+"norms $\\lVert\\cdot\\rVert_p$ on $\\R^n$ and $\\C^n$"
+]
+],
+"Summable.of_norm": [
+[
+"undergrad",
+"absolutely convergent series in Banach spaces"
+],
+[
+"overview",
+"absolutely convergent series in Banach spaces"
+]
+],
+"ContinuousLinearMap": [
+[
+"undergrad",
+"continuous linear maps"
+],
+[
+"overview",
+"continuous linear map"
+]
+],
+"LinearMap.mkContinuous": [
+[
+"undergrad",
+"norm of a continuous linear map"
+],
+[
+"overview",
+"norm of a continuous linear map"
+]
+],
+"EMetric.tendstoUniformlyOn_iff": [
+[
+"undergrad",
+"uniform convergence norm (sup-norm)"
+]
+],
+"BoundedContinuousFunction.instNormedSpace": [
+[
+"undergrad",
+"normed space of bounded continuous functions"
+]
+],
+"BoundedContinuousFunction.instCompleteSpace": [
+[
+"undergrad",
+"completeness of the space of bounded continuous functions"
+],
+[
+"overview",
+"completeness of spaces of bounded continuous functions"
+]
+],
+"FiniteDimensional.of_isCompact_closedBall": [
+[
+"undergrad",
+"Riesz' lemma (unit-ball characterization of finite dimension)"
+]
+],
+"Submodule.orthogonalProjectionOnto": [
+[
+"undergrad",
+"orthogonal projection onto closed vector subspaces"
+],
+[
+"overview",
+"orthogonal projection"
+]
+],
+"StrongDual": [
+[
+"undergrad",
+"dual space"
+],
+[
+"overview",
+"dual of a normed space"
+]
+],
+"lp.instInnerProductSpace": [
+[
+"undergrad",
+"inner product space $l^2$"
+]
+],
+"lp.completeSpace": [
+[
+"undergrad",
+"completeness of $l^2$"
+]
+],
+"MeasureTheory.L2.innerProductSpace": [
+[
+"undergrad",
+"inner product space $L^2$"
+]
+],
+"MeasureTheory.Lp.instCompleteSpace": [
+[
+"undergrad",
+"completeness of $L^2$"
+],
+[
+"undergrad",
+"Completeness of $\\mathrm{L}^p$ spaces"
+]
+],
+"HilbertBasis": [
+[
+"undergrad",
+"Hilbert bases"
+]
+],
+"fourierBasis": [
+[
+"undergrad",
+"example, the Hilbert basis of trigonometric polynomials"
+],
+[
+"undergrad",
+"Fourier series of locally integrable periodic real-valued functions"
+]
+],
+"fderiv": [
+[
+"undergrad",
+"differentials (linear tangent functions)"
+]
+],
+"lineDeriv": [
+[
+"undergrad",
+"directional derivative"
+]
+],
+"gradient": [
+[
+"undergrad",
+"gradient vector"
+]
+],
+"fderiv_comp": [
+[
+"undergrad",
+"chain rule"
+]
+],
+"Differentiable": [
+[
+"undergrad",
+"differentiable functions"
+]
+],
+"second_derivative_symmetric": [
+[
+"undergrad",
+"partial derivatives commute"
+]
+],
+"IsLocalMin.fderiv_eq_zero": [
+[
+"undergrad",
+"local extrema"
+],
+[
+"overview",
+"local extrema"
+]
+],
+"Structomorph": [
+[
+"undergrad",
+"diffeomorphisms"
+]
+],
+"HasStrictDerivAt.to_localInverse": [
+[
+"undergrad",
+"inverse function theorem"
+]
+],
+"norm_le_gronwallBound_of_norm_deriv_right_le": [
+[
+"undergrad",
+"Gr\u00f6nwall lemma"
+]
+],
+"MeasurableSpace": [
+[
+"undergrad",
+"measurable spaces"
+],
+[
+"undergrad",
+"sigma-algebras"
+],
+[
+"undergrad",
+"sigma-algebra"
+],
+[
+"overview",
+"sigma-algebra"
+]
+],
+"MeasurableSpace.pi": [
+[
+"undergrad",
+"product of sigma-algebras"
+],
+[
+"undergrad",
+"product measure"
+]
+],
+"BorelSpace": [
+[
+"undergrad",
+"Borel sigma-algebras"
+],
+[
+"overview",
+"Borel sigma-algebra"
+]
+],
+"MeasureTheory.Measure": [
+[
+"undergrad",
+"positive measure"
+],
+[
+"overview",
+"positive measure"
+]
+],
+"MeasureTheory.Measure.count": [
+[
+"undergrad",
+"counting measure"
+]
+],
+"MeasureTheory.MeasureSpace": [
+[
+"undergrad",
+"Lebesgue measure"
+]
+],
+"Measurable": [
+[
+"undergrad",
+"measurable functions"
+],
+[
+"overview",
+"measurable function"
+]
+],
+"MeasureTheory.SimpleFunc.tendsto_approxOn": [
+[
+"undergrad",
+"approximation by step functions"
+]
+],
+"MeasureTheory.lintegral_iInf_ae": [
+[
+"undergrad",
+"monotone convergence theorem"
+],
+[
+"overview",
+"monotone convergence theorem"
+]
+],
+"MeasureTheory.Integrable": [
+[
+"undergrad",
+"integrable functions"
+],
+[
+"undergrad",
+"finite-dimensional vector-valued integrable functions"
+],
+[
+"overview",
+"vector-valued integrable function (Bochner integral)"
+]
+],
+"intervalIntegral.continuous_of_dominated_interval": [
+[
+"undergrad",
+"continuity of integrals with respect to parameters"
+]
+],
+"IntervalIntegrable.ae_hasDerivAt_integral": [
+[
+"undergrad",
+"differentiability of integrals with respect to parameters"
+]
+],
+"MeasureTheory.Lp": [
+[
+"undergrad",
+"$\\mathrm{L}^p$ spaces where $1 \u2264 p \u2264 \u221e$"
+],
+[
+"undergrad",
+"$\\mathrm{L}^p$ convergence"
+],
+[
+"overview",
+"$L^p$ space"
+],
+[
+"overview",
+"$\\mathrm{L}^p$ convergence"
+]
+],
+"NNReal.lintegral_mul_le_Lp_mul_Lq": [
+[
+"undergrad",
+"Holder's inequality"
+]
+],
+"MeasureTheory.integral_image_eq_integral_abs_det_fderiv_smul": [
+[
+"undergrad",
+"change of variables for multiple integrals"
+],
+[
+"overview",
+"change of variables formula"
+]
+],
+"integral_comp_polarCoord_symm": [
+[
+"undergrad",
+"change of variables to polar co-ordinates"
+]
+],
+"MeasureTheory.convolution": [
+[
+"undergrad",
+"convolution"
+],
+[
+"overview",
+"convolution"
+]
+],
+"ContDiffBump.convolution_tendsto_right": [
+[
+"undergrad",
+"approximation by convolution"
+],
+[
+"overview",
+"approximation by convolution"
+]
+],
+"HasCompactSupport.contDiff_convolution_left": [
+[
+"undergrad",
+"regularization by convolution"
+],
+[
+"overview",
+"regularization by convolution"
+]
+],
+"tendsto_integral_exp_smul_cocompact": [
+[
+"undergrad",
+"Riemann-Lebesgue lemma"
+]
+],
+"Real.fourier_eq": [
+[
+"undergrad",
+"Fourier transform on $\\mathrm{L}^1(\\R^d)$"
+],
+[
+"overview",
+"Fourier transform as an integral"
+]
+],
+"MeasureTheory.Lp.fourierTransform\u2097\u1d62": [
+[
+"undergrad",
+"Fourier transform on $\\mathrm{L}^2(\\R^d)$"
+]
+],
+"MeasureTheory.IsProbabilityMeasure": [
+[
+"undergrad",
+"probability measure"
+],
+[
+"overview",
+"probability measure"
+]
+],
+"MeasurableSet": [
+[
+"undergrad",
+"events"
+]
+],
+"ProbabilityTheory.iIndepSet": [
+[
+"undergrad",
+"independent events"
+],
+[
+"overview",
+"independent events"
+]
+],
+"ProbabilityTheory.iIndep": [
+[
+"undergrad",
+"independent sigma-algebra"
+],
+[
+"overview",
+"independent sigma-algebras"
+]
+],
+"ProbabilityTheory.measure_zero_or_one_of_measurableSet_limsup_atTop": [
+[
+"undergrad",
+"$0$-$1$ law"
+],
+[
+"overview",
+"Kolmogorov's $0$-$1$ law"
+]
+],
+"MeasureTheory.measure_limsup_atTop_eq_zero": [
+[
+"undergrad",
+"Borel-Cantelli lemma (easy direction)"
+]
+],
+"ProbabilityTheory.measure_limsup_eq_one": [
+[
+"undergrad",
+"Borel-Cantelli lemma (difficult direction)"
+]
+],
+"ProbabilityTheory.cond": [
+[
+"undergrad",
+"conditional probability"
+],
+[
+"overview",
+"conditional probability"
+]
+],
+"PMF": [
+[
+"undergrad",
+"discrete law"
+],
+[
+"overview",
+"discrete law"
+]
+],
+"MeasureTheory.HasPDF": [
+[
+"undergrad",
+"probability density function"
+],
+[
+"overview",
+"probability density function"
+]
+],
+"ProbabilityTheory.iIndepFun": [
+[
+"undergrad",
+"independence of random variables"
+],
+[
+"overview",
+"independence of random variables"
+]
+],
+"MeasureTheory.integral": [
+[
+"undergrad",
+"mean of a random variable"
+],
+[
+"overview",
+"Bochner integral"
+]
+],
+"ProbabilityTheory.variance": [
+[
+"undergrad",
+"variance of a real-valued random variable"
+],
+[
+"overview",
+"variance of a real-valued random variable"
+]
+],
+"ProbabilityTheory.moment": [
+[
+"undergrad",
+"moments"
+],
+[
+"overview",
+"moment of a random variable"
+]
+],
+"ProbabilityTheory.bernoulliMeasure": [
+[
+"undergrad",
+"Bernoulli law"
+],
+[
+"overview",
+"Bernoulli law"
+]
+],
+"ProbabilityTheory.binomial": [
+[
+"undergrad",
+"binomial law"
+],
+[
+"overview",
+"binomial law"
+]
+],
+"ProbabilityTheory.geometricMeasure": [
+[
+"undergrad",
+"geometric law"
+],
+[
+"overview",
+"geometric law"
+]
+],
+"ProbabilityTheory.poissonMeasure": [
+[
+"undergrad",
+"Poisson law"
+],
+[
+"overview",
+"Poisson law"
+]
+],
+"ProbabilityTheory.expMeasure": [
+[
+"undergrad",
+"exponential law"
+],
+[
+"overview",
+"exponential law"
+]
+],
+"ProbabilityTheory.gaussianReal": [
+[
+"undergrad",
+"Gaussian law"
+],
+[
+"overview",
+"Gaussian law"
+]
+],
+"MeasureTheory.charFun": [
+[
+"undergrad",
+"characteristic function"
+],
+[
+"overview",
+"characteristic function"
+]
+],
+"MeasureTheory.TendstoInMeasure": [
+[
+"undergrad",
+"convergence in probability"
+],
+[
+"overview",
+"convergence in probability"
+]
+],
+"MeasureTheory.ae": [
+[
+"undergrad",
+"almost surely convergence"
+],
+[
+"overview",
+"almost sure convergence"
+]
+],
+"MeasureTheory.mul_meas_ge_le_lintegral": [
+[
+"undergrad",
+"Markov inequality"
+],
+[
+"overview",
+"Markov inequality"
+]
+],
+"ProbabilityTheory.meas_ge_le_variance_div_sq": [
+[
+"undergrad",
+"Chebyshev inequality"
+],
+[
+"overview",
+"Chebyshev inequality"
+]
+],
+"TestFunction": [
+[
+"undergrad",
+"smooth functions with compact support on $\\R^d$"
+],
+[
+"overview",
+"Test functions"
+]
+],
+"Distribution": [
+[
+"undergrad",
+"definition of distributions"
+],
+[
+"overview",
+"Distributions"
+]
+],
+"SchwartzMap": [
+[
+"undergrad",
+"Schwartz space of rapidly decreasing functions"
+],
+[
+"overview",
+"Schwartz space"
+]
+],
+"SchwartzMap.fderivCLM": [
+[
+"undergrad",
+"stability by derivation"
+]
+],
+"SchwartzMap.bilinLeftCLM": [
+[
+"undergrad",
+"stability by multiplication by a slowly growing smooth function"
+]
+],
+"SchwartzMap.fourierTransformCLM": [
+[
+"undergrad",
+"Fourier transforms on $\\mathcal{S}(\\R^d)$"
+]
+],
+"SchwartzMap.convolution": [
+[
+"undergrad",
+"convolution of two functions of $\\mathcal{S}(\\R^d)$"
+]
+],
+"TemperedDistribution": [
+[
+"undergrad",
+"definition"
+],
+[
+"overview",
+"tempered distributions"
+]
+],
+"TemperedDistribution.instLineDeriv": [
+[
+"undergrad",
+"derivation of tempered distributions"
+]
+],
+"TemperedDistribution.smulLeftCLM": [
+[
+"undergrad",
+"multiplication by a function $C^\\infty$ of slow growth"
+]
+],
+"MeasureTheory.Lp.toTemperedDistributionCLM": [
+[
+"undergrad",
+"$L^p$ functions"
+]
+],
+"FourierTransform.fourierCLM": [
+[
+"undergrad",
+"Fourier transforms"
+]
+],
+"FourierTransform.fourierInvCLM": [
+[
+"undergrad",
+"inverse Fourier transform"
+]
+],
+"SchwartzMap.tsum_eq_tsum_fourier": [
+[
+"undergrad",
+"Poisson\u2019s formula"
+]
+],
+"Lagrange.interpolate": [
+[
+"undergrad",
+"Lagrange interpolation"
+],
+[
+"undergrad",
+"Lagrange polynomial of a function at (n + 1) points"
+]
+],
+"CategoryTheory.Category": [
+[
+"overview",
+"category"
+]
+],
+"CategoryTheory.SmallCategory": [
+[
+"overview",
+"small category"
+]
+],
+"CategoryTheory.Functor": [
+[
+"overview",
+"functor"
+]
+],
+"CategoryTheory.NatTrans": [
+[
+"overview",
+"natural transformation"
+]
+],
+"CategoryTheory.yoneda": [
+[
+"overview",
+"Yoneda embedding"
+]
+],
+"CategoryTheory.Iso": [
+[
+"overview",
+"isomorphism"
+]
+],
+"CategoryTheory.Adjunction": [
+[
+"overview",
+"adjunction"
+]
+],
+"CategoryTheory.Monad": [
+[
+"overview",
+"monad"
+]
+],
+"CategoryTheory.Comma": [
+[
+"overview",
+"comma category"
+]
+],
+"CategoryTheory.Limits.IsLimit": [
+[
+"overview",
+"limits"
+]
+],
+"AlgebraicGeometry.PresheafedSpace": [
+[
+"overview",
+"presheafed space"
+]
+],
+"AlgebraicGeometry.SheafedSpace": [
+[
+"overview",
+"sheafed space"
+]
+],
+"CategoryTheory.MonoidalCategory": [
+[
+"overview",
+"monoidal category"
+]
+],
+"CategoryTheory.MonoidalClosed": [
+[
+"overview",
+"Cartesian closed"
+]
+],
+"CategoryTheory.Abelian": [
+[
+"overview",
+"abelian category"
+]
+],
+"CategoryTheory.GrothendieckTopology": [
+[
+"overview",
+"Grothendieck topology"
+]
+],
+"Int": [
+[
+"overview",
+"integer"
+]
+],
+"Rat": [
+[
+"overview",
+"rational number"
+]
+],
+"ContFract": [
+[
+"overview",
+"continued fraction"
+]
+],
+"EReal": [
+[
+"overview",
+"extended real number"
+]
+],
+"Complex": [
+[
+"overview",
+"complex number"
+]
+],
+"Padic": [
+[
+"overview",
+"$p$-adic number"
+]
+],
+"PadicInt": [
+[
+"overview",
+"$p$-adic integer"
+]
+],
+"Hyperreal": [
+[
+"overview",
+"hyper-real number"
+]
+],
+"MulAction.sum_card_fixedBy_eq_card_orbits_mul_card_group": [
+[
+"overview",
+"Burnside lemma"
+]
+],
+"Subgroup.index": [
+[
+"overview",
+"index of a subgroup"
+]
+],
+"IsSimpleGroup": [
+[
+"overview",
+"simple group"
+]
+],
+"Abelianization": [
+[
+"overview",
+"abelianization"
+]
+],
+"FreeGroup": [
+[
+"overview",
+"free group"
+]
+],
+"PresentedGroup": [
+[
+"overview",
+"presented group"
+]
+],
+"Subgroup.closure_mul_image_eq": [
+[
+"overview",
+"Schreier's lemma"
+]
+],
+"Group.IsNilpotent": [
+[
+"overview",
+"nilpotent group"
+]
+],
+"alternatingGroup.isSimpleGroup": [
+[
+"overview",
+"alternating groups on 5 letters or more are simple"
+]
+],
+"CommGroup.is_simple_iff_prime_card": [
+[
+"overview",
+"classification of abelian simple groups"
+]
+],
+"RingCat": [
+[
+"overview",
+"the category of rings"
+]
+],
+"Localization": [
+[
+"overview",
+"localization"
+]
+],
+"IsLocalRing": [
+[
+"overview",
+"local ring"
+]
+],
+"IsNoetherianRing": [
+[
+"overview",
+"Noetherian ring"
+]
+],
+"IsOrderedRing": [
+[
+"overview",
+"ordered ring"
+]
+],
+"FractionalIdeal": [
+[
+"overview",
+"fractional ideal"
+]
+],
+"RingHom.quotientKerEquivOfSurjective": [
+[
+"overview",
+"first isomorphism theorem for commutative rings"
+]
+],
+"lucas_lehmer_sufficiency": [
+[
+"overview",
+"Lucas-Lehmer primality test"
+]
+],
+"Polynomial": [
+[
+"overview",
+"polynomial in one indeterminate"
+]
+],
+"Polynomial.Separable": [
+[
+"overview",
+"separable polynomial"
+]
+],
+"Polynomial.normalizedGcdMonoid": [
+[
+"overview",
+"$A[X]$ has gcd and lcm if $A$ does"
+]
+],
+"PowerSeries": [
+[
+"overview",
+"power series"
+]
+],
+"AlgCat": [
+[
+"overview",
+"the category of algebras over a ring"
+]
+],
+"FreeAlgebra": [
+[
+"overview",
+"free algebra of a commutative ring"
+]
+],
+"Algebra.TensorProduct.instAlgebra": [
+[
+"overview",
+"tensor product of algebras"
+]
+],
+"TensorAlgebra": [
+[
+"overview",
+"tensor algebra of a commutative ring"
+]
+],
+"LieAlgebra": [
+[
+"overview",
+"Lie algebra"
+]
+],
+"ExteriorAlgebra": [
+[
+"overview",
+"exterior algebra"
+]
+],
+"CliffordAlgebra": [
+[
+"overview",
+"Clifford algebra"
+]
+],
+"AlgebraicClosure": [
+[
+"overview",
+"existence of algebraic closure of a field"
+]
+],
+"PerfectClosure": [
+[
+"overview",
+"perfect closure"
+]
+],
+"IsGalois.intermediateFieldEquivSubgroup": [
+[
+"overview",
+"Galois correspondence"
+]
+],
+"isSolvable_gal_minpoly": [
+[
+"overview",
+"Abel-Ruffini theorem (one direction)"
+]
+],
+"ChainComplex": [
+[
+"overview",
+"chain complex"
+]
+],
+"HomologicalComplex.homology": [
+[
+"overview",
+"functorial homology"
+]
+],
+"Pell.pell": [
+[
+"overview",
+"solutions to Pell's equation"
+]
+],
+"ArithmeticFunction": [
+[
+"overview",
+"arithmetic functions"
+]
+],
+"bernoulli": [
+[
+"overview",
+"Bernoulli numbers"
+]
+],
+"char_dvd_card_solutions": [
+[
+"overview",
+"Chevalley-Warning theorem"
+]
+],
+"hensels_lemma": [
+[
+"overview",
+"Hensel's lemma (for $\\mathbb{Z}_p$)"
+]
+],
+"WittVector": [
+[
+"overview",
+"ring of Witt vectors"
+]
+],
+"Perfection": [
+[
+"overview",
+"perfection of a ring"
+]
+],
+"transcendental_liouvilleNumber": [
+[
+"overview",
+"Liouville's theorem on existence of transcendental numbers"
+]
+],
+"NumberField.RingOfIntegers.instFintypeClassGroup": [
+[
+"overview",
+"Finiteness of the class number"
+]
+],
+"NumberField.tendsto_sub_one_mul_dedekindZeta_nhdsGT": [
+[
+"overview",
+"Dirichlet class number formula"
+]
+],
+"Representation": [
+[
+"overview",
+"representation"
+]
+],
+"FDRep": [
+[
+"overview",
+"category of finite-dimensional representations"
+]
+],
+"ModuleCat": [
+[
+"overview",
+"the category of modules over a ring"
+]
+],
+"TensorProduct": [
+[
+"overview",
+"tensor product"
+]
+],
+"IsNoetherian": [
+[
+"overview",
+"Noetherian module"
+]
+],
+"AlternatingMap": [
+[
+"overview",
+"alternating map"
+]
+],
+"Module.End.exists_eigenvalue": [
+[
+"overview",
+"existence of an eigenvalue"
+]
+],
+"OrthonormalBasis": [
+[
+"overview",
+"existence of orthonormal basis"
+]
+],
+"Filter": [
+[
+"overview",
+"filter"
+]
+],
+"TopologicalSpace": [
+[
+"overview",
+"topological space"
+]
+],
+"TopCat": [
+[
+"overview",
+"the category of topological spaces"
+]
+],
+"IsOpenMap": [
+[
+"overview",
+"open map"
+]
+],
+"IsClosedMap": [
+[
+"overview",
+"closed map"
+]
+],
+"closure": [
+[
+"overview",
+"closure"
+]
+],
+"T2Space": [
+[
+"overview",
+"Hausdorff space"
+]
+],
+"SequentialSpace": [
+[
+"overview",
+"sequential space"
+]
+],
+"IsDenseInducing.extend": [
+[
+"overview",
+"extension by continuity"
+]
+],
+"IsCompact": [
+[
+"overview",
+"compactness in terms of filters"
+]
+],
+"ContinuousMap.compactOpen": [
+[
+"overview",
+"compact open topology"
+]
+],
+"StoneCech": [
+[
+"overview",
+"Stone-Cech compactification"
+]
+],
+"FiberBundle": [
+[
+"overview",
+"topological fiber bundle"
+],
+[
+"overview",
+"(topological) fiber bundle"
+]
+],
+"VectorBundle": [
+[
+"overview",
+"topological vector bundle"
+]
+],
+"exists_continuous_zero_one_of_isClosed": [
+[
+"overview",
+"Urysohn's lemma"
+]
+],
+"UniformSpace": [
+[
+"overview",
+"uniform space"
+]
+],
+"Cauchy": [
+[
+"overview",
+"Cauchy filter"
+]
+],
+"CompleteSpace": [
+[
+"overview",
+"completeness"
+]
+],
+"UniformSpace.Completion": [
+[
+"overview",
+"completion"
+]
+],
+"OrderTopology": [
+[
+"overview",
+"order topology"
+]
+],
+"IsTopologicalGroup": [
+[
+"overview",
+"topological group"
+]
+],
+"UniformSpace.Completion.instAddCommGroup": [
+[
+"overview",
+"completion of an abelian topological group"
+]
+],
+"HasSum": [
+[
+"overview",
+"infinite sum"
+]
+],
+"IsTopologicalRing": [
+[
+"overview",
+"topological ring"
+]
+],
+"UniformSpace.Completion.ring": [
+[
+"overview",
+"completion of a topological ring"
+]
+],
+"ContinuousSMul": [
+[
+"overview",
+"topological module"
+]
+],
+"MeasureTheory.Measure.haarMeasure": [
+[
+"overview",
+"Haar measure on a locally compact Hausdorff group"
+]
+],
+"MetricSpace": [
+[
+"overview",
+"metric space"
+]
+],
+"Metric.ball": [
+[
+"overview",
+"ball"
+]
+],
+"HolderWith": [
+[
+"overview",
+"H\u00f6lder continuity"
+]
+],
+"dense_iInter_of_isOpen": [
+[
+"overview",
+"Baire theorem"
+]
+],
+"Metric.hausdorffEDist": [
+[
+"overview",
+"Hausdorff distance"
+]
+],
+"GromovHausdorff.GHSpace": [
+[
+"overview",
+"Gromov-Hausdorff space"
+]
+],
+"LocallyConvexSpace": [
+[
+"overview",
+"local convexity"
+]
+],
+"Bornology": [
+[
+"overview",
+"Bornology"
+]
+],
+"WeakBilin.instTopologicalSpace": [
+[
+"overview",
+"weak-* topology for dualities"
+]
+],
+"NormedSpace": [
+[
+"overview",
+"normed vector space over a normed field"
+]
+],
+"Submodule.complete_of_finiteDimensional": [
+[
+"overview",
+"finite-dimensional normed spaces over complete normed fields are complete"
+]
+],
+"NormedSpace.inclusionInDoubleDualLi": [
+[
+"overview",
+"isometric inclusion in double dual"
+]
+],
+"LinearPMap.adjoint": [
+[
+"overview",
+"adjoint operator"
+]
+],
+"Submodule.reflection": [
+[
+"overview",
+"reflection"
+]
+],
+"exists_hilbertBasis": [
+[
+"overview",
+"existence of Hilbert basis"
+]
+],
+"IsSelfAdjoint.hasEigenvector_of_isLocalExtrOn": [
+[
+"overview",
+"eigenvalues from Rayleigh quotient"
+]
+],
+"HasFDerivAt": [
+[
+"overview",
+"differentiable function between normed vector spaces"
+]
+],
+"HasFDerivAt.comp": [
+[
+"overview",
+"derivative of a composition of functions"
+]
+],
+"HasFDerivAt.of_local_left_inverse": [
+[
+"overview",
+"derivative of the inverse of a function"
+]
+],
+"Mathlib/Analysis/Calculus/Taylor.html": [
+[
+"overview",
+"Taylor's theorem"
+]
+],
+"fderiv_mul": [
+[
+"overview",
+"Leibniz formula"
+]
+],
+"AnalyticAt": [
+[
+"overview",
+"analytic function"
+]
+],
+"ConvexOn.map_sum_le": [
+[
+"overview",
+"Jensen's inequality (finite sum version)"
+]
+],
+"ConvexOn.map_integral_le": [
+[
+"overview",
+"Jensen's inequality (integral version)"
+]
+],
+"MeasCat": [
+[
+"overview",
+"the category of measurable spaces"
+]
+],
+"StieltjesFunction.measure": [
+[
+"overview",
+"Stieltjes measure"
+]
+],
+"Real.measureSpace": [
+[
+"overview",
+"Lebesgue measure"
+]
+],
+"MeasureTheory.Measure.hausdorffMeasure": [
+[
+"overview",
+"Hausdorff measure"
+]
+],
+"dimH": [
+[
+"overview",
+"Hausdorff dimension"
+]
+],
+"MeasureTheory.Measure.instMeasurableSpace": [
+[
+"overview",
+"Giry monad"
+]
+],
+"MeasureTheory.UniformIntegrable": [
+[
+"overview",
+"uniform integrability"
+]
+],
+"intervalIntegral.integral_hasFDerivAt_of_tendsto_ae": [
+[
+"overview",
+"fundamental theorem of calculus, part 1"
+]
+],
+"MeasureTheory.Measure.pi": [
+[
+"overview",
+"product of finitely many measures"
+]
+],
+"DiffContOnCl.circleIntegral_sub_inv_smul": [
+[
+"overview",
+"Cauchy integral formula"
+]
+],
+"Complex.norm_le_norm_of_mapsTo_ball": [
+[
+"overview",
+"Schwarz lemma"
+]
+],
+"Complex.differentiableOn_update_limUnder_insert_of_isLittleO": [
+[
+"overview",
+"removable singularity"
+]
+],
+"ValueDistribution.characteristic_sub_characteristic_inv_le": [
+[
+"overview",
+"First Main Theorem of Value Distribution Theory"
+]
+],
+"tendsto_integral_exp_inner_smul_cocompact": [
+[
+"overview",
+"Riemann-Lebesgue lemma"
+]
+],
+"MeasureTheory.condExp": [
+[
+"overview",
+"conditional expectation"
+]
+],
+"ProbabilityTheory.IndepFun.integral_mul_eq_mul_integral": [
+[
+"overview",
+"mean of product of independent random variables"
+]
+],
+"ProbabilityTheory.IsGaussian": [
+[
+"overview",
+"Gaussian measures"
+]
+],
+"MeasureTheory.ProbabilityMeasure.tendsto_iff_forall_integral_tendsto": [
+[
+"overview",
+"convergence in distribution"
+]
+],
+"MeasureTheory.Martingale": [
+[
+"overview",
+"martingale"
+]
+],
+"MeasureTheory.IsStoppingTime": [
+[
+"overview",
+"stopping time"
+]
+],
+"MeasureTheory.hittingBtwn": [
+[
+"overview",
+"hitting time"
+]
+],
+"ProbabilityTheory.IsGaussianProcess": [
+[
+"overview",
+"Gaussian processes"
+]
+],
+"NormedAddTorsor": [
+[
+"overview",
+"Euclidean affine space"
+]
+],
+"IsManifold": [
+[
+"overview",
+"smooth or analytic manifold (with boundary and corners)"
+]
+],
+"ContMDiff": [
+[
+"overview",
+"smooth map between manifolds"
+]
+],
+"Manifold.IsImmersion": [
+[
+"overview",
+"smooth immersion"
+]
+],
+"Manifold.IsSmoothEmbedding": [
+[
+"overview",
+"smooth embedding"
+]
+],
+"IsManifold.prod": [
+[
+"overview",
+"product of manifolds"
+]
+],
+"IsManifold.disjointUnion": [
+[
+"overview",
+"disjoint union of manifolds"
+]
+],
+"ModelWithCorners.interior": [
+[
+"overview",
+"interior of a manifold"
+]
+],
+"ModelWithCorners.boundary": [
+[
+"overview",
+"boundary of a manifold"
+]
+],
+"TangentBundle": [
+[
+"overview",
+"tangent bundle"
+]
+],
+"tangentMap": [
+[
+"overview",
+"tangent map"
+]
+],
+"VectorField.mpullback": [
+[
+"overview",
+"pullback of vector fields"
+]
+],
+"VectorField.mlieBracket": [
+[
+"overview",
+"Lie bracket of vector field"
+]
+],
+"VectorField.leibniz_identity_mlieBracket": [
+[
+"overview",
+"Jacobi/Leibniz identity"
+]
+],
+"IsMIntegralCurve": [
+[
+"overview",
+"integral curves"
+]
+],
+"exists_isMIntegralCurveAt_of_contMDiffAt_boundaryless": [
+[
+"overview",
+"local existence of integral curves"
+]
+],
+"exists_isMIntegralCurve_of_isMIntegralCurveOn": [
+[
+"overview",
+"uniform time existence"
+]
+],
+"isMIntegralCurveOn_Ioo_eqOn_of_contMDiff_boundaryless": [
+[
+"overview",
+"uniqueness of integral curves"
+]
+],
+"LieGroup": [
+[
+"overview",
+"Lie group"
+]
+],
+"GroupLieAlgebra": [
+[
+"overview",
+"Lie algebra of a Lie group"
+]
+],
+"EuclideanSpace.instIsManifoldSphere": [
+[
+"overview",
+"sphere"
+]
+],
+"instIsManifoldIcc": [
+[
+"overview",
+"closed interval"
+]
+],
+"Units.instLieGroupModelWithCornersSelf": [
+[
+"overview",
+"general linear group as a Lie group"
+]
+],
+"IsManifold.of_discreteTopology": [
+[
+"overview",
+"discrete spaces are 0-manifolds"
+]
+],
+"ChartedSpace.discreteTopology": [
+[
+"overview",
+"0-manifolds are discrete spaces"
+]
+],
+"ContMDiffVectorBundle": [
+[
+"overview",
+"(smooth) vector bundle"
+]
+],
+"Bundle.Trivial.contMDiffVectorBundle": [
+[
+"overview",
+"(smooth) trivial vector bundle"
+]
+],
+"Bundle.Prod.contMDiffVectorBundle": [
+[
+"overview",
+"(smooth) direct sum of vector bundles"
+]
+],
+"ContMDiffVectorBundle.pullback": [
+[
+"overview",
+"(smooth) pullback vector bundle"
+]
+],
+"ContMDiffVectorBundle.continuousLinearMap": [
+[
+"overview",
+"(smooth) Hom bundle"
+]
+],
+"CovariantDerivative": [
+[
+"overview",
+"covariant derivatives"
+]
+],
+"Bundle.RiemannianMetric": [
+[
+"overview",
+"Riemannian/bundle metric"
+]
+],
+"Bundle.ContMDiffRiemannianMetric": [
+[
+"overview",
+"Smooth bundle metric"
+]
+],
+"IsRiemannianManifold": [
+[
+"overview",
+"Riemannian manifold"
+]
+],
+"PrimeSpectrum": [
+[
+"overview",
+"prime spectrum"
+]
+],
+"PrimeSpectrum.zariskiTopology": [
+[
+"overview",
+"Zariski topology"
+]
+],
+"AlgebraicGeometry.LocallyRingedSpace": [
+[
+"overview",
+"locally ringed space"
+]
+],
+"AlgebraicGeometry.Scheme": [
+[
+"overview",
+"scheme"
+]
+],
+"ConvexCone": [
+[
+"overview",
+"convex cone"
+]
+],
+"ConvexCone.Salient": [
+[
+"overview",
+"salient cone"
+]
+],
+"ConvexCone.positive": [
+[
+"overview",
+"positive cone"
+]
+],
+"PointedCone": [
+[
+"overview",
+"pointed cone"
+]
+],
+"PointedCone.dual": [
+[
+"overview",
+"dual cone"
+]
+],
+"PointedCone.minTensorProduct": [
+[
+"overview",
+"minimal tensor product"
+]
+],
+"PointedCone.maxTensorProduct": [
+[
+"overview",
+"maximal tensor product"
+]
+],
+"Fintype.exists_ne_map_eq_of_card_lt": [
+[
+"overview",
+"finite"
+]
+],
+"Finite.exists_infinite_fiber": [
+[
+"overview",
+"infinite"
+]
+],
+"Fintype.exists_lt_card_fiber_of_mul_lt_card": [
+[
+"overview",
+"strong pigeonhole principle"
+]
+],
+"catalan": [
+[
+"overview",
+"Catalan numbers"
+]
+],
+"Multiset.bell": [
+[
+"overview",
+"Bell numbers"
+]
+],
+"DyckWord": [
+[
+"overview",
+"Dyck words"
+]
+],
+"IsLowerSet.le_card_inter_finset": [
+[
+"overview",
+"Harris-Kleitman inequality"
+]
+],
+"AhlswedeZhang.infSum_eq_one": [
+[
+"overview",
+"Ahlswede-Zhang identity"
+]
+],
+"Finset.lubell_yamamoto_meshalkin_inequality_sum_card_div_choose": [
+[
+"overview",
+"LYM inequality"
+]
+],
+"Set.Intersecting.is_max_iff_card_eq": [
+[
+"overview",
+"Maximum size of an intersecting family"
+]
+],
+"Finset.card_biUnion_le_of_intersecting": [
+[
+"overview",
+"Kleitman's theorem"
+]
+],
+"Finset.vcDim": [
+[
+"overview",
+"VC dimension"
+]
+],
+"Finset.card_shatterer_le_sum_vcDim": [
+[
+"overview",
+"Sauer-Shelah lemma"
+]
+],
+"SimpleGraph": [
+[
+"overview",
+"simple graph"
+]
+],
+"SimpleGraph.sum_degrees_eq_twice_card_edges": [
+[
+"overview",
+"degree-sum formula"
+]
+],
+"SimpleGraph.Subgraph.IsMatching": [
+[
+"overview",
+"matching"
+]
+],
+"SimpleGraph.adjMatrix": [
+[
+"overview",
+"adjacency matrix"
+]
+],
+"SimpleGraph.IsSRGWith": [
+[
+"overview",
+"Strongly regular graphs"
+]
+],
+"szemeredi_regularity": [
+[
+"overview",
+"Regularity lemma"
+]
+],
+"SimpleGraph.triangle_counting": [
+[
+"overview",
+"Triangle counting lemma"
+]
+],
+"SimpleGraph.triangle_removal": [
+[
+"overview",
+"Triangle removal lemma"
+]
+],
+"Hindman.FS_partition_regular": [
+[
+"overview",
+"Hindman's theorem"
+]
+],
+"ThreeAPFree": [
+[
+"overview",
+"sets without arithmetic progressions"
+]
+],
+"roth_3ap_theorem_nat": [
+[
+"overview",
+"Roth's theorem"
+]
+],
+"Behrend.roth_lower_bound": [
+[
+"overview",
+"Behrend's construction"
+]
+],
+"Finset.addConst": [
+[
+"overview",
+"doubling constant"
+]
+],
+"Set.ruzsa_covering_add": [
+[
+"overview",
+"Ruzsa covering lemma"
+]
+],
+"Finset.ruzsa_triangle_inequality_sub_sub_sub": [
+[
+"overview",
+"Ruzsa triangle inequality"
+]
+],
+"Finset.pluennecke_petridis_inequality_add": [
+[
+"overview",
+"Pl\u00fcnnecke-Petridis inequality"
+]
+],
+"Finset.small_pow_of_small_tripling": [
+[
+"overview",
+"Small tripling implies small powers"
+]
+],
+"Finset.addDysonETransform": [
+[
+"overview",
+"Dyson transform"
+]
+],
+"ZMod.cauchy_davenport": [
+[
+"overview",
+"Cauchy-Davenport theorem"
+]
+],
+"Finset.addEnergy": [
+[
+"overview",
+"Additive energy"
+]
+],
+"IsAddFreimanHom": [
+[
+"overview",
+"Freiman homomorphisms"
+]
+],
+"CircleDeg1Lift.translationNumber": [
+[
+"overview",
+"translation number"
+]
+],
+"CircleDeg1Lift.semiconj_of_group_action_of_forall_translationNumber_eq": [
+[
+"overview",
+"translation numbers define a group action up to semiconjugacy"
+]
+],
+"CircleDeg1Lift.semiconj_of_bijective_of_translationNumber_eq": [
+[
+"overview",
+"translation number defines a homeomorphism up to semiconjugacy"
+]
+],
+"omegaLimit": [
+[
+"overview",
+"omega-limit sets"
+]
+],
+"Function.fixedPoints": [
+[
+"overview",
+"fixed points"
+]
+],
+"Function.periodicPts": [
+[
+"overview",
+"periodic points"
+]
+],
+"List": [
+[
+"overview",
+"list"
+]
+],
+"Array": [
+[
+"overview",
+"array"
+]
+],
+"Batteries.DList": [
+[
+"overview",
+"difference list"
+]
+],
+"MLList": [
+[
+"overview",
+"lazy list"
+]
+],
+"Stream": [
+[
+"overview",
+"stream"
+]
+],
+"Stream'.Seq": [
+[
+"overview",
+"sequence"
+]
+],
+"Stream'.WSeq": [
+[
+"overview",
+"weak sequence"
+]
+],
+"Set": [
+[
+"overview",
+"set"
+]
+],
+"Finset": [
+[
+"overview",
+"finite set"
+]
+],
+"Multiset": [
+[
+"overview",
+"multiset"
+]
+],
+"Ordset": [
+[
+"overview",
+"ordered set"
+]
+],
+"AList": [
+[
+"overview",
+"key-value map"
+]
+],
+"Std.HashMap": [
+[
+"overview",
+"hash map"
+]
+],
+"Finsupp": [
+[
+"overview",
+"finitely supported function"
+]
+],
+"Finmap": [
+[
+"overview",
+"finite map"
+]
+],
+"BinaryTree": [
+[
+"overview",
+"tree"
+]
+],
+"Ordnode": [
+[
+"overview",
+"size-balanced binary search tree"
+]
+],
+"WType": [
+[
+"overview",
+"W type"
+]
+],
+"Computable": [
+[
+"overview",
+"in terms of general recursive functions"
+]
+],
+"Turing.TM2Computable": [
+[
+"overview",
+"in terms of Turing machines"
+]
+],
+"Primrec": [
+[
+"overview",
+"primitive recursive function"
+]
+],
+"ack": [
+[
+"overview",
+"Ackermann function"
+]
+],
+"Turing.TM0.Machine": [
+[
+"overview",
+"Turing machine"
+]
+],
+"ComputablePred.halting_problem": [
+[
+"overview",
+"halting problem"
+]
+],
+"TuringDegree": [
+[
+"overview",
+"Turing degrees"
+]
+],
+"Turing.TM2ComputableInPolyTime": [
+[
+"overview",
+"polynomial-time computation"
+]
+],
+"Language": [
+[
+"overview",
+"language"
+]
+],
+"Language.self_eq_mul_add_iff": [
+[
+"overview",
+"Arden's lemma"
+]
+],
+"Language.IsRegular": [
+[
+"overview",
+"regular language"
+]
+],
+"DFA": [
+[
+"overview",
+"DFA"
+]
+],
+"NFA": [
+[
+"overview",
+"NFA"
+]
+],
+"\u03b5NFA": [
+[
+"overview",
+"$\\varepsilon$-NFA"
+]
+],
+"RegularExpression": [
+[
+"overview",
+"regular expression"
+]
+],
+"Language.IsContextFree": [
+[
+"overview",
+"context-free language"
+]
+],
+"ContextFreeGrammar": [
+[
+"overview",
+"context-free grammar"
+]
+],
+"Ordinal": [
+[
+"overview",
+"ordinal"
+]
+],
+"Ordinal.CNF": [
+[
+"overview",
+"Cantor normal form"
+]
+],
+"Ordinal.IsFundamentalSeq": [
+[
+"overview",
+"fundamental sequences"
+]
+],
+"Ordinal.epsilon": [
+[
+"overview",
+"epsilon numbers"
+]
+],
+"Ordinal.gamma": [
+[
+"overview",
+"gamma numbers"
+]
+],
+"Cardinal": [
+[
+"overview",
+"cardinal"
+]
+],
+"Cardinal.aleph": [
+[
+"overview",
+"aleph numbers"
+]
+],
+"Cardinal.beth": [
+[
+"overview",
+"beth numbers"
+]
+],
+"Order.cof": [
+[
+"overview",
+"cofinality"
+]
+],
+"ZFSet": [
+[
+"overview",
+"model of ZFC"
+]
+],
+"FirstOrder.Language.Structure": [
+[
+"overview",
+"first-order structure"
+]
+],
+"FirstOrder.Language.Formula": [
+[
+"overview",
+"first-order formula"
+]
+],
+"FirstOrder.Language.Theory.IsSatisfiable": [
+[
+"overview",
+"satisfiability"
+]
+],
+"FirstOrder.Language.Substructure": [
+[
+"overview",
+"substructure"
+]
+],
+"Set.Definable": [
+[
+"overview",
+"definable set"
+]
+],
+"FirstOrder.Language.ElementaryEmbedding": [
+[
+"overview",
+"elementary embedding"
+]
+]
+}
