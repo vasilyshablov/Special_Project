@@ -54,5 +54,17 @@ lake build FormalConjectures.WrittenOnTheWallII.GraphConjecture100
 conjectures (19, 40, 61, 133, 198a) on all connected graphs with at most 9 vertices.
 No counterexamples were found (it needs `networkx` and nauty's `geng`).
 
-Caveat: no literature search has been done to check whether this conjecture was
-resolved after WOWII listed it as open.
+## Prior work (this is an independent proof, not the first)
+
+The conjecture had already been resolved before this proof was written:
+
+- **Kias Henry**, *A Proof of Written on the Wall II Conjecture 100*, Zenodo, 13 Aug 2026,
+  [doi:10.5281/zenodo.21914031](https://zenodo.org/records/21914031). The proof was
+  reviewed by E. DeLaViña, who marked the conjecture true on the WOWII page.
+- **vatsj**, Lean proof in
+  [formal-conjectures PR #5221](https://github.com/google-deepmind/formal-conjectures/pull/5221)
+  (opened 31 Aug 2026, unmerged at the time of writing), closing issue #4920.
+
+The upstream file was still tagged `research open`, which is why this was picked.
+The argument here was found independently. It avoids Cauchy–Schwarz and AM–GM and
+instead reduces everything to the single polynomial inequality `P(k,t) > 0` above.
