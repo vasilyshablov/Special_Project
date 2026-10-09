@@ -1,0 +1,232 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,urlcolor=blue!50!black,citecolor=blue!50!black]{hyperref}
+\usepackage{url}
+\usepackage{listings}
+\emergencystretch=3em
+\lstset{basicstyle=\ttfamily\small,columns=fullflexible,keepspaces=true,frame=single,
+  framerule=0.3pt,xleftmargin=6pt,xrightmargin=6pt,literate={→}{{$\to$}}1 {↔}{{$\leftrightarrow$}}1
+  {ℕ}{{$\mathbb{N}$}}1 {∃}{{$\exists$}}1 {∀}{{$\forall$}}1 {∧}{{$\wedge$}}1 {∨}{{$\vee$}}1}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\ord}{\operatorname{ord}}
+\newcommand{\lcm}{\operatorname{lcm}}
+
+\title{Consecutive residues of equal multiplicative order:\\
+a proof of the conjecture in OEIS A397683}
+\author{Vasily Shablov\\[2pt]
+\small Proof search and Lean formalization assisted by Claude (Anthropic)}
+\date{October 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+For an integer $m\ge 2$ let $f(m)$ be the number of $x$ with $1\le x<m$ such that $x$ and
+$x+1$ are both units modulo $m$ and $\ord_m(x)=\ord_m(x+1)$. OEIS sequence A397683
+(D.~S.~Gonz\'alez May, September 2026) conjectures that for odd $m>1$, $f(m)=0$ if and only if
+$m$ is a power of $3$ or a power of $7$. We prove this conjecture. The only non-elementary
+input is S.~D.~Cohen's theorem that every prime $p>7$ has a pair of consecutive primitive
+roots. The rest is an explicit Chinese remainder construction, with the residues $4$ modulo
+$3^a$ and $3$ modulo $7^b$ chosen so that the multiplicative orders balance. The full argument
+is formalized in Lean~4 with Mathlib. Cohen's theorem enters as an explicit hypothesis and
+nothing else is assumed.
+\end{abstract}
+
+\section{Introduction}
+
+For $m\ge 2$ define
+\[
+  f(m)=\#\{\,1\le x<m:\ \gcd(x,m)=\gcd(x+1,m)=1,\ \ord_m(x)=\ord_m(x+1)\,\}.
+\]
+Every unit modulo an even $m$ is odd, so $x$ and $x+1$ cannot both be units and $f(m)=0$.
+The interesting case is odd $m$. OEIS A397683 lists $a(n)=f(2n-1)$ and records the following.
+
+\paragraph{Conjecture (A397683).} For odd $m$, $f(m)=0$ if and only if $m$ is a power of $3$
+or a power of $7$. This was verified for $m<20000$.
+
+Here ``power'' means $3^a$ or $7^b$ with exponent at least $1$, since $f(1)=1$ by convention.
+The entry already notes that positivity is preserved under coprime products: if
+$\gcd(r,s)=1$, $f(r)>0$ and $f(s)>0$, then $f(rs)>0$. Together with Cohen's theorem this settles
+every odd $m$ coprime to $21$. The open part is every odd $m$ divisible by $3$ or $7$ that is
+not a pure power of $3$ or of $7$. There the coprime-product argument fails, because
+$f(3^a)=f(7^b)=0$. We close this case.
+
+\begin{theorem}\label{thm:main}
+Assume Cohen's theorem (Theorem~\ref{thm:cohen}). For every odd $m>1$, $f(m)=0$ if and only if
+$m=3^a$ or $m=7^b$ for some $a,b\ge 1$.
+\end{theorem}
+
+\paragraph{Prior work.} We checked the following on 9 October 2026 and found no existing proof:
+\begin{itemize}
+  \item The OEIS entry and its edit history. The last edit was on 20 September 2026, and the
+    conjecture is still marked open. No other OEIS entry references A397683.
+  \item Google DeepMind's \texttt{formal-conjectures} repository, including its issues and pull
+    requests.
+  \item The \texttt{the-omega-institute/trureturing} repository, an automated pipeline that
+    proves OEIS conjectures, including its issues and pull requests.
+  \item Recent papers proving OEIS conjectures, namely the ``OEIS Open'' benchmark and S.~Fried's
+    series. Both predate the entry.
+  \item General web searches.
+\end{itemize}
+N.~A.~Carella's paper~\cite{carella}, which the entry cites, concerns consecutive primitive
+roots modulo primes only.
+
+\section{Tools}
+
+\begin{theorem}[Cohen~\cite{cohen1,cohen2}; see also~\cite{cot}]\label{thm:cohen}
+For every prime power $q>7$, the field $\mathbb F_q$ contains two consecutive primitive
+elements. In particular, every prime $p>7$ has consecutive primitive roots $y,\,y+1$ modulo
+$p$.
+\end{theorem}
+
+For $p=5$ the pair $(2,3)$ works, because both residues have order $4$. We write $E_n(z,k)$
+for $z^k\equiv 1\pmod n$, so that $\ord_n(z)\mid k\iff E_n(z,k)$. In particular,
+$\ord_m(x)=\ord_m(x+1)$ holds if and only if $E_m(x,k)\iff E_m(x+1,k)$ for every $k$.
+
+\begin{lemma}[Order profile]\label{lem:profile}
+Let $p$ be an odd prime and $p\nmid z$. Let $d$ be the order of $z$ modulo $p$, and suppose
+$p^2\nmid z^d-1$. Then for every $n\ge 1$ and every $k$,
+\[ z^k\equiv 1 \pmod{p^n}\iff d\,p^{\,n-1}\mid k. \]
+\end{lemma}
+\begin{proof}
+Both sides force $d\mid k$. Write $k=dj$ with $j\ge1$; the case $j=0$ is trivial. By the
+lifting-the-exponent lemma,
+$v_p\bigl((z^d)^j-1\bigr)=v_p(z^d-1)+v_p(j)=1+v_p(j)$. Hence $p^n\mid z^k-1$ if and only if
+$p^{n-1}\mid j$, which holds if and only if $dp^{n-1}\mid k$.
+\end{proof}
+
+\begin{lemma}[Lifting a consecutive pair]\label{lem:lift}
+Let $p\ge5$ be prime, and let $y,\,y+1$ be primitive roots modulo $p$. Then there is
+$t\in\{0,1,2\}$ such that $y'=y+tp$ and $y'+1$ both satisfy $p^2\nmid (\cdot)^{p-1}-1$.
+Consequently both $y'$ and $y'+1$ have order $\varphi(p^n)=(p-1)p^{n-1}$ modulo $p^n$ for every
+$n\ge1$.
+\end{lemma}
+\begin{proof}
+Modulo $p^2$, $(y+tp)^{p-1}\equiv y^{p-1}+(p-1)y^{p-2}tp$. Suppose two values $t_1\ne t_2$
+both give $(y+t_ip)^{p-1}\equiv1\pmod{p^2}$. Then $p\mid (p-1)y^{p-2}(t_1-t_2)$, so
+$p\mid t_1-t_2$. This is impossible, since $|t_1-t_2|\le2<p$. So at most one $t$ is bad for
+$y$, and likewise at most one for $y+1$, which leaves a good $t$ among the three. The order
+statement then follows from Lemma~\ref{lem:profile} with $d=p-1$.
+\end{proof}
+
+\begin{lemma}[Profiles modulo $3^a$ and $7^b$]\label{lem:37}
+For $a,b\ge1$ and all $k$:
+\begin{align*}
+4^k\equiv1 \!\!\pmod{3^a} &\iff 3^{a-1}\mid k, &
+5^k\equiv1 \!\!\pmod{3^a} &\iff 2\cdot3^{a-1}\mid k,\\
+3^k\equiv1 \!\!\pmod{7^b} &\iff 6\cdot7^{b-1}\mid k, &
+4^k\equiv1 \!\!\pmod{7^b} &\iff 3\cdot7^{b-1}\mid k.
+\end{align*}
+\end{lemma}
+\begin{proof}
+Apply Lemma~\ref{lem:profile}. The orders modulo the prime are
+$\ord_3(4)=1$, $\ord_3(5)=2$, $\ord_7(3)=6$ and $\ord_7(4)=3$. The non-divisibility conditions
+are $9\nmid 3$, $9\nmid 24$, $49\nmid 728$ and $49\nmid 63$.
+\end{proof}
+
+\section{Proof of Theorem~\ref{thm:main}}
+
+\paragraph{Pure powers have $f=0$.}
+\begin{itemize}
+  \item \emph{$m=3^a$, $a\ge1$.} If $x$ and $x+1$ are units modulo $3$, then $x\equiv1\pmod 3$.
+    So $x^{3^{a-1}}\equiv1\pmod{3^a}$. However, $3^{a-1}$ is odd, so
+    $(x+1)^{3^{a-1}}\equiv2^{3^{a-1}}\equiv2\pmod 3$, and $(x+1)^{3^{a-1}}\not\equiv1$.
+    The exponent $k=3^{a-1}$ separates the two orders.
+  \item \emph{$m=7^b$, $b\ge1$.} Here $x\bmod 7\in\{1,\dots,5\}$. The orders modulo $7$ of the
+    consecutive pairs $(x,x+1)$ are
+    \[ (1,3),\ (3,6),\ (6,3),\ (3,6),\ (6,2). \]
+    In each case there is a $d\in\{1,3,2\}$ such that exactly one of $x^d$, $(x+1)^d$ is
+    $\equiv1\pmod7$. Take $k=d\cdot7^{b-1}$. The side with $z^d\equiv1\pmod 7$ satisfies
+    $z^k\equiv1\pmod{7^b}$. On the other side, $7^{b-1}\equiv1\pmod 6$ gives
+    $w^k\equiv w^d\not\equiv1\pmod 7$. Again the orders differ.
+\end{itemize}
+
+\paragraph{Every other odd $m>1$ has $f(m)>0$.}
+Write $m=3^a\,7^b\,r$ with $\gcd(r,21)=1$. Since $m$ is not a pure power, either $a,b\ge1$ or
+$r>1$.
+
+\emph{The part $r$.} For each $p^n\,\|\,r$ we have $p\ge5$ and $p\ne7$. Theorem~\ref{thm:cohen}
+(or the pair $(2,3)$ when $p=5$) together with Lemma~\ref{lem:lift} gives $y_p$ with
+$y_p,\,y_p+1$ both of order $\varphi(p^n)$ modulo $p^n$. Glue these by the CRT into $y_r$. Then
+for every $k$, $E_r(y_r,k)\iff E_r(y_r+1,k)$, and $E_r(y_r,k)$ forces $2\mid k$ when $r>1$,
+because every $\varphi(p^n)$ is even.
+
+\emph{The construction.} By the CRT choose $x$ with
+\[ x\equiv4\ (3^a),\qquad x\equiv3\ (7^b),\qquad x\equiv y_r\ (r). \]
+Then $x+1\equiv5,\ 4,\ y_r+1$ respectively, so $x$ and $x+1$ are units modulo $m$. By
+Lemma~\ref{lem:37}, writing $R(k)$ for $E_r(y_r,k)$:
+\begin{align*}
+E_m(x,k)&\iff [a=0 \vee 3^{a-1}\mid k]\wedge[b=0\vee (2\mid k\wedge 3\cdot7^{b-1}\mid k)]
+  \wedge R(k),\\
+E_m(x+1,k)&\iff [a=0 \vee (2\mid k\wedge 3^{a-1}\mid k)]\wedge[b=0\vee 3\cdot7^{b-1}\mid k]
+  \wedge R(k).
+\end{align*}
+Here we used $\gcd(2,3^{a-1})=\gcd(2,3\cdot7^{b-1})=1$. The two right-hand sides differ only
+in where the condition $2\mid k$ appears.
+\begin{itemize}
+  \item If $a,b\ge1$, each side contains the condition $2\mid k$.
+  \item If exactly one of $a,b$ is positive, or both are $0$, then $r>1$ and $R(k)$ implies
+    $2\mid k$.
+\end{itemize}
+Either way the two sides are equivalent for every $k$. Hence $\ord_m(x)=\ord_m(x+1)$, and
+$f(m)\ge1$ after reducing $x$ modulo $m$. \qed
+
+\begin{remark}
+For $m=3^a7^b$ the orders are
+$\ord_m(x)=\lcm(3^{a-1},6\cdot7^{b-1})$ and $\ord_m(x+1)=\lcm(2\cdot3^{a-1},3\cdot7^{b-1})$.
+Both equal $2\cdot3^{\max(a-1,1)}\cdot7^{b-1}$. The construction was checked directly for every
+odd $m\le 30000$.
+\end{remark}
+
+\section{Lean formalization}
+
+The proof is formalized in Lean~4 (v4.33.1) with Mathlib, in about 520 lines; see the
+accompanying file \texttt{A397683.lean}. The function $f$ is defined literally as in the OEIS.
+Cohen's theorem is the explicit hypothesis
+\begin{lstlisting}
+def CohenConsecutive : Prop :=
+  ∀ p : ℕ, p.Prime → 7 < p →
+    ∃ y : ZMod p, orderOf y = p - 1 ∧ orderOf (y + 1) = p - 1
+\end{lstlisting}
+and the main theorem reads
+\begin{lstlisting}
+theorem conjecture (hC : CohenConsecutive) {m : ℕ}
+    (hm : 1 < m) (hodd : Odd m) :
+    f m = 0 ↔ (∃ a, m = 3 ^ a) ∨ (∃ b, m = 7 ^ b)
+\end{lstlisting}
+\texttt{\#print axioms} reports only \texttt{propext}, \texttt{Classical.choice} and
+\texttt{Quot.sound}. In particular there is no \texttt{sorryAx}.
+
+The lifting-the-exponent step uses Mathlib's \path{padicValNat.pow_sub_pow}. The lift
+modulo $p^2$ uses \path{sq_dvd_add_pow_sub_sub}. The CRT gluing uses
+\path{Nat.chineseRemainder} and \path{Nat.modEq_and_modEq_iff_modEq_mul}. The
+reduction over the prime-power factorization uses \path{Nat.recOnPrimeCoprime}.
+
+Cohen's theorem itself, which rests on character-sum estimates over finite fields, is not
+formalized. To our knowledge it is not in Mathlib.
+
+\begin{thebibliography}{9}
+\bibitem{oeis} D.~S.~Gonz\'alez May, Sequence A397683, \emph{The On-Line Encyclopedia of
+  Integer Sequences}, \url{https://oeis.org/A397683}, 2026.
+\bibitem{cohen1} S.~D.~Cohen, Consecutive primitive roots in a finite field,
+  \emph{Proc.\ Amer.\ Math.\ Soc.} 93 (1985), 189--197.
+\bibitem{cohen2} S.~D.~Cohen, Consecutive primitive roots in a finite field~II,
+  \emph{Proc.\ Amer.\ Math.\ Soc.} 94 (1985), 605--611.
+\bibitem{cot} S.~D.~Cohen, T.~Oliveira e Silva and T.~Trudgian, On consecutive primitive
+  elements in a finite field, \emph{Bull.\ London Math.\ Soc.} 47 (2015), 418--426;
+  arXiv:1410.6210.
+\bibitem{carella} N.~A.~Carella, Least consecutive pair of primitive roots,
+  arXiv:2604.13090, 2026.
+\bibitem{mathlib} The mathlib Community, The Lean mathematical library, \emph{CPP 2020}.
+\end{thebibliography}
+
+\end{document}
