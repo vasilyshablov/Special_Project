@@ -184,3 +184,11 @@ out["max_height"] = max(height)
 json.dump(out, open("data/results.json", "w"), indent=1)
 print("\nfamous with k=0:", out["famous_unused_frac"], " all thms with k=0:", out["all_thm_unused_frac"])
 print("max height", out["max_height"])
+
+# Per-constant table of the visible Mathlib constants, for follow-up analysis.
+import csv
+with open("data/visible.tsv", "w", newline="") as f:
+    w = csv.writer(f, delimiter="\t")
+    w.writerow(["name", "kind", "module", "s", "k", "log10U", "height"])
+    for i in vis:
+        w.writerow([names[i], kind[i], mod[i], size[i], k[i], round(logU[i], 3), height[i]])

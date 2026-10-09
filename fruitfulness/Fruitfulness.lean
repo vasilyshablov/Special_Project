@@ -16,6 +16,8 @@ Main results:
   exactly `(k - 1) * (b - 1) - 1` symbols, so it pays off iff `(k - 1) * (b - 1) > 1`.
 * `unfold_le`: unfolding is at most exponential: with sizes `≤ S` and at most `d`
   citations per result, `unfold i ≤ S * (d + 1) ^ (i + 1)`.
+* `unfold_le_two_pow`, `completeLib_unfold`: whatever the number of citations, unfolding
+  at most doubles per result, and the complete library attains `2 ^ i` exactly.
 * `fibLib_unfold`, `fibLib_unfold_ge`: this exponential gap is really attained. In the
   Fibonacci library, where each result cites the two before it, the named library has
   linear total size, but `unfold i = fib (i + 3) - 1 ≥ 2 ^ (i / 2)`.
@@ -94,6 +96,49 @@ theorem Library.unfold_le (L : Library) (S d : ℕ) (hS : ∀ i, L.size i ≤ S)
             Nat.le_mul_of_pos_right _ (pow_pos (by omega) _)
           omega
       _ = S * (d + 1) ^ (i + 1) := by ring
+
+/-- Sharper and independent of the number of citations: unfolding at most doubles per
+result. With own sizes `≤ S`, `unfold i ≤ S * 2 ^ i`. -/
+theorem Library.unfold_le_two_pow (L : Library) (S : ℕ) (hS : ∀ i, L.size i ≤ S) :
+    ∀ i, L.unfold i ≤ S * 2 ^ i := by
+  intro i
+  induction i using Nat.strong_induction_on with
+  | _ i ih =>
+    rw [L.unfold_eq]
+    have hsub : L.deps i ⊆ Finset.range i := fun j hj =>
+      Finset.mem_range.2 (L.acyclic i j hj)
+    have h1 : ∑ j ∈ L.deps i, L.unfold j ≤ ∑ j ∈ Finset.range i, L.unfold j :=
+      Finset.sum_le_sum_of_subset hsub
+    have h2 : ∑ j ∈ Finset.range i, L.unfold j ≤ ∑ j ∈ Finset.range i, S * 2 ^ j :=
+      Finset.sum_le_sum fun j hj => ih j (Finset.mem_range.1 hj)
+    have h3 : ∑ j ∈ Finset.range i, S * 2 ^ j + S = S * 2 ^ i := by
+      rw [← Finset.mul_sum, Nat.geomSum_eq (le_refl 2)]
+      have : 1 ≤ 2 ^ i := Nat.one_le_two_pow
+      simp only [show (2 : ℕ) - 1 = 1 from rfl, Nat.div_one]
+      rw [Nat.mul_sub, mul_one]
+      have : S ≤ S * 2 ^ i := Nat.le_mul_of_pos_right _ (pow_pos (by norm_num) _)
+      omega
+    have := hS i
+    omega
+
+/-- The complete library: every result cites every earlier result. -/
+def completeLib : Library where
+  size _ := 1
+  deps i := Finset.range i
+  acyclic _ _ hj := Finset.mem_range.1 hj
+
+/-- The doubling bound is attained: in the complete library `unfold i = 2 ^ i`. -/
+theorem completeLib_unfold : ∀ i, completeLib.unfold i = 2 ^ i := by
+  intro i
+  induction i using Nat.strong_induction_on with
+  | _ i ih =>
+    rw [completeLib.unfold_eq]
+    show 1 + ∑ j ∈ Finset.range i, completeLib.unfold j = 2 ^ i
+    rw [Finset.sum_congr rfl fun j hj => ih j (Finset.mem_range.1 hj),
+      Nat.geomSum_eq (le_refl 2)]
+    have : 1 ≤ 2 ^ i := Nat.one_le_two_pow
+    simp only [show (2 : ℕ) - 1 = 1 from rfl, Nat.div_one]
+    omega
 
 /-! ## 3. The Fibonacci library: the exponential gap is attained -/
 
