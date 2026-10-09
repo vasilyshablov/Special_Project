@@ -1,0 +1,628 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=*}
+\definecolor{seriesA}{HTML}{2A78D6}
+\definecolor{seriesB}{HTML}{EB6834}
+\definecolor{inkMuted}{HTML}{8A8A85}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{conjecture}{Conjecture}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem{question}{Question}
+\newcommand{\lean}[1]{\texttt{#1}}
+\emergencystretch=3em
+
+\title{Fruitfulness as Compression:\\
+Lean-Checked Theorems and a Measurement of All of Mathlib}
+\author{Vasily Shablov\thanks{Formalization, measurement and drafting assisted by Claude (Anthropic).}}
+\date{October 2026 \\ \small Draft}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We pose an open-ended question: what is the \emph{fruitfulness} of a mathematical idea?
+We answer it with a definition: a named concept is a compression, and its value is what
+naming it saves. We then prove theorems about this definition in Lean~4 and measure it on
+all 771{,}129 constants of Mathlib.
+
+\textbf{Theorems.}
+\begin{itemize}
+\item The saving from naming a body of size $b$ used $k$ times is exactly $(k-1)(b-1)-1$.
+\item Unfolding all names at most doubles proof size per result, and the doubling is
+  attained.
+\item With at most $d$ citations per result, the sharp bound is the $d$-bonacci recurrence,
+  also attained.
+\end{itemize}
+
+\textbf{Measurements.}
+\begin{enumerate}
+\item \emph{Growth law.} Naively unfolded proof size grows by a factor of about $1.5$ per
+  dependency level ($R^2=0.98$), reaching about $10^{65.6}$ symbols.
+\item \emph{Rediscovery.} Ranking by reuse alone rediscovers the textbook core:
+  \lean{Set}, \lean{Category}, \lean{Functor}, \lean{TopologicalSpace}, \lean{Real},
+  \lean{Module}, \ldots
+\item \emph{Two axes of taste.} Human curation of \emph{concepts} is predicted by reuse
+  (AUC $0.88$). Human fame of \emph{theorems} is predicted by depth (AUC $0.78$) and not
+  by reuse (AUC $0.54$).
+\item \emph{A glue layer.} Instance declarations and structure projections are $12\%$ of
+  constants but receive $60\%$ of all citations. Mathlib also obeys Zipf's law of
+  abbreviation. These are the same signatures as function words in language and currency
+  metabolites in metabolism.
+\end{enumerate}
+
+We correct an overreach in our own earlier statement (naive unfolding is not minimal
+lemma-free proof size). We connect the work to proof complexity, logical depth,
+compression progress, hierarchy in nature, and Wigner's puzzle. We state nine open
+questions and five falsifiable conjectures.
+\end{abstract}
+
+\section{Introduction}
+
+\paragraph{Where the question came from.} The question started as a debate. One position
+holds that AI is good at well-posed yes/no problems but cannot handle open ``why / what
+is'' questions, because ``there is nothing to optimize.'' Rather than argue, we posed one
+such question and followed it:
+
+\begin{quote}\itshape
+What is the fruitfulness of a mathematical idea, and can it be measured?
+\end{quote}
+
+\paragraph{Our answer.} We take a compression view, in the tradition of minimum
+description length and of Whitehead's remark that ``civilization advances by extending the
+number of important operations which we can perform without thinking about them.''
+\begin{itemize}
+\item A definition or lemma is \emph{named}: its body is written once and then cited.
+\item The value of a name is the description length it saves.
+\item This makes fruitfulness precise enough to prove theorems about, and concrete enough
+  to measure on the largest library of formalized mathematics.
+\end{itemize}
+
+\paragraph{Contributions.}
+\begin{enumerate}
+\item \textbf{Theorems, checked in Lean 4 with Mathlib} (Section~\ref{sec:theory}; no
+  \lean{sorry}; standard axioms only).
+  \begin{itemize}
+  \item The exact value of naming a concept.
+  \item A tight exponential bound on unfolding.
+  \item A sharp bound for bounded citation, via the $d$-bonacci recurrence.
+  \end{itemize}
+\item \textbf{A complete measurement of Mathlib} (Sections~\ref{sec:data}--\ref{sec:results}).
+  \begin{itemize}
+  \item A growth law for unfolded size.
+  \item Reuse rediscovers the textbook core.
+  \item Two distinct axes of human mathematical taste, each predicted by a computable
+    measure.
+  \item A glue layer with the statistics of function words.
+  \end{itemize}
+\item \textbf{Connections and open questions} (Section~\ref{sec:questions}).
+  \begin{itemize}
+  \item The deepest version of ``are concepts necessary?'' is the open Frege versus
+    Extended Frege problem.
+  \item Human fame tracks Bennett's logical depth; concept taste tracks Schmidhuber's
+    compression progress.
+  \item The same reuse statistics appear in language, metabolism and software.
+  \end{itemize}
+\end{enumerate}
+
+\section{Theory: what naming buys}\label{sec:theory}
+
+\begin{definition}[Library]
+A \emph{library} consists of:
+\begin{itemize}
+\item a size function $\mathrm{size}:\mathbb{N}\to\mathbb{N}$;
+\item citation sets $\mathrm{deps}(i)\subseteq\{0,\dots,i-1\}$.
+\end{itemize}
+Result $i$ has its own proof of size $\mathrm{size}(i)$ and cites the results in
+$\mathrm{deps}(i)$. Its \emph{unfolded size} is
+\[
+U(i)=\mathrm{size}(i)+\sum_{j\in\mathrm{deps}(i)}U(j),
+\]
+which is the size of its proof if each cited result were re-proved in place.
+\end{definition}
+
+\begin{theorem}[Value of one name; \lean{naming\_saves}, \lean{naming\_pays\_iff}]
+Inlining a body of size $b$ at $k$ sites costs $kb$. Naming it costs $b+k$: one
+definition plus one reference per use. The saving is exactly
+\[
+kb-(b+k)=(k-1)(b-1)-1.
+\]
+\begin{itemize}
+\item Naming pays off if and only if $(k-1)(b-1)>1$. In particular it always pays when
+  $k\ge 2$ and $b\ge 3$ (\lean{naming\_pays\_of}).
+\item A name used once never pays: it costs exactly one symbol (\lean{naming\_once}).
+\end{itemize}
+\end{theorem}
+
+\noindent The last clause is the \emph{rule utility} constraint of the Sequitur grammar
+compressor~\cite{sequitur}, here derived rather than imposed.
+
+\begin{theorem}[Doubling; \lean{Library.unfold\_le\_two\_pow}, \lean{completeLib\_unfold}]
+If $\mathrm{size}\le S$, then $U(i)\le S\cdot 2^{i}$, whatever the number of citations.
+Equality holds for the \emph{complete library}, in which every result cites all earlier
+ones and has size $1$: there $U(i)=2^{i}$.
+\end{theorem}
+
+\begin{theorem}[Sharp bound for bounded citation; \lean{Library.unfold\_le\_tb}, \lean{windowLib\_unfold}]
+Let $T_d(i)=1+\sum_{j=\max(0,i-d)}^{i-1}T_d(j)$. If $\mathrm{size}\le S$ and
+$|\mathrm{deps}(i)|\le d$ for all $i$, then
+\[
+U(i)\le S\cdot T_d(i).
+\]
+Equality holds for the library in which each result cites its $d$ predecessors and has
+size $1$.
+\end{theorem}
+
+\noindent The proof rests on an exchange lemma (\lean{sum\_le\_sum\_window}): among sets of
+at most $d$ indices below $i$, a monotone function has its largest sum on the last $d$
+indices. Some consequences:
+\begin{itemize}
+\item $T_d(i)$ grows like $\phi_d^{\,i}$, where $\phi_d$ is the $d$-bonacci constant, the
+  root in $(1,2)$ of $x^d=x^{d-1}+\dots+1$.
+\item $\phi_2$ is the golden ratio. The case $d=2$ is formalized separately: $U(i)=F_{i+3}-1\ge 2^{\lfloor i/2\rfloor}$
+  (\lean{fibLib\_unfold}, \lean{fibLib\_unfold\_ge}).
+\item $\phi_d\to 2$ as $d\to\infty$, recovering the doubling theorem.
+\end{itemize}
+Every one of these exponential gaps is generated by a library of \emph{linear} named size.
+
+\begin{remark}[What these theorems do and do not say]
+$U$ measures \emph{copying}. It is not the size of the shortest lemma-free proof, and a
+clever re-prover can restructure a proof rather than inline it. For Frege systems,
+tree-like proofs polynomially simulate dag-like ones~\cite{krajicek}. So, in that setting,
+reusing lemmas saves only polynomially, even though copying costs exponentially. The
+question of whether \emph{new symbols} (definitions) can save super-polynomially is the
+Frege versus Extended Frege problem, which is open (Section~\ref{sec:questions}). Our
+theorems are about naming versus copying, and they are tight for that.
+\end{remark}
+
+\section{Data and method}\label{sec:data}
+
+\paragraph{Export.} We loaded all of Mathlib~\cite{mathlib} (Lean v4.33.1), including private proof
+bodies, and recorded every constant: its kind, its module, the size of its body (number of
+distinct term nodes), and the constants cited in its body and statement. In a second pass,
+with environment extensions loaded, we recorded the size of its statement and whether it is
+an instance declaration or a structure projection.
+
+\paragraph{Size of the data.}
+\begin{itemize}
+\item $771{,}129$ constants and $20.4$\,M citation edges.
+\item $279$ cycle edges, from unsafe definitions, were dropped.
+\item The \emph{visible} set has $315{,}085$ constants: user-facing Mathlib theorems,
+  definitions and inductive types, after removing compiler-generated auxiliaries.
+\end{itemize}
+
+\paragraph{Measures.} For each constant $c$:
+\begin{itemize}
+\item \emph{reuse} $k(c)$: the number of constants citing $c$;
+\item \emph{unfolded size} $U(c)$: as in Section~\ref{sec:theory}, computed exactly in
+  log-space;
+\item \emph{height}: the longest citation chain below $c$;
+\item \emph{depth}: $\log_{10}U(c)-\log_{10}(\text{statement size})$, i.e.\ hidden work
+  per symbol of statement.
+\end{itemize}
+
+\paragraph{Glue.} We call instance declarations and structure projections \emph{glue},
+classified structurally rather than by name. They make up $12.3\%$ of visible constants.
+
+\paragraph{Human labels.} All labels come from Mathlib's own human-curated files.
+\begin{itemize}
+\item \emph{Famous}: Freek Wiedijk's ``100 theorems'' and the ``1000+ theorems'' project,
+  294 declarations.
+\item \emph{Curriculum}: the undergraduate curriculum list and the library overview, 686
+  declarations.
+\end{itemize}
+
+\paragraph{Statistics.}
+\begin{itemize}
+\item AUC against all other non-glue constants of the same kind. $0.5$ is chance and
+  $1.0$ is perfect.
+\item A \emph{same-file} control: the probability that a labelled constant beats an
+  unlabelled constant of the same kind in the same source file. This controls for
+  ``advanced files contain deeper things.''
+\end{itemize}
+
+\section{Results}\label{sec:results}
+
+\subsection{A growth law}
+
+Mean $\log_{10}U$ is almost exactly linear in height (Figure~\ref{fig:growth}).
+\begin{itemize}
+\item \textbf{Fit.} Over all $315{,}085$ constants, $\log_{10}U\approx1.22+0.189\,h$
+  with $R^2=0.979$, a factor of $1.55$ per level. Fitting the per-height means gives
+  $1.50$ per level with $R^2=0.990$.
+\item \textbf{Stability across the range.} The three thirds of the height range give
+  $1.45$, $1.64$ and $1.41$.
+\item \textbf{Placement.} This is supercritical branching: well above the linear regime,
+  and below the golden ratio, $1.618$ per \emph{result}, of the citing-two-predecessors
+  library.
+\item \textbf{Scale.} The deepest result, \lean{CompletelyPositiveMap.map\_cstarMatrix\_nonneg}
+  at height 361, has $U\approx10^{65.6}$.
+\end{itemize}
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.92\linewidth,height=6.2cm,
+  xlabel={dependency height $h$}, ylabel={$\log_{10}$ unfolded size $U$},
+  xmin=0,xmax=365,ymin=0,ymax=70,
+  axis lines=left, grid=major, grid style={draw=black!8},
+  tick label style={font=\small,text=black!70}, label style={font=\small},
+  legend style={draw=none,font=\small,at={(0.03,0.97)},anchor=north west,fill=none},
+  legend cell align=left]
+\addplot[color=seriesB,line width=1pt] table[x=h,y=max]{../data/fig_growth.dat};
+\addlegendentry{maximum at each height}
+\addplot[color=seriesA,line width=1.2pt] table[x=h,y=mean]{../data/fig_growth.dat};
+\addlegendentry{mean at each height}
+\addplot[color=inkMuted,dashed,line width=0.8pt,domain=0:362]{1.216+0.18898*x};
+\addlegendentry{fit $1.22+0.189h$ ($R^2=0.98$)}
+\end{axis}
+\end{tikzpicture}
+\caption{Naively unfolded size grows exponentially with dependency height, about
+$1.5\times$ per level, over $315{,}085$ Mathlib constants.}
+\label{fig:growth}
+\end{figure}
+
+\subsection{Reuse rediscovers the textbook}
+
+With glue removed, the most-cited definitions and theorems are listed below. No notion of
+importance was supplied. The ranking is pure citation counting.
+
+\begin{center}\small
+\begin{tabular}{p{0.46\linewidth}p{0.46\linewidth}}
+\toprule
+\textbf{Definitions} (by citations) & \textbf{Theorems} (by citations) \\
+\midrule
+\lean{Set}, \lean{Category}, \lean{Functor}, \lean{TopologicalSpace}, \lean{Real},
+\lean{Module}, \lean{RingHom.id}, \lean{CommRing}, \lean{Finset}, \lean{Semiring},
+\lean{RingHom}, \lean{AddCommMonoid}, \lean{AddCommGroup}, \lean{Algebra},
+\lean{NormedAddCommGroup}, \lean{LinearMap}, \lean{Equiv}, \lean{Opposite}, \ldots
+&
+\lean{mul\_one}, \lean{add\_zero}, \lean{le\_trans}, \lean{zero\_add}, \lean{one\_mul},
+\lean{Nat.cast\_one}, \lean{mul\_comm}, \lean{Finset.sum\_congr}, \lean{Set.ext},
+\lean{le\_refl}, \lean{mul\_assoc}, \lean{map\_zero}, \lean{le\_antisymm}, \ldots \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent The theorem column omits tactic-internal certificate lemmas
+(\lean{Mathlib.Tactic.*}), which form a third, automation-generated kind of glue.
+
+\paragraph{Observation.} The top of the concept ranking is dominated by notions of
+\emph{structure and sameness}: sets, maps, homomorphisms, equivalences, categories,
+functors, opposites. The single most-cited definition overall is \lean{DFunLike.coe}
+(applying a structured map), at $115{,}373$ citations. In a precise sense, the most
+compressive idea in modern mathematics is the morphism.
+
+\subsection{Two axes of human taste}
+
+Table~\ref{tab:auc} gives the main result.
+\begin{itemize}
+\item \textbf{Concepts.} Human-curated concepts are predicted by \emph{reuse}: AUC $0.88$,
+  and $0.87$ against peers in the same file. Depth does not predict them, and is even
+  inverted (AUC $0.46$): fundamental concepts are shallow.
+\item \textbf{Theorems.} Famous and curriculum theorems are predicted by \emph{depth}:
+  AUC $0.78$--$0.82$, and $0.66$--$0.68$ within the same file. Reuse barely predicts them
+  ($0.54$--$0.58$).
+\item \textbf{Famous theorems are not reuse hubs.} $28.6\%$ of famous declarations are never
+  cited anywhere else in Mathlib, against $36.6\%$ of all theorems, so they are only
+  slightly more reused than average.
+\end{itemize}
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{lrcccc}
+\toprule
+Human label & $n$ & reuse $k$ & unfolded $U$ & depth & statement size \\
+\midrule
+curriculum \emph{definitions} & 421 & \textbf{0.88} / \textbf{0.87} & 0.46 / 0.35 & 0.46 / 0.38 & 0.36 / 0.32 \\
+curriculum theorems & 209 & 0.58 / 0.59 & \textbf{0.82} / 0.66 & \textbf{0.82} / \textbf{0.68} & 0.67 / 0.51 \\
+famous theorems & 259 & 0.54 / 0.55 & \textbf{0.78} / 0.66 & \textbf{0.78} / \textbf{0.67} & 0.59 / 0.51 \\
+\bottomrule
+\end{tabular}
+\caption{Global AUC / same-file win rate, glue removed. $0.5$ is chance.}
+\label{tab:auc}
+\end{table}
+
+\subsection{A glue layer, a heavy tail, and the law of abbreviation}
+
+\paragraph{Glue.} Glue (instances and projections) is $12.3\%$ of visible constants but
+receives $59.5\%$ of all citations, including 77 of the 100 most-cited constants.
+\begin{itemize}
+\item Only 63 of the 904 human-labelled declarations are glue.
+\item This is the profile of \emph{function words} in language: a small closed class
+  carrying a large share of tokens and little content.
+\item It is also the profile of \emph{currency metabolites} (ATP, NADH, water), which
+  network biologists must remove before metabolic pathways become visible~\cite{ma}.
+\end{itemize}
+
+\paragraph{Heavy tail.} Reuse is heavy-tailed (Figure~\ref{fig:ccdf}).
+\begin{itemize}
+\item A discrete power-law maximum-likelihood fit~\cite{clauset} gives a density exponent
+  $\alpha\approx1.72$, $1.77$ and $1.79$ for $k\ge10$, $30$ and $100$.
+\item For comparison: word frequencies give $\alpha\approx2$ (Zipf), and protein-domain
+  family sizes and citation counts show similar tails~\cite{koonin,price}.
+\end{itemize}
+
+\paragraph{Law of abbreviation.} In natural languages, frequent words are shorter (Zipf),
+a regularity proposed to be a universal consequence of compression~\cite{ferrer}. Mathlib
+obeys it too.
+\begin{itemize}
+\item \textbf{Definitions.} Mean name length falls monotonically with reuse: $13.2$
+  characters (never cited), $10.8$ (cited $10$--$99$ times), $8.9$ ($10^3$--$10^4$),
+  $8.2$ ($10^4$--$10^5$), and $3$ for \lean{Set}.
+\item \textbf{Theorems.} Mean name length falls from $19.2$ to $8.5$.
+\item \textbf{Rank correlations.} Spearman $\rho(k,\text{name length})=-0.16$ for
+  definitions and $-0.07$ for theorems; $\rho(k,\text{body size})=-0.22$ for definitions.
+  Most constants have small $k$, so the global correlations are weak, but the trend
+  across decades of $k$ is monotone.
+\end{itemize}
+Mathlib's names are derived from statements by convention, so this is not designed; it
+emerges from which concepts get reused.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}
+\begin{loglogaxis}[width=0.72\linewidth,height=5.6cm,
+  xlabel={number of citations $x$}, ylabel={constants with $k\ge x$},
+  axis lines=left, grid=major, grid style={draw=black!8},
+  tick label style={font=\small,text=black!70}, label style={font=\small}]
+\addplot[color=seriesA,line width=1.2pt,mark=*,mark size=1.2pt] table[x=k,y=ccdf]{../data/fig_ccdf.dat};
+\end{loglogaxis}
+\end{tikzpicture}
+\caption{Reuse in Mathlib is heavy-tailed: 215{,}078 constants are cited at least once,
+8{,}090 at least 100 times, and 165 at least 10{,}000 times.}
+\label{fig:ccdf}
+\end{figure}
+
+\section{Connections and open questions}\label{sec:questions}
+
+\subsection{Are concepts necessary? Proof complexity}
+
+Naming comes in two strengths.
+\begin{itemize}
+\item \textbf{Lemmas} reuse proved statements: dag-like versus tree-like proofs.
+  \begin{itemize}
+  \item The gap is exponential for resolution~\cite{bsiw}.
+  \item It is polynomial for Frege~\cite{krajicek}.
+  \end{itemize}
+\item \textbf{Definitions} introduce new symbols. This is Tseitin's extension rule; Frege
+  plus extension is Extended Frege~\cite{cookreckhow}.
+  \begin{itemize}
+  \item Whether Extended Frege is super-polynomially stronger than Frege is a central open
+    problem.
+  \end{itemize}
+\end{itemize}
+Higher up, the answer is known to be dramatic. G\"odel~\cite{godel} showed that passing to
+higher-order logic shortens some proofs by more than any computable function, and Boolos's
+``curious inference''~\cite{boolos} gives a concrete first-order-valid argument whose
+first-order proofs are physically unwritable but which has a short second-order proof.
+
+\begin{question}[Are new concepts forced?]
+Are \emph{definitions} ever super-polynomially necessary beyond lemma reuse? This is
+Frege versus Extended Frege, restated as the question ``are human concepts forced or merely
+convenient?''
+\end{question}
+
+\begin{question}[Empirical proof complexity]
+Mathlib is a vast sample of definitions in actual use. Can it locate \emph{where}
+definitions give large savings, and so supply empirical evidence on a problem that has
+resisted proof?
+\end{question}
+
+\subsection{Value has two axes: depth and leverage}
+
+The split in Table~\ref{tab:auc} matches two independent theories of value.
+\begin{itemize}
+\item \textbf{Bennett's logical depth}~\cite{bennett}. An object is valuable when it is
+  the product of a long computation that cannot be shortcut. Famous theorems are deep: a
+  short statement certifies a large amount of hidden work.
+\item \textbf{Schmidhuber's compression progress}~\cite{schmidhuber}. Interest equals
+  improvement of the observer's compressor. Our $(k-1)(b-1)-1$ is exactly the compression
+  progress of one new concept, and reuse predicts concept taste.
+\end{itemize}
+We know of no previous large-scale test of either thesis against human judgments of
+mathematical value, though a fuller literature search is warranted.
+
+\begin{question}[The residual]
+Are depth and leverage the only two axes of mathematical value? What explains the
+remaining $12$--$22\%$ of AUC: surprise, beauty, \emph{bridging} between distant areas, or
+historical accident?
+\end{question}
+
+\begin{question}[Computability of taste]
+Ideal fruitfulness, meaning the optimal library of concepts for all of mathematics, is a
+minimal-grammar problem. It is NP-hard even for finite corpora~\cite{charikar}, and in the
+limit it is Kolmogorov complexity, which is uncomputable. So no agent, human or machine,
+can optimize fruitfulness exactly; all can only approximate it from below. Is the human
+advantage in choosing directions, if any, then a matter of better approximation rather than
+a different kind of faculty?
+\end{question}
+
+\subsection{A glue law across nature}
+
+Function words, currency metabolites, tiny utility packages (the \lean{left-pad} incident),
+and Mathlib's instances share a profile: few units, an enormous share of uses, little
+content, and invisible to anyone asked what matters.
+
+\begin{question}[The glue theorem]
+Must every system that grows by reuse under a description-length cost develop (i)
+heavy-tailed reuse, (ii) a high-frequency, low-content glue layer, and (iii) abbreviation of
+the frequent? Preferential attachment~\cite{price} explains (i), and compression
+arguments~\cite{ferrer} explain (iii). Is there a single derivation of all three?
+\end{question}
+
+\noindent Mathlib is a natural \emph{model organism} for such laws.
+\begin{itemize}
+\item In biology, edges are inferred and noisy. In language, ``concept'' is fuzzy.
+\item In Mathlib, every edge is exact and every unit is machine-checked.
+\end{itemize}
+
+\begin{question}[Mathematics as an evolving genome]
+Protein-domain statistics are explained by birth--death--innovation models~\cite{koonin}.
+Does the same model, fitted to Mathlib's history (generalization as duplication, imported
+concepts as horizontal transfer), reproduce its reuse distribution?
+\end{question}
+
+\subsection{Hierarchy, decoupling, and the effectiveness of mathematics}
+
+\paragraph{Simon's watchmakers.} Simon's parable~\cite{simon} contrasts a watchmaker who
+builds from stable sub-assemblies with one who does not. The first has an exponential
+advantage under interruption, which Simon offered as the reason nature is hierarchical.
+Our theorems are the corresponding statement about \emph{size}.
+
+\paragraph{Proof irrelevance is scale separation.} In Lean, any two proofs of the same
+proposition are equal. Later results therefore depend only on \emph{statements}, never on
+proofs. This is the logical form of the physicist's decoupling of scales: chemistry needs
+the periodic table, not quantum chromodynamics. The depth $\log U-\log(\text{statement})$
+measures how much micro-detail a statement forgets.
+
+\begin{question}[Wigner's puzzle as compression]
+Is the ``unreasonable effectiveness'' of mathematics in physics~\cite{wigner} a consequence
+of both being hierarchical compressions under scale separation? Formalized physics
+libraries now exist. Do they reuse the same top concepts as Mathlib, with the same tail
+exponent and glue layer?
+\end{question}
+
+\subsection{Delayed reward and understanding}
+
+\begin{question}[How delayed is the reward?]
+The strongest form of the ``nothing to optimize'' objection is that fruitfulness is
+visible only decades later; Lobachevsky is the canonical example. Mathlib's version history
+records when each declaration and each citation appeared. Does early reuse, after months,
+predict late reuse, after years? If it does, the reward horizon is short and learnable. If
+it does not, the objection gains real empirical support.
+\end{question}
+
+\begin{question}[Understanding as conditional compression]
+Thurston held that mathematics is about human understanding~\cite{thurston}. Define: an
+agent \emph{understands} a proof when its size, relative to the agent's library of named
+concepts, fits within the agent's working capacity. This is conditional description length
+with a library in place of a universal machine, consistent with chunking in
+cognition~\cite{chase,miller}. On this definition, ``can humans understand machine
+mathematics?'' becomes the quantitative question ``can the machine's library be taught?''
+\end{question}
+
+\subsection{Falsifiable conjectures}
+
+\begin{conjecture}[Growth law]
+In future versions of Mathlib, the per-level unfolding factor stays in $[1.4,1.7]$ with
+$R^2>0.95$.
+\end{conjecture}
+
+\begin{conjecture}[Two axes]
+In other large formal libraries (Isabelle AFP, Rocq/MathComp), human-curated concepts are
+predicted by reuse and famous theorems by depth, each with AUC $>0.75$. Reuse does not
+predict fame (AUC $<0.6$).
+\end{conjecture}
+
+\begin{conjecture}[Glue share]
+In any mature formal library with typeclass-style inference, a structurally defined glue
+class of at most $15\%$ of constants receives a majority of citations.
+\end{conjecture}
+
+\begin{conjecture}[Concepts are rediscovered]
+Strip names from Mathlib's proof terms and run compression-driven library
+learning~\cite{dreamcoder,stitch}. The highest-value recovered abstractions substantially
+overlap the top concepts of Section~\ref{sec:results}.
+\end{conjecture}
+
+\begin{conjecture}[Morphisms are the universal compressor]
+In every sufficiently large formal library, the most-cited definitions are dominated by
+notions of map and sameness (morphism, homomorphism, equivalence, functor) rather than by
+specific objects.
+\end{conjecture}
+
+\section{Limitations}
+
+\begin{itemize}
+\item \textbf{The labels are biased.} They record what formalizers chose to curate.
+\item \textbf{$U$ is a copying measure.} It counts each citation once per citing result.
+  It is not an occurrence count inside proof terms, and not a lower bound on proof size.
+\item \textbf{The glue classification is incomplete.} It is structural but leaves out
+  tactic-certificate lemmas, which we report separately.
+\item \textbf{One snapshot.} All measurements come from a single version of Mathlib.
+  Temporal claims are stated as conjectures.
+\item \textbf{The reported correlations are observational.}
+\end{itemize}
+
+\section{Conclusion}
+
+An open ``what is'' question led us to:
+\begin{itemize}
+\item a definition;
+\item theorems proved in Lean, including a sharp one;
+\item a growth law over 315{,}085 objects;
+\item a mechanical measure that recovers human concept taste at AUC $0.88$ and theorem
+  taste at AUC $0.78$;
+\item connections to proof complexity, information theory, biology, linguistics and
+  physics;
+\item questions we cannot yet answer.
+\end{itemize}
+Fruitfulness is not unmeasurable. It is delayed and, in its ideal form, uncomputable, for
+every kind of mind.
+
+\appendix
+\section{Lean index}
+All results are in \lean{Fruitfulness.lean}, namespace \lean{Fruitfulness}. They use only
+\lean{propext}, \lean{Classical.choice} and \lean{Quot.sound}, with no \lean{sorry}.
+
+\begin{center}\small
+\begin{tabular}{ll}
+\toprule
+Statement & Lean name \\
+\midrule
+Saving $(k-1)(b-1)-1$ & \lean{naming\_saves} \\
+Pays iff $(k-1)(b-1)>1$; pays when $k\ge2$, $b\ge3$ & \lean{naming\_pays\_iff}, \lean{naming\_pays\_of} \\
+Used once never pays & \lean{naming\_once} \\
+Unfolded size $\ge$ own size & \lean{Library.size\_le\_unfold} \\
+$U(i)\le S(d+1)^{i+1}$ & \lean{Library.unfold\_le} \\
+$U(i)\le S\,2^i$ (any $d$) & \lean{Library.unfold\_le\_two\_pow} \\
+Complete library: $U(i)=2^i$ & \lean{completeLib\_unfold} \\
+Exchange lemma & \lean{sum\_le\_sum\_window} \\
+$T_d$ is monotone & \lean{tb\_mono} \\
+Sharp bound $U(i)\le S\,T_d(i)$ & \lean{Library.unfold\_le\_tb} \\
+Attained by the window library & \lean{windowLib\_unfold} \\
+Fibonacci library: $U(i)=F_{i+3}-1\ge2^{\lfloor i/2\rfloor}$ & \lean{fibLib\_unfold}, \lean{fibLib\_unfold\_ge} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent Reproduction: \lean{Export.lean} and \lean{Flags.lean} export the graph;
+\lean{analyze.py}, \lean{robustness.py} and \lean{paper\_stats.py} compute every number in
+this paper.
+
+\begin{thebibliography}{99}\small
+\bibitem{bsiw} E.~Ben-Sasson, R.~Impagliazzo, A.~Wigderson. Near optimal separation of tree-like and general resolution. \emph{Combinatorica} 24 (2004).
+\bibitem{bennett} C.~H.~Bennett. Logical depth and physical complexity. In \emph{The Universal Turing Machine: A Half-Century Survey}, 1988.
+\bibitem{boolos} G.~Boolos. A curious inference. \emph{J.\ Philosophical Logic} 16 (1987).
+\bibitem{stitch} M.~Bowers et al. Top-down synthesis for library learning. \emph{POPL} 2023.
+\bibitem{charikar} M.~Charikar et al. The smallest grammar problem. \emph{IEEE Trans.\ Inf.\ Theory} 51 (2005).
+\bibitem{chase} W.~G.~Chase, H.~A.~Simon. Perception in chess. \emph{Cognitive Psychology} 4 (1973).
+\bibitem{clauset} A.~Clauset, C.~R.~Shalizi, M.~E.~J.~Newman. Power-law distributions in empirical data. \emph{SIAM Review} 51 (2009).
+\bibitem{cookreckhow} S.~A.~Cook, R.~A.~Reckhow. The relative efficiency of propositional proof systems. \emph{J.\ Symbolic Logic} 44 (1979).
+\bibitem{dreamcoder} K.~Ellis et al. DreamCoder: bootstrapping inductive program synthesis with wake-sleep library learning. \emph{PLDI} 2021.
+\bibitem{ferrer} R.~Ferrer-i-Cancho et al. Compression as a universal principle of animal behavior. \emph{Cognitive Science} 37 (2013).
+\bibitem{godel} K.~G\"odel. \"Uber die L\"ange von Beweisen. \emph{Ergebnisse eines math.\ Kolloquiums} 7 (1936).
+\bibitem{koonin} E.~V.~Koonin, Y.~I.~Wolf, G.~P.~Karev. The structure of the protein universe and genome evolution. \emph{Nature} 420 (2002).
+\bibitem{krajicek} J.~Kraj\'i\v{c}ek. \emph{Bounded Arithmetic, Propositional Logic, and Complexity Theory}. Cambridge University Press, 1995.
+\bibitem{ma} H.~Ma, A.-P.~Zeng. Reconstruction of metabolic networks from genome data and analysis of their global structure. \emph{Bioinformatics} 19 (2003).
+\bibitem{mathlib} The mathlib Community. The Lean mathematical library. \emph{CPP} 2020.
+\bibitem{miller} G.~A.~Miller. The magical number seven, plus or minus two. \emph{Psychological Review} 63 (1956).
+\bibitem{sequitur} C.~G.~Nevill-Manning, I.~H.~Witten. Identifying hierarchical structure in sequences: a linear-time algorithm. \emph{JAIR} 7 (1997).
+\bibitem{price} D.~de~Solla Price. A general theory of bibliometric and other cumulative advantage processes. \emph{JASIS} 27 (1976).
+\bibitem{schmidhuber} J.~Schmidhuber. Driven by compression progress. In \emph{Anticipatory Behavior in Adaptive Learning Systems}, Springer, 2009.
+\bibitem{simon} H.~A.~Simon. The architecture of complexity. \emph{Proc.\ Amer.\ Phil.\ Soc.} 106 (1962).
+\bibitem{thurston} W.~P.~Thurston. On proof and progress in mathematics. \emph{Bull.\ AMS} 30 (1994).
+\bibitem{wigner} E.~Wigner. The unreasonable effectiveness of mathematics in the natural sciences. \emph{Comm.\ Pure Appl.\ Math.} 13 (1960).
+\end{thebibliography}
+\end{document}

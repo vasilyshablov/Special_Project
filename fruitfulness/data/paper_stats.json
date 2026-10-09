@@ -1,0 +1,411 @@
+{
+ "glue": {
+  "n_glue": 38617,
+  "n": 315085,
+  "share_of_constants": 0.123,
+  "share_of_citations": 0.595,
+  "share_of_top100": 0.77,
+  "labelled_glue": 63,
+  "labelled": 904
+ },
+ "auc": {
+  "famous|thm": {
+   "n": 259,
+   "reuse k": [
+    0.543,
+    0.546
+   ],
+   "unfolded U": [
+    0.784,
+    0.66
+   ],
+   "depth U/statement": [
+    0.784,
+    0.674
+   ],
+   "statement size": [
+    0.589,
+    0.507
+   ]
+  },
+  "famous|def": {
+   "n": 24,
+   "reuse k": [
+    0.516,
+    0.63
+   ],
+   "unfolded U": [
+    0.772,
+    0.681
+   ],
+   "depth U/statement": [
+    0.772,
+    0.747
+   ],
+   "statement size": [
+    0.621,
+    0.458
+   ]
+  },
+  "curriculum|thm": {
+   "n": 209,
+   "reuse k": [
+    0.578,
+    0.587
+   ],
+   "unfolded U": [
+    0.817,
+    0.662
+   ],
+   "depth U/statement": [
+    0.817,
+    0.675
+   ],
+   "statement size": [
+    0.668,
+    0.505
+   ]
+  },
+  "curriculum|def": {
+   "n": 421,
+   "reuse k": [
+    0.88,
+    0.868
+   ],
+   "unfolded U": [
+    0.461,
+    0.347
+   ],
+   "depth U/statement": [
+    0.464,
+    0.378
+   ],
+   "statement size": [
+    0.355,
+    0.319
+   ]
+  }
+ },
+ "top_def": [
+  [
+   "Set",
+   106159
+  ],
+  [
+   "CategoryTheory.Category",
+   83438
+  ],
+  [
+   "CategoryTheory.Functor",
+   45214
+  ],
+  [
+   "TopologicalSpace",
+   44551
+  ],
+  [
+   "Real",
+   43496
+  ],
+  [
+   "Module",
+   41160
+  ],
+  [
+   "RingHom.id",
+   39086
+  ],
+  [
+   "CommRing",
+   37791
+  ],
+  [
+   "Finset",
+   29483
+  ],
+  [
+   "Semiring",
+   29173
+  ],
+  [
+   "RingHom",
+   26967
+  ],
+  [
+   "AddCommMonoid",
+   24871
+  ],
+  [
+   "AddCommGroup",
+   24800
+  ],
+  [
+   "Algebra",
+   24194
+  ],
+  [
+   "NormedAddCommGroup",
+   23706
+  ],
+  [
+   "LinearMap",
+   23317
+  ],
+  [
+   "CommSemiring",
+   23241
+  ],
+  [
+   "Equiv",
+   23109
+  ],
+  [
+   "Opposite",
+   21202
+  ],
+  [
+   "CategoryTheory.Functor.comp",
+   19342
+  ],
+  [
+   "NormedSpace",
+   18715
+  ],
+  [
+   "MeasurableSpace",
+   18417
+  ],
+  [
+   "Ring",
+   17996
+  ],
+  [
+   "ENNReal",
+   16243
+  ],
+  [
+   "Set.Elem",
+   16094
+  ],
+  [
+   "Submodule",
+   15994
+  ],
+  [
+   "Filter",
+   15822
+  ],
+  [
+   "Preorder",
+   15321
+  ],
+  [
+   "Field",
+   15114
+  ],
+  [
+   "MeasureTheory.Measure",
+   14819
+  ]
+ ],
+ "top_thm": [
+  [
+   "mul_one",
+   4781
+  ],
+  [
+   "Mathlib.Tactic.Reassoc.eq_whisker'",
+   4551
+  ],
+  [
+   "add_zero",
+   3947
+  ],
+  [
+   "LE.le.trans",
+   3758
+  ],
+  [
+   "zero_add",
+   3585
+  ],
+  [
+   "one_mul",
+   3566
+  ],
+  [
+   "Mathlib.Meta.NormNum.isNat_ofNat",
+   3238
+  ],
+  [
+   "Nat.cast_one",
+   2993
+  ],
+  [
+   "mul_comm",
+   2792
+  ],
+  [
+   "Finset.sum_congr",
+   2790
+  ],
+  [
+   "Set.ext",
+   2752
+  ],
+  [
+   "LT.lt.le",
+   2622
+  ],
+  [
+   "le_refl",
+   2608
+  ],
+  [
+   "mul_assoc",
+   2509
+  ],
+  [
+   "Mathlib.Meta.NormNum.IsNat.of_raw",
+   2503
+  ],
+  [
+   "Mathlib.Tactic.Ring.Common.atom_pf",
+   2484
+  ],
+  [
+   "Mathlib.Tactic.Ring.Common.add_pf_add_zero",
+   2453
+  ],
+  [
+   "map_zero",
+   2343
+  ],
+  [
+   "Mathlib.Tactic.Ring.of_eq",
+   2323
+  ],
+  [
+   "le_antisymm",
+   2282
+  ],
+  [
+   "Mathlib.Meta.NormNum.IsNat.to_raw_eq",
+   2260
+  ],
+  [
+   "Nat.cast_zero",
+   2243
+  ],
+  [
+   "Mathlib.Meta.NormNum.IsNat.to_isInt",
+   2222
+  ],
+  [
+   "Mathlib.Meta.NormNum.isInt_neg",
+   2191
+  ],
+  [
+   "Mathlib.Tactic.Ring.Common.add_pf_zero_add",
+   2147
+  ],
+  [
+   "Mathlib.Tactic.Ring.Common.zero_mul",
+   2123
+  ],
+  [
+   "Mathlib.Tactic.Ring.Common.mul_zero",
+   2122
+  ],
+  [
+   "Mathlib.Tactic.Ring.Common.add_mul",
+   2122
+  ],
+  [
+   "Mathlib.Tactic.Ring.Common.mul_add",
+   2109
+  ],
+  [
+   "Mathlib.Meta.NormNum.isNat_mul",
+   2093
+  ]
+ ],
+ "tail": {
+  "10": {
+   "n": 44813,
+   "alpha_pdf": 1.723
+  },
+  "30": {
+   "n": 20470,
+   "alpha_pdf": 1.771
+  },
+  "100": {
+   "n": 8090,
+   "alpha_pdf": 1.792
+  }
+ },
+ "abbrev": {
+  "thm": {
+   "rho_name_len": -0.074,
+   "rho_statement": -0.143,
+   "rho_body": 0.093,
+   "mean_name_len_by_decade": {
+    "0": [
+     87521,
+     18.8
+    ],
+    "1": [
+     131494,
+     19.2
+    ],
+    "2": [
+     11865,
+     13.7
+    ],
+    "3": [
+     917,
+     10.5
+    ],
+    "4": [
+     75,
+     8.5
+    ]
+   }
+  },
+  "def": {
+   "rho_name_len": -0.156,
+   "rho_statement": -0.077,
+   "rho_body": -0.223,
+   "mean_name_len_by_decade": {
+    "0": [
+     4795,
+     13.2
+    ],
+    "1": [
+     20213,
+     13.1
+    ],
+    "2": [
+     15931,
+     10.8
+    ],
+    "3": [
+     3189,
+     9.7
+    ],
+    "4": [
+     427,
+     8.9
+    ],
+    "5": [
+     40,
+     8.2
+    ],
+    "6": [
+     1,
+     3.0
+    ]
+   }
+  }
+ }
+}

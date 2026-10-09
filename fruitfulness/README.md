@@ -1,5 +1,8 @@
 # What is fruitfulness? Measuring it on all of Mathlib
 
+**Paper:** [`paper/paper.pdf`](paper/paper.pdf), *Fruitfulness as Compression*, 10 pages.
+**Working notes:** [`notes/thoughts.pdf`](notes/thoughts.pdf).
+
 This started from a debate claim: AI can't handle open "why / what is" questions, because
 there is nothing to optimize. So we posed one such question ourselves:
 
@@ -133,10 +136,15 @@ never cited anywhere else in Mathlib.
    abstractions it recovers will substantially overlap with Finding B's list. If that
    holds, the core of human mathematical vocabulary is a compression optimum, not an
    artifact of the human brain.
-4. **Next Lean target (likely provable, not yet done).** With at most `d` citations per
-   result, the sharp per-result growth of unfolded size is the `d`-bonacci constant, the
-   root in (1, 2) of `x^d = x^{d-1} + ... + 1`. That is the golden ratio for `d = 2`, and
-   it tends to 2, the bound already proved, as `d → ∞`.
+4. ~~Sharp bound for bounded citation.~~ **Now proved in Lean:** `Library.unfold_le_tb`
+   and `windowLib_unfold`. With at most `d` citations, `unfold i ≤ S · T_d(i)`, where
+   `T_d(i) = 1 + T_d(i-1) + ... + T_d(i-d)`, and this is attained. The growth rate is
+   the `d`-bonacci constant.
+5. **Glue share** (added after the structural glue classification). Instance declarations
+   and structure projections are 12.3% of constants but receive 59.5% of all citations,
+   including 77 of the top 100. That is the profile of function words in language and of
+   currency metabolites in metabolism. Conjecture: this holds in any mature formal library
+   with typeclass-style inference.
 
 ## 5. What this says about "AI can't do open questions"
 
