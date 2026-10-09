@@ -54,3 +54,38 @@ So f(m) ≥ 1. ∎
 
 `verify_construction.py` checks that this explicit construction produces a valid x for every
 odd m ≤ 30000 that is not a pure power of 3 or 7, and that f = 0 on small pure powers.
+
+## Lean 4 verification
+
+`A397683.lean` (about 520 lines, Lean 4 v4.33.1 + Mathlib) formalizes the whole proof. Its
+main theorem is
+
+```lean
+theorem conjecture (hC : CohenConsecutive) {m : ℕ} (hm : 1 < m) (hodd : Odd m) :
+    f m = 0 ↔ (∃ a, m = 3 ^ a) ∨ (∃ b, m = 7 ^ b)
+```
+
+Here `f` is the OEIS function, defined literally: the number of `1 ≤ x < m` with
+`gcd(x, m) = gcd(x+1, m) = 1` and `orderOf (x : ZMod m) = orderOf (x + 1)`.
+
+Cohen's theorem is the one input not proved in Lean. It enters as the explicit hypothesis
+
+```lean
+def CohenConsecutive : Prop :=
+  ∀ p : ℕ, p.Prime → 7 < p → ∃ y : ZMod p, orderOf y = p - 1 ∧ orderOf (y + 1) = p - 1
+```
+
+It is a published theorem (S. D. Cohen, 1985) whose proof uses character-sum estimates that
+Mathlib does not have. Everything else is machine-checked:
+- the lifting-the-exponent profiles mod 3^a and 7^b;
+- the lift of consecutive primitive roots from p to p^n;
+- the CRT gluing and the case analysis;
+- the impossibility for pure powers of 3 and 7;
+- the reduction from x to x mod m.
+
+`#print axioms OeisA397683.conjecture` reports only `propext`, `Classical.choice` and
+`Quot.sound`, with no `sorryAx`.
+
+**To check:** put the file at `FormalConjectures/OEIS/A397683Proof.lean` inside a checkout of
+google-deepmind/formal-conjectures (commit b3f2641), then run
+`lake exe cache get && lake build FormalConjectures.OEIS.A397683Proof`.
