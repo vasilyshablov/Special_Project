@@ -1,0 +1,362 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=*}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{conj}{Conjecture}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newcommand{\lean}[1]{\texttt{#1}}
+\emergencystretch=3em
+\title{Attacking the Lucas Conjecture and Looking at Frege vs.\ Extended Frege:\\
+What I Proved, What I Could Not, and How Hard These Problems Are}
+\author{Notes for Vasily Shablov, by Claude}
+\date{October 2026}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+I worked by hand, using computation once to test a proof strategy. Results:
+\begin{itemize}
+\item \textbf{A reformulation.} The Lucas conjecture is equivalent to a clean statement
+  about \emph{variable-window Fibonacci recurrences}.
+\item \textbf{A partial theorem.} The golden speed limit $\varphi^{1/3}$ is \emph{exactly}
+  right for every library in which each result cites at most two others. The proof is
+  complete and short.
+\item \textbf{The obstruction.} The general case fails at one identifiable phenomenon,
+  \emph{runs of near-equal values}, and I explain why every simple potential argument
+  breaks there.
+\end{itemize}
+I did not prove the full conjecture. I did not, and cannot honestly claim to, make progress
+on Frege vs.\ Extended Frege. That is a famous problem at the frontier of complexity
+theory, and I explain where it sits. I also say plainly how famous and how hard each
+problem is.
+\end{abstract}
+
+\section{Are these real open problems? How hard are they?}
+
+\paragraph{The Lucas conjecture.} It is \emph{our} conjecture: we posed it two days ago.
+\begin{itemize}
+\item \textbf{Status.} It is ``open'' only in the sense that it is unproved. A literature
+  search found no prior statement of it, though a specialist should double-check. It is
+  not a recognized problem that anyone else is working on.
+\item \textbf{Difficulty.} My honest estimate is a solid research problem in extremal
+  combinatorics. A clean proof would make a good paper in a combinatorics journal,
+  especially with the exact Lucas-number answer.
+\item \textbf{Prize level.} It is nowhere near Fields-Medal level. It could fall to one
+  good idea. It could also be subtler than it looks: Section~\ref{sec:obstruction} shows
+  that the obvious methods provably fail.
+\end{itemize}
+
+\paragraph{Frege vs.\ Extended Frege.} This is a genuinely famous open problem.
+\begin{itemize}
+\item \textbf{History.} It was posed in Cook and Reckhow's founding paper of proof
+  complexity (1979) and is still open after 45 years.
+\item \textbf{Even the first step is open.} Nobody can prove a super-polynomial lower
+  bound for \emph{Frege itself} on any tautology, and separating Extended Frege from
+  Frege would require that.
+\item \textbf{Its circuit analogue is just as stuck.} The analogue is showing that
+  circuits (computations with shared, \emph{named} subresults) are super-polynomially
+  stronger than formulas (no sharing). The best formula lower bounds for explicit
+  functions are about $n^3$ (H\aa stad; Tal), and super-polynomial ones are a celebrated
+  open problem.
+\item \textbf{Prize level.} A resolution would be a landmark in theoretical computer
+  science, in the tier of results honored by the G\"odel Prize or the IMU Abacus Medal.
+  It is not a Millennium Prize problem, but it sits in the research program around
+  P vs.\ NP. Whether it would be Fields-level depends on the mathematics a proof brought
+  with it; I won't pretend to calibrate that.
+\item \textbf{My position.} I cannot prove it, and you should be very skeptical of anyone,
+  human or AI, who claims a quick proof.
+\end{itemize}
+
+\paragraph{One clarification.} ``Prove Extended Frege'' is not quite a thing. Extended
+Frege is a proof system, not a statement. The open question is a \emph{separation}: are
+there tautologies with short Extended Frege proofs but no short Frege proofs?
+
+\section{The Lucas conjecture, reformulated}
+
+\paragraph{Recall.} Results are added one at a time. Result $t$ cites a set of $d_t$
+distinct earlier results and has unfolded size $u_t=1+\sum_{\text{cited }j}u_j$, the
+number of citation paths starting at $t$. The cost is $C=\sum_t(1+d_t)$.
+
+\begin{conj}[Lucas]
+At cost $3m$ ($m\ge4$) the largest unfolded size is $2L_m-2$. In particular,
+$u\le K\varphi^{C/3}$ for a constant $K$.
+\end{conj}
+
+\begin{lemma}[Greedy dominance]\label{lem:greedy}
+Fix the sequence of citation counts $d_1,d_2,\ldots$. Among all libraries with these
+counts, the largest values are achieved when every result cites the $d_t$ \emph{largest}
+values available.
+\end{lemma}
+\begin{proof}
+Compare any library with the greedy one, step by step. Keep the multiset of values of
+each, sorted in decreasing order.
+
+\emph{Invariant:} the greedy multiset dominates the other elementwise.
+
+\emph{Step:} if multiset $A$ dominates multiset $B$, then the sum of the $d$ largest
+elements of $A$ is at least the sum of any $d$ elements of $B$. So the greedy library's
+new value $a$ is at least the other library's new value $b$. Inserting $a$ into $A$ and $b$
+into $B$, with $a\ge b$, preserves elementwise dominance.
+
+Costs are identical, since they depend only on the $d_t$.
+\end{proof}
+
+\paragraph{The window form.} In a greedy library, every non-leaf result cites the current
+largest value. Its own value is therefore larger than everything so far, so non-leaf
+values appear in \emph{increasing} order $z_1<z_2<\cdots$. A non-leaf step with window
+$d\ge1$ is then
+\[
+z_{\text{new}} \;=\; 1 + z_n + z_{n-1} + \dots + z_{n-d+1},
+\]
+where leaves (value 1) fill in when the window reaches below the non-leaf values. The
+conjecture becomes:
+
+\begin{quote}\itshape
+In any variable-window Fibonacci recurrence, where each step chooses its own window $d$ at
+price $d+1$, the growth per unit price is at most $\varphi^{1/3}$.
+\end{quote}
+
+\noindent Ordinary Fibonacci is window $2$ at price $3$, growing by $\varphi$ per step:
+exactly $\varphi^{1/3}$ per unit. The $d$-bonacci recurrences grow by $\varphi_d$ per price
+$d+1$, and $\varphi_d^{1/(d+1)}$ is largest at $d=2$:
+
+\begin{center}\small
+\begin{tabular}{lcccccc}
+\toprule
+window $d$ & 1 & 2 & 3 & 4 & 5 & large \\
+\midrule
+growth per step $\varphi_d$ & 1 & 1.618 & 1.839 & 1.928 & 1.966 & $\to 2$ \\
+per unit price $\varphi_d^{1/(d+1)}$ & 1 & \textbf{1.174} & 1.165 & 1.140 & 1.119 & $\to 1$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent So among \emph{constant} windows, $2$ wins. The conjecture says that
+\emph{varying} the window cannot beat it either.
+
+\section{A partial theorem: at most two citations}
+
+\begin{theorem}[Golden speed limit for binary libraries]\label{thm:A}
+If every result cites at most two others, then every unfolded size satisfies
+\[
+u \;<\; 7\,\varphi^{C/3}.
+\]
+The Fibonacci library achieves $\Theta(\varphi^{C/3})$, so the rate $\varphi^{1/3}$ is
+exact for this class.
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:greedy} we may assume the library is greedy. The lemma preserves each
+$d_t\le2$, hence the class.
+
+\paragraph{Potential.} Let $\alpha=\varphi^{1/3}$, so $\alpha^3=\varphi$. Let $z\ge z'\ge0$
+be the two largest values so far ($z'=0$ if there is only one). Define
+\[
+\Phi \;=\; \max\Bigl(\,z+\tfrac{z'}{\varphi},\;\; \alpha z\,\Bigr).
+\]
+The first piece is the classical Fibonacci invariant: it is multiplied by exactly
+$\varphi$ per Fibonacci step. The second piece accounts for a ``copy'' step, which is
+cheap and almost doubles the second value. We show that each step of price $p$ satisfies
+$\Phi_{\text{new}}+7\le\alpha^{p}(\Phi+7)$.
+
+\paragraph{Leaf ($p=1$).} The top two can only change by $z'$ rising from $0$ to $1$,
+so $\Phi_{\text{new}}\le\Phi+1/\varphi$. If the library was empty, then $\Phi$ goes from
+$0$ to $\alpha$, and $\alpha+7\le7\alpha$. Otherwise
+$(\alpha-1)(\Phi+7)\ge 7(\alpha-1)>1.2>1/\varphi$.
+
+\paragraph{Copy ($d=1$, $p=2$).} The new top two are $(z+1,z)$. So
+\[
+\Phi_{\text{new}}=\max\bigl(\varphi z+1,\ \alpha z+\alpha\bigr)\le \varphi z+\alpha .
+\]
+Since $\varphi z=\alpha^2(\alpha z)\le\alpha^2\Phi$, we get
+$\Phi_{\text{new}}\le\alpha^2\Phi+\alpha$. Then $\alpha+7\le 7\alpha^2$ gives the claim.
+
+\paragraph{Fibonacci step ($d=2$, $p=3$).} The new top two are $(z+z'+1,\ z)$. So
+\[
+\Phi_{\text{new}}\le\max\bigl(\varphi z+z',\ \alpha(z+z')\bigr)+\alpha .
+\]
+Now $\alpha(z+z')\le\varphi z+z'$, because $(\varphi-\alpha)z\ge(\alpha-1)z'$ follows from
+$z\ge z'$ and $\varphi-\alpha\approx0.444>\alpha-1\approx0.174$. Also
+$\varphi z+z'=\varphi(z+z'/\varphi)\le\varphi\Phi=\alpha^3\Phi$. Hence
+$\Phi_{\text{new}}\le\alpha^3\Phi+\alpha$, and $\alpha+7\le7\varphi$ finishes.
+
+\paragraph{Conclusion.} Multiplying over all steps,
+$\Phi+7\le 7\alpha^{C}$. Since every value is at most $z\le\Phi$, we get
+$u<7\alpha^C=7\varphi^{C/3}$.
+\end{proof}
+
+\begin{remark}
+This proves that the golden ratio is the true speed limit, rigorously, for a
+natural class of libraries. It is short enough to formalize in Lean in a few hundred
+lines; the only nontrivial part is the dominance lemma, about multisets. It also explains
+the role of the \emph{copy} piece $\alpha z$. Without it, a copy step can multiply
+$z+z'/\varphi$ by $\varphi$ at price $2$, which is too much. With it, the copy step is
+paid for exactly ($\varphi=\alpha^2\cdot\alpha$).
+\end{remark}
+
+\section{The obstruction: runs of near-equal values}\label{sec:obstruction}
+
+Allowing three citations breaks this proof. Here is exactly why.
+
+\paragraph{The bad state.} Two copy steps from a value $v$ produce
+$(v+2,\,v+1,\,v)\approx(v,v,v)$: three nearly equal top values. A window-3 step then
+gives about $3v$. The two-piece potential has $\Phi(v,v,v)=\varphi v$, and after the step
+$\Phi\approx(3+1/\varphi)v=(2+\varphi)v\approx3.618v$. But the allowed factor is
+$\alpha^{4}\varphi\approx3.07$. The potential is \emph{undervaluing} the state $(v,v,v)$:
+from there, ``window 3, then Fibonacci'' really is worth about $1.905v$, not $\varphi v$.
+
+\paragraph{Patching creates more holes.} We can add that strategy as a third piece,
+$\alpha^{-4}(\varphi z_1+z_2+z_3)$. Then other two-move openings matter: for example,
+``window 2, then window 3'' is worth $\varphi^{-1/3}(z_1+z_2)$ when $z_1\approx z_2$.
+With $m$ near-equal values, the best opening may be ``sum six of them, copy, then
+Fibonacci'', and so on. The true value function, normalized by $\alpha^{\text{cost}}$, is
+a supremum over infinitely many opening strategies.
+
+\paragraph{What we know rigorously about this obstruction.}
+\begin{itemize}
+\item \textbf{No linear potential works.} By linear-programming duality, no potential
+  that is \emph{linear} in the sorted values can certify any rate below $1.2198$. This
+  was proved earlier in the project.
+\item \textbf{Two natural relaxations overshoot.} Decoupled recursions, which bound each
+  cited group by its own worst case, overshoot the truth. They give rate about $1.179$
+  instead of $1.174$, departing from the Lucas values from cost $33$ on. (This is the
+  single computation I ran for these notes, to test a proof strategy.)
+\item \textbf{Why they overshoot.} A relaxation lets ``the result at position $k$'' play
+  different roles for different citing results. In a real library it is \emph{one}
+  result. Any proof must keep this coupling.
+\end{itemize}
+
+\paragraph{Why this matters conceptually.} Near-equal runs are expensive to build ($2$
+symbols per copy) and cheap to exploit (one big window sums them all). A proof has to show
+that building a run never pays for itself. That is an amortization argument across many
+steps, not a one-step inequality, and it is the real content of the conjecture.
+
+\section{Ideas for a full proof}
+
+\begin{enumerate}
+\item \textbf{Amortize over runs.} Group the recurrence into blocks: a run of copies
+  followed by the window step that exploits it. Prove a block inequality: a block of
+  price $p$ multiplies a suitable potential by at most $\alpha^p$.
+
+  \emph{Supporting evidence.} The simplest block, ``$m-1$ copies then a window-$m$
+  sum'', yields $\max(m+1/\varphi,\ \alpha m)$ times the old maximum, at price $3m-1$. A
+  short check shows this is at most $\varphi^{m}$, with equality exactly at $m=1,2$. So
+  the golden bound survives these blocks, tightly at the Fibonacci step. What remains is
+  to control runs that are reused by later windows.
+\item \textbf{A finite closed family of pieces.} Find finitely many ``opening then
+  Fibonacci'' pieces whose maximum is preserved by every move, on \emph{reachable} states
+  only. Our earlier failed attempt used all sorted vectors. Reachable states are far
+  more constrained: each value is exactly a window sum of earlier ones. Restricting to
+  them may close the family.
+\item \textbf{Symbolic dynamics and pressure.} The extremal number $2L_m-2$ is twice the
+  trace of $\begin{psmallmatrix}1&1\\1&0\end{psmallmatrix}^m$, minus 2. $L_m$ counts the
+  periodic orbits of period $m$ of the \emph{golden-mean shift}: binary sequences on a
+  cycle with no two adjacent 1s. This suggests the paths of an optimal library are a
+  cyclic golden-mean code in disguise.
+
+  In that language, the conjecture is a \emph{pressure inequality}: path entropy per unit
+  of cost is at most $\tfrac13\log\varphi$. The twist, and the reason standard
+  thermodynamic formalism does not apply directly, is that cost is paid \emph{once per
+  result}, not once per visit along a path. That is precisely the difference between
+  naming and copying.
+\item \textbf{Entropy of a random path.} Take a uniformly random citation path. Its
+  entropy is $\log u$, and it splits into local choices (stop, or follow one of $d$
+  citations) weighted by visit probabilities. A Shearer-type inequality that charges each
+  result's entropy to its price $1+d$, while using that visit probabilities decay
+  geometrically along near-equal runs, could give the bound.
+\end{enumerate}
+
+\noindent My judgment is that route~1 is the most likely to work, possibly combined with
+route~2. If it works, the result is a complete proof of the rate $\varphi^{1/3}$. The exact
+value $2L_m-2$ would then need a further sharpening argument.
+
+\section{Frege vs.\ Extended Frege: what I can and cannot say}
+
+\paragraph{The dictionary.} This is where our project genuinely helps understanding.
+\begin{center}\small
+\begin{tabular}{lll}
+\toprule
+Our project & Circuits & Proofs \\
+\midrule
+copying (unfolded size) & formulas & tree-like / Frege \\
+naming (named size) & circuits & dag-like / Extended Frege \\
+naming a \emph{proved lemma} & sharing a gate output & reusing a line \\
+naming a \emph{new definition} & introducing a wire for a subcircuit & extension variable $q\leftrightarrow\varphi$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{The trivial versus the deep direction.} Our speed limit is a statement about
+\emph{naive} unfolding: how much bigger a named object gets when every name is copied out.
+That direction is easy and elementary, and we proved it.
+
+The deep direction asks whether there is \emph{some other} small unnamed object doing the
+same job.
+\begin{itemize}
+\item For lemmas in Frege the answer is yes, up to a polynomial: Kraj\'i\v{c}ek's
+  simulation of dag-like by tree-like Frege.
+\item For circuits versus formulas, and for definitions in proofs (Extended Frege versus
+  Frege), nobody knows.
+\end{itemize}
+Our theorems do not touch the deep direction.
+
+\paragraph{Why it is so hard.}
+\begin{itemize}
+\item A lower bound must defeat \emph{every} possible Frege proof, not one given proof.
+  Our calculus always fixes the proof and only varies the naming.
+\item \emph{Feasible interpolation}, one of the main tools for proof lower bounds, provably
+  fails for Frege and for Extended Frege if standard cryptography (such as factoring) is
+  hard. This is due to Kraj\'i\v{c}ek--Pudl\'ak and Bonet--Pitassi--Raz. So the method
+  that works for weaker systems cannot work here.
+\item The circuit analogue, super-polynomial formula lower bounds, is stuck at roughly
+  cubic. Researchers believe new ideas are needed; the Karchmer--Raz--Wigderson
+  conjecture is one proposed route.
+\end{itemize}
+
+\paragraph{Could our ideas help at all?} Two honest, small possibilities.
+\begin{enumerate}
+\item \textbf{The exact value $(o-1)(W-1)-1$ and the rank-one (Schur) updates} describe
+  precisely how much sharing a \emph{given} circuit or proof benefits from. A lower-bound
+  argument needs to show that \emph{every} small circuit for some function has a bad
+  sharing structure. Our calculus could be a bookkeeping tool inside such an argument. It
+  is not the argument.
+\item \textbf{Submodularity} (concepts are substitutes) says the benefit of sharing has
+  diminishing returns within a fixed object. Separations, if they exist, must come from
+  objects where sharing is \emph{forced}, not just useful. Our bounded-reader result,
+  where names become complements under capacity limits, hints at where to look:
+  statements whose proofs cannot fit in bounded working memory without definitions. In
+  proof complexity, a closely related precise notion is \emph{proof space}. Whether a
+  space-flavored argument could separate Extended Frege from Frege is, to my knowledge,
+  not something anyone has made work.
+\end{enumerate}
+
+\section{Did our paper help? Summary}
+
+\paragraph{For the Lucas conjecture: yes, concretely.}
+\begin{itemize}
+\item The calculus suggested thinking of a library as a multiset of values. That led to
+  greedy dominance and the window form.
+\item The failed LP certificate told us that linear arguments cannot work, which pointed
+  to the two-piece potential.
+\item That gave a real new theorem (Theorem~\ref{thm:A}): the golden speed limit is exact
+  for binary libraries.
+\item We identified the precise obstruction for the general case.
+\end{itemize}
+
+\paragraph{For Frege vs.\ Extended Frege: only as a lens.} The project clarifies what
+``naming versus copying'' means and why the easy direction is easy. It offers no attack on
+the hard direction. This should be stated plainly in any write-up.
+
+\paragraph{Suggested next step.} Formalize Theorem~\ref{thm:A} in Lean. Then try the
+block-amortization route for windows of size at most $3$, the first case beyond binary. If
+that works, the general case may follow the same pattern.
+
+\end{document}
