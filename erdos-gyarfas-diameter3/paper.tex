@@ -1,0 +1,269 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=2.6cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\usepackage{microtype}
+\emergencystretch=1em
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\title{The Erd\H{o}s--Gy\'arf\'as conjecture for graphs of diameter at most three}
+\author{Special Project\thanks{Produced with Claude (Anthropic) in an interactive session. The computer
+search and the independent checker are included with this note.}}
+\date{October 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Erd\H{o}s and Gy\'arf\'as conjectured that every graph of minimum degree at least $3$ contains a cycle
+whose length is a power of two. We prove that every graph, finite or infinite, with minimum degree at
+least $3$ and diameter at most $3$ contains a cycle of length $4$ or $8$. This extends the recent
+diameter-two result of Carr. The proof is computer-assisted. Assuming a counterexample, we grow a
+finite subgraph embedded in it, branching over every way a missing neighbour or a short path can
+attach. All $183{,}943$ terminal branches contain a $4$- or $8$-cycle, the search tree has $3{,}169$
+internal nodes, and no configuration ever needs more than $15$ vertices. A separately written
+checker verifies the certificate. We also give a short human proof of the bipartite case.
+\end{abstract}
+
+\section{Introduction}
+
+In 1995 Erd\H{o}s and Gy\'arf\'as conjectured that every graph with minimum degree at least $3$
+contains a cycle whose length is a power of $2$ \cite{erdos}. The conjecture is Problem~64 on
+\texttt{erdosproblems.com}, and it remains open. Known results include:
+\begin{itemize}
+\item graphs of sufficiently large average degree (Liu and Montgomery \cite{liumontgomery});
+\item $3$-connected cubic planar graphs (Heckman and Krakovski \cite{hk});
+\item claw-free graphs;
+\item $P_8$-, $P_{10}$- and $P_{13}$-free graphs \cite{gaoshan,hushen,hss}, the last with computer aid;
+\item graphs of diameter $2$, which always contain a $C_4$ or a $C_8$ (Carr \cite{carr}).
+\end{itemize}
+Computer searches show that a counterexample has at least $24$ vertices, and that none exists among
+graphs on at most $40$ vertices or cubic graphs on at most $48$ \cite{dd,small}. Markstr\"om found
+cubic graphs on $24$ vertices whose only power-of-two cycle length is $16$ \cite{markstrom}.
+
+\begin{theorem}\label{thm:main}
+Every graph $G$ (finite or infinite) with minimum degree at least $3$ and diameter at most $3$
+contains a cycle of length $4$ or $8$.
+\end{theorem}
+
+\begin{corollary}
+The Erd\H{o}s--Gy\'arf\'as conjecture holds for all graphs of diameter at most $3$.
+\end{corollary}
+
+Two remarks put the statement in context.
+\begin{itemize}
+\item \textbf{Infinite graphs.} The infinite $3$-regular tree has minimum degree $3$ and no cycles at
+  all, so the conjecture fails for infinite graphs in general. Theorem~\ref{thm:main} shows that
+  bounded diameter (at most $3$) restores it.
+\item \textbf{Both lengths are needed.} $K_4$ has no $8$-cycle, and the graph found in
+  Section~\ref{sec:controls} has diameter $3$ and no $4$-cycle.
+\end{itemize}
+
+\section{The method}
+
+Fix integers $D$ (the diameter bound), $\delta$ (the minimum-degree bound) and a set $F$ of forbidden
+cycle lengths. In this note $D=3$, $\delta=3$ and $F=\{4,8\}$. A \emph{counterexample} is a graph $G$
+with minimum degree at least $\delta$, diameter at most $D$, and no cycle whose length lies in $F$.
+
+A \emph{configuration} is a finite graph $H$ on vertices $\{0,\dots,n-1\}$. An \emph{embedding} of
+$H$ into $G$ is an injective map $\varphi:V(H)\to V(G)$ that sends edges to edges. A
+\emph{requirement} of $H$ is either of the following:
+\begin{itemize}
+\item a vertex $v$ with $\deg_H(v)<\delta$;
+\item a pair $\{a,b\}$ with $\mathrm{dist}_H(a,b)>D$, where the distance is infinite if $a$ and $b$
+  lie in different components.
+\end{itemize}
+
+\paragraph{Witnesses.} Let $n=|V(H)|$, and call $n$ and $n+1$ \emph{fresh}.
+\begin{itemize}
+\item For a degree requirement $v$, the witnesses are the single edges $vu$, where either $u$ is a
+  vertex of $H$ that is distinct from $v$ and not adjacent to it, or $u=n$ is fresh.
+\item For a distance requirement $\{a,b\}$, the witnesses are the paths $a=w_0,w_1,\dots,w_k=b$ with
+  $1\le k\le D$ and distinct vertices. Each interior vertex is either a vertex of $H$ other than $a$
+  and $b$, or fresh. Fresh vertices are numbered $n,n+1,\dots$ in order of appearance, which
+  removes relabelling symmetry.
+\end{itemize}
+Adding a witness to $H$ gives a configuration $H+w$.
+
+\paragraph{Proof trees.} A proof tree for $H$ selects one requirement $\rho$ of $H$ and, for every
+witness $w$ of $\rho$, records one of two outcomes:
+\begin{itemize}
+\item $H+w$ contains a cycle whose length lies in $F$ (a \emph{dead} branch); or
+\item a proof tree for $H+w$ is given.
+\end{itemize}
+Note that if $H$ has no requirement, no proof tree for $H$ exists. In that case $H$ itself is a
+finite counterexample.
+
+\begin{lemma}[Soundness]\label{lem:sound}
+Suppose a finite proof tree exists for the one-vertex configuration. Then no counterexample exists.
+\end{lemma}
+
+\begin{proof}
+Suppose $G$ is a counterexample. We maintain a configuration $H$ that has a proof tree, together
+with an embedding $\varphi:H\to G$. Start with $H=K_1$, mapping its vertex to any vertex of $G$.
+
+Let $\rho$ be the requirement selected at $H$. We find a witness $w$ of $\rho$ and extend $\varphi$
+to an embedding of $H+w$, as follows.
+\begin{itemize}
+\item \emph{Degree requirement $v$.} Since $\deg_G\varphi(v)\ge\delta>\deg_H(v)$, the vertex
+  $\varphi(v)$ has a neighbour $x\notin\varphi(N_H(v))$. If $x=\varphi(u)$ for some $u\in V(H)$, then
+  $u\ne v$ and $u$ is not adjacent to $v$ in $H$, so $w=vu$ is a witness. Otherwise $w=vn$ with $n$
+  fresh, and we set $\varphi(n)=x$.
+\item \emph{Distance requirement $\{a,b\}$.} Let $P$ be a shortest $\varphi(a)$--$\varphi(b)$ path in
+  $G$. It has length $k\le D$, and its vertices are distinct. Pull $P$ back to $H$: an interior
+  vertex of the form $\varphi(u)$ becomes $u$, and every other interior vertex becomes a fresh
+  vertex, numbered in order. The result is a witness $w$. Define $\varphi$ on the fresh vertices
+  accordingly.
+\end{itemize}
+In both cases the extended map is injective. Fresh vertices go outside $\varphi(V(H))$, and the
+vertices of $P$ are distinct. It also sends edges to edges, so it is an embedding of $H+w$.
+
+The proof tree assigns an outcome to $w$. If the branch is dead, $H+w$ contains a cycle with length
+in $F$, and its image under the embedding is such a cycle in $G$, a contradiction. Otherwise we
+continue with the proof tree of $H+w$. The tree is finite, so a dead branch is reached after
+finitely many steps.
+\end{proof}
+
+The argument never uses finiteness of $G$: degrees in $G$ may be infinite, and only finitely many
+vertices are ever inspected. So Theorem~\ref{thm:main} follows from Lemma~\ref{lem:sound} once a
+proof tree for $D=3$, $\delta=3$, $F=\{4,8\}$ has been exhibited. That is what the computation does.
+
+\section{Computation}\label{sec:controls}
+
+The search program \texttt{search.py} builds proof trees depth-first. At each configuration it
+considers every requirement, preferring distance requirements, and selects the one with the fewest
+witnesses that are not immediately dead. A branch is dead when one of the newly added edges lies on a
+cycle whose length is in $F$. Running the program with $D=3$, $\delta=3$, $F=\{4,8\}$ produces a
+complete proof tree, saved as \texttt{proof\_tree.json}.
+
+\begin{center}
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Instance & internal nodes & dead branches & max.\ $|V(H)|$ & time\\
+\midrule
+$D=2$, $F=\{4,8\}$ (Carr's theorem) & 38 & 180 & 8 & $<1$\,s\\
+$D=3$, $F=\{4,8\}$ (Theorem~\ref{thm:main}) & 3{,}169 & 183{,}943 & 15 & 6\,s\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\paragraph{Independent verification.} The checker \texttt{checker.py} was written separately and
+shares no code with the search. It replays the tree from $K_1$ and, at every node, does three
+things.
+\begin{enumerate}
+\item It confirms, using its own breadth-first search, that the recorded requirement really is a
+  requirement of the current configuration.
+\item It regenerates the full set of witnesses itself and confirms that each one is covered by a
+  branch of the tree. Edges already present in $H$ are ignored when matching.
+\item For every dead branch, it confirms with an independent cycle enumerator
+  (the \texttt{simple\_cycles} routine of \texttt{networkx}, with a length bound) that the configuration contains a $4$- or
+  $8$-cycle.
+\end{enumerate}
+The checker accepts the certificate in about 35 seconds.
+
+\paragraph{Controls.} The same program behaves correctly on instances whose answers are known.
+\begin{itemize}
+\item With $D=2$ it reproduces Carr's theorem.
+\item With $F=\{4\}$ it returns a genuine $10$-vertex graph with minimum degree $3$, diameter $3$
+  and no $4$-cycle. That graph necessarily contains $8$-cycles.
+\item With $\delta=2$ it returns the triangle, a valid counterexample to the weakened statement.
+\item With $D=4$ and $F=\{4,8\}$ it does not terminate within our time limit. This is consistent
+  with the expectation that Markstr\"om-type graphs, which have no $4$- or $8$-cycle, exist at
+  diameter $4$.
+\end{itemize}
+
+\section{A human proof of the bipartite case}
+
+The computer proof is a large case analysis. To illustrate the kind of argument it contains, here
+is a short proof of one special case.
+
+\begin{proposition}
+Every bipartite graph with minimum degree at least $3$ and diameter at most $3$ contains a cycle of
+length $4$ or $8$.
+\end{proposition}
+
+\begin{proof}
+Suppose $G$ has no $C_4$. Being bipartite, $G$ then has girth at least $6$.
+
+\emph{Every path $a\,b\,c\,d\,e$ with four edges lies on a $6$-cycle.} The vertices $a$ and $e$ lie
+on the same side of the bipartition, so $\mathrm{dist}(a,e)$ is even. It is at most $3$, so it
+equals $2$. Let $m$ be a common neighbour of $a$ and $e$. We check that $m$ is not on the path:
+\begin{itemize}
+\item $m=b$ would make $b c d e$ a $4$-cycle;
+\item $m=d$ would make $a b c d$ a $4$-cycle;
+\item $m=c$ is impossible, because $c$ lies on the same side as $a$.
+\end{itemize}
+Hence $a\,b\,c\,d\,e\,m$ is a $6$-cycle.
+
+\emph{Constructing the $8$-cycle.} A path with four edges exists because the minimum degree is $3$,
+so by the claim there is a $6$-cycle $c_0c_1\cdots c_5$. It has no chord, since a chord would create
+a $C_4$ or join two vertices on the same side. So $c_1$ has a neighbour $z$ outside the cycle, and
+$z$ has two neighbours $y_1,y_2\neq c_1$. Neither $y_j$ lies on the cycle: it would be $c_3$ or
+$c_5$, creating the $4$-cycle $c_1zc_3c_2$ or $c_1zc_5c_0$.
+
+Fix $j\in\{1,2\}$. By the claim, the path $y_j\,z\,c_1\,c_2\,c_3$ closes into a $6$-cycle through a
+common neighbour $m_j$ of $y_j$ and $c_3$, with $m_j\notin\{z,c_1,c_2\}$. Suppose
+$m_j\notin\{c_4\}$. Then
+\[
+y_j\,z\,c_1\,c_0\,c_5\,c_4\,c_3\,m_j
+\]
+is an $8$-cycle, since its eight vertices are distinct. Finally, $m_1=m_2=c_4$ is impossible: it
+would give two common neighbours $y_1,y_2$ of $z$ and $c_4$, that is, a $4$-cycle.
+\end{proof}
+
+When the graph is not bipartite, the triangles, $5$-cycles and $7$-cycles allowed by
+$C_4$-freeness multiply the cases. This is where the computer search takes over.
+
+\section{Discussion}
+
+Theorem~\ref{thm:main} is sharp in the sense that the method stops working at diameter $4$, where
+$4$-cycles and $8$-cycles alone are not enough. Markstr\"om's cubic graphs on $24$ vertices, whose
+only power-of-two cycle length is $16$, necessarily have diameter at least $4$, because a cubic graph
+of diameter $3$ has at most $22$ vertices. Two questions are natural.
+
+\begin{enumerate}
+\item Does every graph with minimum degree at least $3$ and diameter at most $4$ contain a cycle of
+  length $4$, $8$ or $16$? This is the next case of the conjecture. The same search applies, with
+  $F=\{4,8,16\}$.
+\item Is there a short human proof of Theorem~\ref{thm:main}? The proof tree is small enough, at
+  under $3{,}200$ internal nodes, that a structured human argument may well exist.
+\end{enumerate}
+
+\paragraph{Files.} The files \texttt{search.py}, \texttt{checker.py} and
+\texttt{proof\_tree.json.gz} (394\,KB) are in the same directory as this note.
+\begin{itemize}
+\item Reproduce the proof tree with \texttt{python3 search.py 3 4,8 3 18 --tree proof\_tree.json}.
+\item Check it with \texttt{python3 checker.py proof\_tree.json}.
+\end{itemize}
+
+\begin{thebibliography}{99}
+\bibitem{erdos} P.~Erd\H{o}s, Some old and new problems in various branches of combinatorics,
+  \emph{Discrete Math.} 165/166 (1997) 227--231.
+\bibitem{liumontgomery} H.~Liu and R.~Montgomery, A solution to Erd\H{o}s and Hajnal's odd cycle
+  problem, \emph{J. Amer. Math. Soc.} 36 (2023) 1191--1234.
+\bibitem{hk} C.~C.~Heckman and R.~Krakovski, Erd\H{o}s--Gy\'arf\'as conjecture for cubic planar
+  graphs, \emph{Electron. J. Combin.} 20(2) (2013) P7.
+\bibitem{gaoshan} J.~Gao and S.~Shan, Erd\H{o}s--Gy\'arf\'as conjecture for $P_8$-free graphs (2022).
+\bibitem{hushen} X.~Hu and S.~Shen, The Erd\H{o}s--Gy\'arf\'as conjecture holds for $P_{10}$-free
+  graphs, \emph{Discrete Math.} 347 (2024) 114175.
+\bibitem{hss} A.~S.~Hegde, R.~B.~Sandeep and P.~Shashank, Erd\H{o}s--Gy\'arf\'as conjecture on graphs
+  without long induced paths, arXiv:2410.22842.
+\bibitem{carr} A.~Carr, Cycles of length $4$ or $8$ in graphs with diameter $2$ and minimum degree at
+  least $3$, arXiv:2508.19302.
+\bibitem{dd} G.~Ducoffe and B.~Dumitru, Towards a more structured search for Erd\H{o}s--Gy\'arf\'as
+  counter-examples, arXiv:2609.28594.
+\bibitem{small} Small graphs without power-of-two cycles: a lower bound of 24, arXiv:2609.04686.
+\bibitem{markstrom} K.~Markstr\"om, Extremal graphs for some problems on cycles in graphs,
+  \emph{Congr. Numer.} 171 (2004) 179--192.
+\end{thebibliography}
+\end{document}
